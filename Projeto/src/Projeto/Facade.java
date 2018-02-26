@@ -1,4 +1,5 @@
 package Projeto;
+
 import easyaccept.EasyAccept;
 
 public class Facade {
@@ -9,7 +10,7 @@ public class Facade {
 	}
 
 	public static void main(String[] args) {
-		args = new String[] { "Projeto.Facade", "testes/us1_test.txt", "testes/us2_test.txt"};
+		args = new String[] { "Projeto.Facade", "testes/us1_test.txt", "testes/us2_test.txt" };
 		EasyAccept.main(args);
 
 	}
@@ -29,5 +30,16 @@ public class Facade {
 	public String getInfoAluno(String matricula, String atributo) {
 		return sistema.getInfoAluno(matricula, atributo);
 	}
+
+	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
+		sistema.tornarTutor(matricula, disciplina, proficiencia);
+	}
+
+	public String recuperaTutor(String matricula) {
+		return sistema.recuperaTutor(matricula);
+
+	}
+
+
 
 }
