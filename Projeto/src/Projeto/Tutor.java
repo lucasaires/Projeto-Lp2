@@ -41,14 +41,11 @@ public class Tutor extends Aluno {
 	public void setDinheiro(int dinheiro) {
 		this.dinheiro = dinheiro;
 	}
-
-	public String getMatricula() {
-		return matricula;
-	}
-
+	
 	public String getDisciplina() {
 		return disciplina;
 	}
+	
 
 	@Override
 	public String toString() {
@@ -56,6 +53,4 @@ public class Tutor extends Aluno {
 		return super.toString();
 	}
 
-	
-	}
-
+}

@@ -58,7 +58,7 @@ public class Sistema {
 
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
 		Aluno escolhido = alunos.get(matricula);
-		Tutor novoTutor = new Tutor(escolhido.nome,escolhido.matricula,escolhido.codigoCurso,escolhido.telefone,escolhido.email,disciplina,proficiencia);
+		Tutor novoTutor = new Tutor(escolhido.getNome(),escolhido.getMatricula(),escolhido.getCodigoCurso(),escolhido.getTelefone(),escolhido.getEmail(),disciplina,proficiencia);
 	
 	}
 

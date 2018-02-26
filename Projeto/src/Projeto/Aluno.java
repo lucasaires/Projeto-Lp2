@@ -1,15 +1,13 @@
 package Projeto;
 
-
 public class Aluno {
 
-	
-	protected String matricula;
-	protected String nome;
-	protected int codigoCurso;
-	protected String email;
-	protected int nota;
-	protected String telefone;
+	private String matricula;
+	private String nome;
+	private int codigoCurso;
+	private String email;
+	private int nota;
+	private String telefone;
 
 	public Aluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		if (nome.trim().equals("")) {

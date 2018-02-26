@@ -10,7 +10,7 @@ public class Facade {
 	}
 
 	public static void main(String[] args) {
-		args = new String[] { "Projeto.Facade", "testes/us1_test.txt", "testes/us2_test.txt" };
+		args = new String[] { "Projeto.Facade", "testes/us1_test.txt", "testes/us2_test.txt","testes/us3_test.txt" };
 		EasyAccept.main(args);
 
 	}
