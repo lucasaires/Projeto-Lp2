@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * 
- * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya ,
+ * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya Raíssa Guedes Alves ,
  *         Yally de Lima Galdino
  *
  */
@@ -16,14 +16,10 @@ public class Sistema {
 
 	private Map<String, Aluno> mapaAlunos;
 	private Map<String, Tutor> tutores;
-	private List<Horario> horarios;
-	private List<Local> locais;
 
 	public Sistema() {
 		this.mapaAlunos = new HashMap<>();
 		this.tutores = new HashMap<>();
-		this.horarios = new ArrayList<>();
-		this.locais = new ArrayList<Local>();
 	}
 
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
@@ -136,7 +132,11 @@ public class Sistema {
 	 * @return
 	 */
 	public String listarTutores() {
-		return "lucas chato";
+		String saida = "";
+		for (Tutor tutor : tutores.values()) {
+			saida += tutor.toString() + ", ";
+		}
+		return saida.substring(0, (saida.length() - 2));
 	}
 
 	/**
@@ -146,48 +146,18 @@ public class Sistema {
 	 * @param dia
 	 */
 	public void cadastrarHorario(String email, String horario, String dia) {
-
 		if (email.trim().equals("")) {
-
 			throw new IllegalArgumentException("Erro no cadastrar horario: email nao pode ser vazio ou em branco");
-
 		} else if (horario.trim().equals("")) {
-
 			throw new IllegalArgumentException("Erro no cadastrar horario: horario nao pode ser vazio ou em branco");
-
 		} else if (dia.trim().equals("")) {
-
 			throw new IllegalArgumentException("Erro no cadastrar horario: dia nao pode ser vazio ou em branco");
 		}
-
-		if (!consultaEmail(email)) {
-
+		Tutor tutor = buscaTutor(email);
+		if (tutor == null) {
 			throw new IllegalArgumentException("Erro no cadastrar horario: tutor nao cadastrado");
-
 		}
-
-		Horario novo = new Horario(email, horario, dia);
-
-		horarios.add(novo);
-
-	}
-
-	/**
-	 * 
-	 * @param email
-	 * @return
-	 */
-	private boolean consultaEmail(String email) {
-
-		boolean verifica = false;
-		for (Tutor tutor : tutores.values()) {
-			if (tutor.getEmail().equals(email)) {
-
-				verifica = true;
-			}
-
-		}
-		return verifica;
+		tutor.cadastraHorario(horario, dia);
 	}
 
 	/**
@@ -198,34 +168,22 @@ public class Sistema {
 	 * @return
 	 */
 	public boolean consultaHorario(String email, String horario, String dia) {
-
-		return verificahorario(email, horario, dia);
-	}
-
-	/**
-	 * 
-	 * @param email
-	 * @param horario
-	 * @param dia
-	 * @return
-	 */
-	private boolean verificahorario(String email, String horario, String dia) {
-
-		boolean verifica = false;
-
-		Horario novo = new Horario(email, horario, dia);
-
-		for (Horario HorarioDoTutor : horarios) {
-
-			if (HorarioDoTutor.equals(novo)) {
-
-				verifica = true;
-			}
-
+		Tutor tutor = buscaTutor(email);
+		if (tutor == null) {
+			return false;
 		}
-		return verifica;
+		return tutor.consultaHorario(horario, dia);
 	}
-
+	
+	private Tutor buscaTutor(String email) {		
+		for (Tutor tutor : tutores.values()) {
+			if (tutor.getEmail().equals(email)) {
+				return tutor;
+			}
+		} 
+		return null;
+	}
+	
 	/**
 	 * 
 	 * @param email
@@ -233,28 +191,19 @@ public class Sistema {
 	 */
 	public void cadastrarLocalDeAtendimento(String email, String local) {
 		if (email.trim().equals("")) {
-
 			throw new IllegalArgumentException(
 					"Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
-
 		} else if (local.trim().equals("")) {
-
 			throw new IllegalArgumentException(
 					"Erro no cadastrar local de atendimento: local nao pode ser vazio ou em branco");
 		}
-
-		if (!consultaEmail(email)) {
-
+		Tutor tutorBusca = buscaTutor(email);
+		if (tutorBusca == null) {
 			throw new IllegalArgumentException("Erro no cadastrar local de atendimento: tutor nao cadastrado");
-
 		}
-
-		Local novo = new Local(email, local);
-
-		locais.add(novo);
-
+		tutorBusca.cadastrarLocal(local);
 	}
-
+	
 	/**
 	 * 
 	 * @param email
@@ -262,29 +211,11 @@ public class Sistema {
 	 * @return
 	 */
 	public boolean consultaLocal(String email, String local) {
-
-		return consultalocal(email, local);
-	}
-
-	/**
-	 * 
-	 * @param email
-	 * @param local
-	 * @return
-	 */
-	private boolean consultalocal(String email, String local) {
-		Local novo = new Local(email, local);
-		boolean consulta = false;
-
-		for (Local localDoTutor : locais) {
-
-			if (localDoTutor.equals(novo)) {
-				consulta = true;
-			}
-
+		Tutor tutor = buscaTutor(email);
+		if (tutor == null) {
+			return false;
 		}
-
-		return consulta;
+		return tutor.consultaLocal(local);
 	}
 
 }

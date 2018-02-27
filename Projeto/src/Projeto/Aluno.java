@@ -2,7 +2,7 @@ package Projeto;
 
 /**
  * 
- * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya ,
+ * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya Raíssa Guedes Alves ,
  *         Yally de Lima Galdino
  *
  */

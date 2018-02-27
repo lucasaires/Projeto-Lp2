@@ -1,11 +1,15 @@
 package Projeto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 
- * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya ,
+ * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya Raíssa Guedes Alves,
  *         Yally de Lima Galdino
  *
  */
@@ -16,6 +20,8 @@ public class Tutor extends Aluno {
 	private int nota;
 	private int dinheiro;
 	private List<String> disciplinas;
+	private Set<String> locais;
+	private Map<String, ArrayList<String>> horarios;
 
 	public Tutor(String nome, String matricula, int codigoCurso, String telefone, String email, String disciplina,
 			int proficiencia) {
@@ -30,7 +36,9 @@ public class Tutor extends Aluno {
 		this.proficiencia = proficiencia;
 		this.nota = 4;
 		this.dinheiro = 0;
-		this.disciplinas = new ArrayList<>();
+		this.disciplinas = new ArrayList<String>();
+		this.locais = new HashSet<String>();
+		this.horarios = new HashMap<String, ArrayList<String>>();
 	}
 
 	/**
@@ -57,7 +65,7 @@ public class Tutor extends Aluno {
 
 	/**
 	 * 
-	 * @return
+	 * @returnMap
 	 */
 	public int getProficiencia() {
 		return proficiencia;
@@ -115,7 +123,31 @@ public class Tutor extends Aluno {
 	public String getDisciplina() {
 		return disciplina;
 	}
-
+	
+	public void cadastrarLocal(String local) {
+		locais.add(local);
+	}
+	
+	public boolean consultaLocal(String local) {
+		return locais.contains(local);
+	}
+	
+	public void cadastraHorario(String horario, String dia) {
+		ArrayList<String> horas = horarios.get(dia);
+		if (horas == null) {
+			horas = new ArrayList<String>();
+		}
+		horas.add(horario);
+		horarios.put(dia, horas);
+	}
+	
+	public boolean consultaHorario(String horario, String dia) {
+		if (horarios.get(dia) == null) {
+			return false;
+		}
+		return horarios.get(dia).contains(horario);
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString();
