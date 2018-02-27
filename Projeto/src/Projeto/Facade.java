@@ -60,8 +60,4 @@ public class Facade {
 		return sistema.consultaLocal(email, local);
 
 	}
-	
-	public int pedirAjudaPresencial (String disciplina, String horario, String dia, String localInteresse) {
-		return sistema.pedirAjudaPresencial(disciplina, horario, dia, localInteresse);
-	}
 }

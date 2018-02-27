@@ -1,5 +1,11 @@
 package Projeto;
 
+/**
+ * 
+ * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya ,
+ *         Yally de Lima Galdino
+ *
+ */
 public class Local {
 
 	private String email;
@@ -10,10 +16,18 @@ public class Local {
 		this.local = local;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getEmail() {
 		return email;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getLocal() {
 		return local;
 	}

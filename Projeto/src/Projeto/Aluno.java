@@ -1,6 +1,12 @@
 package Projeto;
 
-public class Aluno implements Comparable<Aluno>{
+/**
+ * 
+ * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya ,
+ *         Yally de Lima Galdino
+ *
+ */
+public class Aluno implements Comparable<Aluno> {
 	protected String matricula;
 	private String nome;
 	private int codigoCurso;
@@ -22,30 +28,58 @@ public class Aluno implements Comparable<Aluno>{
 		this.email = email;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getMatricula() {
 		return matricula;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getNome() {
 		return nome;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getNota() {
 		return nota;
 	}
 
+	/**
+	 * 
+	 * @param nota
+	 */
 	public void setNota(int nota) {
 		this.nota = nota;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getCodigoCurso() {
 		return codigoCurso;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getEmail() {
 		return email;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getTelefone() {
 		return telefone;
 	}

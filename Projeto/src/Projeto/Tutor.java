@@ -3,6 +3,12 @@ package Projeto;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya ,
+ *         Yally de Lima Galdino
+ *
+ */
 public class Tutor extends Aluno {
 
 	private String disciplina;
@@ -19,9 +25,7 @@ public class Tutor extends Aluno {
 		if (disciplina.trim().equals("")) {
 			throw new NullPointerException("Erro no cadastro de aluno: Disciplina nao pode ser vazio ou nulo");
 		}
-		if (proficiencia < 0) {
-			throw new NullPointerException("Erro no cadastro de proficiencia: Proficiencia nao pode ser vazio ou nulo");
-		}
+
 		this.disciplina = disciplina;
 		this.proficiencia = proficiencia;
 		this.nota = 4;
@@ -29,49 +33,85 @@ public class Tutor extends Aluno {
 		this.disciplinas = new ArrayList<>();
 	}
 
+	/**
+	 * 
+	 * @param disciplina
+	 */
 	public void disciplinasTutor(String disciplina) {
-        if (this.verificaDisciplinas(disciplina) == false) {
-            disciplinas.add(disciplina);
-        }
-    }    
-	public boolean verificaDisciplinas(String disciplina) {
-        boolean temDisciplina = false;
-        for (String disc : disciplinas) {
-            if (disc.equals(disciplina)) {
-                temDisciplina = true;
-            }
-        }
-        return temDisciplina;
-    }
+		if (this.verificaDisciplinas(disciplina) == false) {
+			disciplinas.add(disciplina);
+		}
+	}
 
+	/**
+	 * 
+	 * @param disciplina
+	 * @return
+	 */
+	public boolean verificaDisciplinas(String disciplina) {
+		if (disciplinas.contains(disciplina)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
 	public int getProficiencia() {
 		return proficiencia;
 	}
 
+	/**
+	 * 
+	 * @param proficiencia
+	 */
 	public void setProficiencia(int proficiencia) {
 		this.proficiencia = proficiencia;
 	}
 
+	/**
+	 * 
+	 */
 	public int getNota() {
 		return nota;
 	}
 
+	/**
+	 * 
+	 */
 	public void setNota(int nota) {
 		this.nota = nota;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getDinheiro() {
 		return dinheiro;
 	}
 
+	/**
+	 * 
+	 * @param dinheiro
+	 */
 	public void setDinheiro(int dinheiro) {
 		this.dinheiro = dinheiro;
 	}
 
+	/**
+	 * 
+	 */
 	public String getMatricula() {
 		return matricula;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getDisciplina() {
 		return disciplina;
 	}

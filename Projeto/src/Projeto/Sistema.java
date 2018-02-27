@@ -6,6 +6,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya ,
+ *         Yally de Lima Galdino
+ *
+ */
 public class Sistema {
 
 	private Map<String, Aluno> mapaAlunos;
@@ -28,6 +34,11 @@ public class Sistema {
 		mapaAlunos.put(matricula, aluno);
 	}
 
+	/**
+	 * 
+	 * @param matricula
+	 * @return
+	 */
 	public String recuperaAluno(String matricula) {
 		if (!mapaAlunos.containsKey(matricula)) {
 			throw new IllegalArgumentException("Erro na busca por aluno: Aluno nao encontrado");
@@ -35,9 +46,13 @@ public class Sistema {
 		return mapaAlunos.get(matricula).toString();
 	}
 
-		public String listarAlunos() {
+	/**
+	 * 
+	 * @return
+	 */
+	public String listarAlunos() {
 		String saida = "";
-		ArrayList<Aluno> alunosOrdenados = new ArrayList<Aluno>();		
+		ArrayList<Aluno> alunosOrdenados = new ArrayList<Aluno>();
 		for (Aluno aluno : mapaAlunos.values()) {
 			alunosOrdenados.add(aluno);
 		}
@@ -48,7 +63,12 @@ public class Sistema {
 		return saida.substring(0, (saida.length() - 2));
 	}
 
-
+	/**
+	 * 
+	 * @param matricula
+	 * @param atributo
+	 * @return
+	 */
 	public String getInfoAluno(String matricula, String atributo) {
 		if (!mapaAlunos.containsKey(matricula)) {
 			throw new IllegalArgumentException("Erro na obtencao de informacao de aluno: Aluno nao encontrado");
@@ -69,8 +89,13 @@ public class Sistema {
 		}
 	}
 
+	/**
+	 * 
+	 * @param matricula
+	 * @param disciplina
+	 * @param proficiencia
+	 */
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
-		
 		if (proficiencia < 0) {
 			throw new IllegalArgumentException("Erro na definicao de papel: Proficiencia invalida");
 		}
@@ -79,20 +104,25 @@ public class Sistema {
 			if (!tutores.containsKey(matricula)) {
 				Tutor novoTutor = new Tutor(escolhido.getNome(), escolhido.getMatricula(), escolhido.getCodigoCurso(),
 						escolhido.getTelefone(), escolhido.getEmail(), disciplina, proficiencia);
+				novoTutor.disciplinasTutor(disciplina);
 				tutores.put(matricula, novoTutor);
 			} else {
-				if (tutores.get(matricula).verificaDisciplinas(disciplina) == false) {
-					tutores.get(matricula).disciplinasTutor(disciplina);
-
-				} else {
+				if (tutores.get(matricula).verificaDisciplinas(disciplina))
 					throw new IllegalArgumentException("Erro na definicao de papel: Ja eh tutor dessa disciplina");
-				}
+
+				else
+					tutores.get(matricula).disciplinasTutor(disciplina);
 			}
 		} else {
 			throw new IllegalArgumentException("Erro na definicao de papel: Tutor nao encontrado");
 		}
 	}
 
+	/**
+	 * 
+	 * @param matricula
+	 * @return
+	 */
 	public String recuperaTutor(String matricula) {
 		if (!tutores.containsKey(matricula)) {
 			throw new IllegalArgumentException("Erro na busca por tutor: Tutor nao encontrado");
@@ -101,10 +131,20 @@ public class Sistema {
 		return tutores.get(matricula).toString();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String listarTutores() {
 		return "lucas chato";
 	}
 
+	/**
+	 * 
+	 * @param email
+	 * @param horario
+	 * @param dia
+	 */
 	public void cadastrarHorario(String email, String horario, String dia) {
 
 		if (email.trim().equals("")) {
@@ -119,11 +159,11 @@ public class Sistema {
 
 			throw new IllegalArgumentException("Erro no cadastrar horario: dia nao pode ser vazio ou em branco");
 		}
-		
-		if(!consultaEmail(email)) {
-			
+
+		if (!consultaEmail(email)) {
+
 			throw new IllegalArgumentException("Erro no cadastrar horario: tutor nao cadastrado");
-			
+
 		}
 
 		Horario novo = new Horario(email, horario, dia);
@@ -132,24 +172,43 @@ public class Sistema {
 
 	}
 
+	/**
+	 * 
+	 * @param email
+	 * @return
+	 */
 	private boolean consultaEmail(String email) {
-		
+
 		boolean verifica = false;
-		for(Tutor tutor : tutores.values()) {
-			if (tutor.getEmail().equals(email)){
-				
+		for (Tutor tutor : tutores.values()) {
+			if (tutor.getEmail().equals(email)) {
+
 				verifica = true;
 			}
-			
+
 		}
 		return verifica;
 	}
 
+	/**
+	 * 
+	 * @param email
+	 * @param horario
+	 * @param dia
+	 * @return
+	 */
 	public boolean consultaHorario(String email, String horario, String dia) {
 
 		return verificahorario(email, horario, dia);
 	}
 
+	/**
+	 * 
+	 * @param email
+	 * @param horario
+	 * @param dia
+	 * @return
+	 */
 	private boolean verificahorario(String email, String horario, String dia) {
 
 		boolean verifica = false;
@@ -167,6 +226,11 @@ public class Sistema {
 		return verifica;
 	}
 
+	/**
+	 * 
+	 * @param email
+	 * @param local
+	 */
 	public void cadastrarLocalDeAtendimento(String email, String local) {
 		if (email.trim().equals("")) {
 
@@ -178,11 +242,11 @@ public class Sistema {
 			throw new IllegalArgumentException(
 					"Erro no cadastrar local de atendimento: local nao pode ser vazio ou em branco");
 		}
-		
-		if(!consultaEmail(email)) {
-			
+
+		if (!consultaEmail(email)) {
+
 			throw new IllegalArgumentException("Erro no cadastrar local de atendimento: tutor nao cadastrado");
-			
+
 		}
 
 		Local novo = new Local(email, local);
@@ -191,11 +255,23 @@ public class Sistema {
 
 	}
 
+	/**
+	 * 
+	 * @param email
+	 * @param local
+	 * @return
+	 */
 	public boolean consultaLocal(String email, String local) {
 
 		return consultalocal(email, local);
 	}
 
+	/**
+	 * 
+	 * @param email
+	 * @param local
+	 * @return
+	 */
 	private boolean consultalocal(String email, String local) {
 		Local novo = new Local(email, local);
 		boolean consulta = false;
@@ -210,18 +286,5 @@ public class Sistema {
 
 		return consulta;
 	}
-
-	public int pedirAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	
-
-	// @Override
-	// public int compareTo(Aluno o) {
-	// TODO Auto-generated method stub
-	// return 0;
-	// }
 
 }

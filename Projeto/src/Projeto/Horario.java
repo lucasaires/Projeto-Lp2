@@ -1,25 +1,43 @@
 package Projeto;
 
+/**
+ * 
+ * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya ,
+ *         Yally de Lima Galdino
+ *
+ */
 public class Horario {
-	
+
 	private String email;
 	private String horario;
 	private String dia;
-	
+
 	public Horario(String email, String horario, String dia) {
 		this.email = email;
 		this.horario = horario;
 		this.dia = dia;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getEmail() {
 		return email;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getHorario() {
 		return horario;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getDia() {
 		return dia;
 	}
@@ -60,11 +78,4 @@ public class Horario {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
-	
-
 }
