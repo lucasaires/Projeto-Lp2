@@ -2,6 +2,7 @@ package Projeto;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,16 +35,19 @@ public class Sistema {
 		return mapaAlunos.get(matricula).toString();
 	}
 
-	public String listarAlunos() {
+		public String listarAlunos() {
 		String saida = "";
-		ArrayList<Aluno> alunosOrdenados = new ArrayList<Aluno>();
-
+		ArrayList<Aluno> alunosOrdenados = new ArrayList<Aluno>();		
 		for (Aluno aluno : mapaAlunos.values()) {
 			alunosOrdenados.add(aluno);
 		}
-		// comparar e ordenar
+		Collections.sort(alunosOrdenados);
+		for (Aluno aluno : alunosOrdenados) {
+			saida += aluno.toString() + ", ";
+		}
 		return saida.substring(0, (saida.length() - 2));
 	}
+
 
 	public String getInfoAluno(String matricula, String atributo) {
 		if (!mapaAlunos.containsKey(matricula)) {

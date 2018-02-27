@@ -1,6 +1,6 @@
 package Projeto;
 
-public class Aluno {
+public class Aluno implements Comparable<Aluno>{
 	protected String matricula;
 	private String nome;
 	private int codigoCurso;
@@ -83,6 +83,11 @@ public class Aluno {
 		} else if (!matricula.equals(other.matricula))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(Aluno o) {
+		return this.nome.compareTo(o.getNome());
 	}
 
 }
