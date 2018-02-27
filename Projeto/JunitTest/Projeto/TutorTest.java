@@ -14,6 +14,21 @@ public class TutorTest {
 		t = new Tutor("Son Goku", "13", 5, "40028922", "songoku@dbs.com", "Prog2", 3);
 	}
 
+	@Test(expected = NullPointerException.class)
+	public void testTutor1(){
+		Tutor t = new Tutor("Larissa", "22", 2, "9985", "aa@bb", "", 3);
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testTutor2(){
+		Tutor t = new Tutor("Larissa", "22", 2, "9985", "aa@bb", "C2", -1);
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testTutor3(){
+		Tutor t = new Tutor("Larissa", "22", 2, "9985", "aa@bb", null, 3);
+	}
+	
 	@Test
 	public void testGetMatricula() {
 		assertEquals("13", t.getMatricula());

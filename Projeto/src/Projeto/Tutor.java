@@ -16,6 +16,12 @@ public class Tutor extends Aluno {
 
 		super(nome, matricula, codigoCurso, telefone, email);
 
+		if (disciplina.trim().equals("")) {
+			throw new NullPointerException("Erro no cadastro de aluno: Disciplina nao pode ser vazio ou nulo");
+		}
+		if (proficiencia < 0) {
+			throw new NullPointerException("Erro no cadastro de proficiencia: Proficiencia nao pode ser vazio ou nulo");
+		}
 		this.disciplina = disciplina;
 		this.proficiencia = proficiencia;
 		this.nota = 4;
@@ -24,20 +30,19 @@ public class Tutor extends Aluno {
 	}
 
 	public void disciplinasTutor(String disciplina) {
-		if (this.verificaDisciplinas(disciplina) == false) {
-			disciplinas.add(disciplina);
-		}
-	}
-
+        if (this.verificaDisciplinas(disciplina) == false) {
+            disciplinas.add(disciplina);
+        }
+    }    
 	public boolean verificaDisciplinas(String disciplina) {
-		boolean temDisciplina = false;
-		for (String disc : disciplinas) {
-			if (disc.equals(disciplina)) {
-				temDisciplina = true;
-			}
-		}
-		return temDisciplina;
-	}
+        boolean temDisciplina = false;
+        for (String disc : disciplinas) {
+            if (disc.equals(disciplina)) {
+                temDisciplina = true;
+            }
+        }
+        return temDisciplina;
+    }
 
 	public int getProficiencia() {
 		return proficiencia;

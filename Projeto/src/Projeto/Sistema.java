@@ -1,6 +1,6 @@
 package Projeto;
 
-import java.awt.List;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,7 +75,7 @@ public class Sistema {
 				Tutor novoTutor = new Tutor(escolhido.getNome(), escolhido.getMatricula(), escolhido.getCodigoCurso(),
 						escolhido.getTelefone(), escolhido.getEmail(), disciplina, proficiencia);
 				tutores.put(matricula, novoTutor);
-			} else if (tutores.containsKey(matricula)) {
+			} else {
 				if (tutores.get(matricula).verificaDisciplinas(disciplina) == false) {
 					tutores.get(matricula).disciplinasTutor(disciplina);
 
