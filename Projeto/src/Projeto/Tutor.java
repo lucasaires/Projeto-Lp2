@@ -42,9 +42,10 @@ public class Tutor extends Aluno {
 	}
 
 	/**
-	 * 
-	 * @param disciplina
+	 * adiciona disciplinas do tutor 
+	 * @param disciplina disciplina a ser adicionada
 	 */
+	
 	public void disciplinasTutor(String disciplina) {
 		if (this.verificaDisciplinas(disciplina) == false) {
 			disciplinas.add(disciplina);
@@ -52,10 +53,11 @@ public class Tutor extends Aluno {
 	}
 
 	/**
-	 * 
-	 * @param disciplina
-	 * @return
+	 * Verifica se o tutor já é tutor de alguma disciplina 
+	 * @param disciplina disciplina disciplina a procurar 
+	 * @return true se o tutor já é tutor da disciplina dada e false caso não.  
 	 */
+	
 	public boolean verificaDisciplinas(String disciplina) {
 		if (disciplinas.contains(disciplina)) {
 			return true;
@@ -64,73 +66,92 @@ public class Tutor extends Aluno {
 	}
 
 	/**
-	 * 
-	 * @returnMap
+	 * Retorna o quão hábil ele se sente na disciplina
+	 * @returnMap retorna a proficiência do tutor 
 	 */
+	
 	public int getProficiencia() {
 		return proficiencia;
 	}
 
 	/**
-	 * 
-	 * @param proficiencia
+	 * Muda a proficiência do tutor  
+	 * @param proficiencia o quão hábil ele se sente na disciplina
 	 */
+	
 	public void setProficiencia(int proficiencia) {
 		this.proficiencia = proficiencia;
 	}
 
 	/**
-	 * 
+	 * Retorna a nota
+	 * @return nota
 	 */
+	
 	public int getNota() {
 		return nota;
 	}
 
 	/**
-	 * 
+	 * Muda a nota 
+	 * @param nota nota 
 	 */
+	
 	public void setNota(int nota) {
 		this.nota = nota;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Retorna o dinheiro  
+	 * @return dinheiro 
 	 */
+	
 	public int getDinheiro() {
 		return dinheiro;
 	}
 
 	/**
-	 * 
-	 * @param dinheiro
+	 * atualiza o dinheiro  
+	 * @param dinheiro dinheiro 
 	 */
+	
 	public void setDinheiro(int dinheiro) {
 		this.dinheiro = dinheiro;
 	}
 
 	/**
-	 * 
+	 * Recupera a matrícula do tutor 
+	 * @return matricula 
 	 */
+	
 	public String getMatricula() {
 		return matricula;
 	}
-
+	
 	/**
-	 * 
-	 * @return
+	 * Cadastra locais de atendimentos 
+	 * @param local local a ser cadastrado 
 	 */
-	public String getDisciplina() {
-		return disciplina;
-	}
 	
 	public void cadastrarLocal(String local) {
 		locais.add(local);
 	}
 	
+	/**
+	 * Consulta se o local está cadastrado 
+	 * @return true se estiver e false se não estiver cadastrado 
+	 */
+	
 	public boolean consultaLocal(String local) {
 		return locais.contains(local);
 	}
+	
+	/**
+	 * Cadastra horarios disponíveis 
+	 * @param horario horário para ser cadastrado 
+	 * @param dia dia a ser cadastrado  
+	 */
+	
 	
 	public void cadastraHorario(String horario, String dia) {
 		ArrayList<String> horas = horarios.get(dia);
@@ -140,6 +161,11 @@ public class Tutor extends Aluno {
 		horas.add(horario);
 		horarios.put(dia, horas);
 	}
+	
+	/**
+	 * Consulta se o horário está disponível 
+	 * @return true se estiver disponível e false se não estiver disponível
+	 */
 	
 	public boolean consultaHorario(String horario, String dia) {
 		if (horarios.get(dia) == null) {

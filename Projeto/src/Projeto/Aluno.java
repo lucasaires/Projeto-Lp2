@@ -29,57 +29,64 @@ public class Aluno implements Comparable<Aluno> {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Retorna a matrícula do aluno 
+	 * @return a matrícula do aluno 
 	 */
+	
 	public String getMatricula() {
 		return matricula;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Retorna o nome do aluno 
+	 * @return o nome do aluno 
 	 */
+	
 	public String getNome() {
 		return nome;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Retorna a nota do aluno 
+	 * @return nota do aluno 
 	 */
+	
 	public int getNota() {
 		return nota;
 	}
 
 	/**
-	 * 
-	 * @param nota
+	 * Atualiza a nota do aluno 
+	 * @param nota uma nova nota para o aluno 
 	 */
+	
 	public void setNota(int nota) {
 		this.nota = nota;
 	}
 
 	/**
 	 * 
-	 * @return
+	 * @return o código do curso 
 	 */
+	
 	public int getCodigoCurso() {
 		return codigoCurso;
 	}
 
 	/**
 	 * 
-	 * @return
+	 * @return o email do aluno 
 	 */
+	
 	public String getEmail() {
 		return email;
 	}
 
 	/**
 	 * 
-	 * @return
+	 * @return o telefone do aluno 
 	 */
+	
 	public String getTelefone() {
 		return telefone;
 	}

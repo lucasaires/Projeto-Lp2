@@ -12,6 +12,7 @@ import java.util.Map;
  *         Yally de Lima Galdino
  *
  */
+
 public class Sistema {
 
 	private Map<String, Aluno> mapaAlunos;
@@ -21,6 +22,10 @@ public class Sistema {
 		this.mapaAlunos = new HashMap<>();
 		this.tutores = new HashMap<>();
 	}
+	
+	/**
+	 * Cadastra um novo aluno 
+	 */
 
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		Aluno aluno = new Aluno(nome, matricula, codigoCurso, telefone, email);
@@ -31,10 +36,11 @@ public class Sistema {
 	}
 
 	/**
-	 * 
-	 * @param matricula
-	 * @return
+	 * Recupera um aluno a partir da sua matrícula 
+	 * @param matricula matrícula do aluno que vai ser recuperado 
+	 * @return aluno recuperado 
 	 */
+	
 	public String recuperaAluno(String matricula) {
 		if (!mapaAlunos.containsKey(matricula)) {
 			throw new IllegalArgumentException("Erro na busca por aluno: Aluno nao encontrado");
@@ -43,9 +49,10 @@ public class Sistema {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Lista alunos cadastrados 
+	 * @return lista de alunos ordenados a partir do nome 
 	 */
+	
 	public String listarAlunos() {
 		String saida = "";
 		ArrayList<Aluno> alunosOrdenados = new ArrayList<Aluno>();
@@ -60,11 +67,12 @@ public class Sistema {
 	}
 
 	/**
-	 * 
-	 * @param matricula
-	 * @param atributo
-	 * @return
+	 * Recupera informações de um aluno 
+	 * @param matricula matrícula do aluno 
+	 * @param atributo informação que se quer do aluno 
+	 * @return informação do atributo 
 	 */
+	
 	public String getInfoAluno(String matricula, String atributo) {
 		if (!mapaAlunos.containsKey(matricula)) {
 			throw new IllegalArgumentException("Erro na obtencao de informacao de aluno: Aluno nao encontrado");
@@ -83,14 +91,15 @@ public class Sistema {
 		default:
 			return "Atributo invalido";
 		}
-	}
+	} 
 
 	/**
-	 * 
-	 * @param matricula
-	 * @param disciplina
-	 * @param proficiencia
+	 * Transforma um aluno em um tutor 
+	 * @param matricula matrícula do aluno 
+	 * @param disciplina disciplina que o aluno vai ser tornar tutor 
+	 * @param proficiencia o quão hábil ele se sente na disciplina
 	 */
+	
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
 		if (proficiencia < 0) {
 			throw new IllegalArgumentException("Erro na definicao de papel: Proficiencia invalida");
@@ -115,10 +124,11 @@ public class Sistema {
 	}
 
 	/**
-	 * 
-	 * @param matricula
-	 * @return
+	 * Recupera informações sobre um tutor a partit da sua matrícula
+	 * @param matricula matrícula do tutor a ser recuperado 
+	 * @return infomações sobre o tutor 
 	 */
+	
 	public String recuperaTutor(String matricula) {
 		if (!tutores.containsKey(matricula)) {
 			throw new IllegalArgumentException("Erro na busca por tutor: Tutor nao encontrado");
@@ -128,9 +138,10 @@ public class Sistema {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Lista tutores cadastrados 
+	 * @return lista de tutores 
 	 */
+	
 	public String listarTutores() {
 		String saida = "";
 		for (Tutor tutor : tutores.values()) {
@@ -140,11 +151,13 @@ public class Sistema {
 	}
 
 	/**
+	 * Cadastra Horário 
+	 * @param email email do tutor 
+	 * @param horario horário disponível 
+	 * @param dia dia disponível 
 	 * 
-	 * @param email
-	 * @param horario
-	 * @param dia
 	 */
+	
 	public void cadastrarHorario(String email, String horario, String dia) {
 		if (email.trim().equals("")) {
 			throw new IllegalArgumentException("Erro no cadastrar horario: email nao pode ser vazio ou em branco");
@@ -161,12 +174,13 @@ public class Sistema {
 	}
 
 	/**
-	 * 
-	 * @param email
-	 * @param horario
-	 * @param dia
-	 * @return
+	 * Consulta se o horário está disponível  
+	 * @param email do tutor 
+	 * @param horario horário a consultar
+	 * @param dia dia a consultar 
+	 * @return true se o horário está disponível 
 	 */
+	
 	public boolean consultaHorario(String email, String horario, String dia) {
 		Tutor tutor = buscaTutor(email);
 		if (tutor == null) {
@@ -174,6 +188,12 @@ public class Sistema {
 		}
 		return tutor.consultaHorario(horario, dia);
 	}
+	
+	/**
+	 * Busca se o tutor está cadastrado 
+	 * @param email email do tutor 
+	 * @return tutor  
+	 */
 	
 	private Tutor buscaTutor(String email) {		
 		for (Tutor tutor : tutores.values()) {
@@ -185,10 +205,11 @@ public class Sistema {
 	}
 	
 	/**
-	 * 
-	 * @param email
-	 * @param local
+	 * Cadastra local de atendimento 
+	 * @param email email do tutor 
+	 * @param local local a ser cadastrado 
 	 */
+	
 	public void cadastrarLocalDeAtendimento(String email, String local) {
 		if (email.trim().equals("")) {
 			throw new IllegalArgumentException(
@@ -205,11 +226,12 @@ public class Sistema {
 	}
 	
 	/**
-	 * 
-	 * @param email
-	 * @param local
-	 * @return
+	 * consulta se o local está disponível 
+	 * @param email do tutor 
+	 * @param local local a procurar 
+	 * @return true se o local está disponível e false se o local não está disponível 
 	 */
+	
 	public boolean consultaLocal(String email, String local) {
 		Tutor tutor = buscaTutor(email);
 		if (tutor == null) {
