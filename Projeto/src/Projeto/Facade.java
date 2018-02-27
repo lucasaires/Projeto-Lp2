@@ -52,12 +52,12 @@ public class Facade {
 	}
 
 	public boolean consultaHorario(String email, String horario, String dia) {
-		return false;
+		return sistema.consultaHorario(email, horario, dia);
 
 	}
 
 	public boolean consultaLocal(String email, String local) {
-		return false;
+		return sistema.consultaLocal(email, local);
 
 	}
 }

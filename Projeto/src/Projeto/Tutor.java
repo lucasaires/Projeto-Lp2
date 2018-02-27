@@ -9,7 +9,7 @@ public class Tutor extends Aluno {
 	private int proficiencia;
 	private int nota;
 	private int dinheiro;
-	public List<String> disciplinas;
+	private List<String> disciplinas;
 
 	public Tutor(String nome, String matricula, int codigoCurso, String telefone, String email, String disciplina,
 			int proficiencia) {

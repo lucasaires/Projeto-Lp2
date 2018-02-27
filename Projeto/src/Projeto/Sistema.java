@@ -1,5 +1,6 @@
 package Projeto;
 
+import java.awt.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,10 +9,14 @@ public class Sistema {
 
 	private Map<String, Aluno> mapaAlunos;
 	private Map<String, Tutor> tutores;
+	private ArrayList<Horario> horarios;
+	private ArrayList<Local> locais;
 
 	public Sistema() {
 		this.mapaAlunos = new HashMap<>();
 		this.tutores = new HashMap<>();
+		this.horarios = new ArrayList<>();
+		this.locais = new ArrayList<Local>();
 	}
 
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
@@ -71,10 +76,9 @@ public class Sistema {
 						escolhido.getTelefone(), escolhido.getEmail(), disciplina, proficiencia);
 				tutores.put(matricula, novoTutor);
 			} else {
-				System.out.println(tutores.get(matricula).verificaDisciplinas(disciplina));
 				if (tutores.get(matricula).verificaDisciplinas(disciplina) == false) {
 					tutores.get(matricula).disciplinasTutor(disciplina);
-					System.out.println(tutores.get(matricula).disciplinas);
+
 				} else {
 					throw new IllegalArgumentException("Erro na definicao de papel: Ja eh tutor dessa disciplina");
 				}
@@ -98,10 +102,83 @@ public class Sistema {
 
 	public void cadastrarHorario(String email, String horario, String dia) {
 
+		if (email.trim().equals("")) {
+
+			throw new IllegalArgumentException("Erro no cadastrar horario: email nao pode ser vazio ou em branco");
+
+		} else if (horario.trim().equals("")) {
+
+			throw new IllegalArgumentException("Erro no cadastrar horario: horario nao pode ser vazio ou em branco");
+
+		} else if (dia.trim().equals("")) {
+
+			throw new IllegalArgumentException("Erro no cadastrar horario: dia nao pode ser vazio ou em branco");
+		}
+
+		Horario novo = new Horario(email, horario, dia);
+
+		horarios.add(novo);
+
+	}
+
+	public boolean consultaHorario(String email, String horario, String dia) {
+
+		return verificahorario(email, horario, dia);
+	}
+
+	private boolean verificahorario(String email, String horario, String dia) {
+
+		boolean verifica = false;
+
+		Horario novo = new Horario(email, horario, dia);
+
+		for (Horario HorarioDoTutor : horarios) {
+
+			if (HorarioDoTutor.equals(novo)) {
+
+				verifica = true;
+			}
+
+		}
+		return verifica;
 	}
 
 	public void cadastrarLocalDeAtendimento(String email, String local) {
+		if (email.trim().equals("")) {
 
+			throw new IllegalArgumentException(
+					"Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
+
+		} else if (local.trim().equals("")) {
+
+			throw new IllegalArgumentException(
+					"Erro no cadastrar local de atendimento: local nao pode ser vazio ou em branco");
+		}
+
+		Local novo = new Local(email, local);
+
+		locais.add(novo);
+
+	}
+
+	public boolean consultaLocal(String email, String local) {
+
+		return consultalocal(email, local);
+	}
+
+	private boolean consultalocal(String email, String local) {
+		Local novo = new Local(email, local);
+		boolean consulta = false;
+
+		for (Local localDoTutor : locais) {
+
+			if (localDoTutor.equals(novo)) {
+				consulta = true;
+			}
+
+		}
+
+		return consulta;
 	}
 
 	// @Override

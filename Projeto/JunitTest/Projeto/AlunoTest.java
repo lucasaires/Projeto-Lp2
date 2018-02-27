@@ -18,6 +18,20 @@ public class AlunoTest {
 	public void testGetMatricula() {
 		assertEquals("13", a.getMatricula());
 	}
+	
+	@Test(expected = NullPointerException.class)
+		public void testCadastraAlunoVazio(){
+		
+		Aluno ilegal = new Aluno("","",0,"","");
+		
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testCadastraAlunoNull(){
+		
+		Aluno ilegal = new Aluno(null,null,0,null,null);
+		
+	}
 
 	@Test
 	public void testGetNome() {
@@ -59,8 +73,7 @@ public class AlunoTest {
 
 	@Test
 	public void testToString() {
-		assertEquals("13 - Son Goku - 5 - 40028922 - songoku@dbs.com", a.getMatricula() + " - " + a.getNome() + " - "
-				+ a.getCodigoCurso() + " - " + a.getTelefone() + " - " + a.getEmail());
+		assertEquals("13 - Son Goku - 5 - 40028922 - songoku@dbs.com",a.toString());
 	}
 
 }
