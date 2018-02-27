@@ -1,6 +1,6 @@
 package Projeto;
 
-
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,8 +9,8 @@ public class Sistema {
 
 	private Map<String, Aluno> mapaAlunos;
 	private Map<String, Tutor> tutores;
-	private ArrayList<Horario> horarios;
-	private ArrayList<Local> locais;
+	private List<Horario> horarios;
+	private List<Local> locais;
 
 	public Sistema() {
 		this.mapaAlunos = new HashMap<>();
@@ -66,6 +66,7 @@ public class Sistema {
 	}
 
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
+		
 		if (proficiencia < 0) {
 			throw new IllegalArgumentException("Erro na definicao de papel: Proficiencia invalida");
 		}
@@ -114,11 +115,30 @@ public class Sistema {
 
 			throw new IllegalArgumentException("Erro no cadastrar horario: dia nao pode ser vazio ou em branco");
 		}
+		
+		if(!consultaEmail(email)) {
+			
+			throw new IllegalArgumentException("Erro no cadastrar horario: tutor nao cadastrado");
+			
+		}
 
 		Horario novo = new Horario(email, horario, dia);
 
 		horarios.add(novo);
 
+	}
+
+	private boolean consultaEmail(String email) {
+		
+		boolean verifica = false;
+		for(Tutor tutor : tutores.values()) {
+			if (tutor.getEmail().equals(email)){
+				
+				verifica = true;
+			}
+			
+		}
+		return verifica;
 	}
 
 	public boolean consultaHorario(String email, String horario, String dia) {
@@ -154,6 +174,12 @@ public class Sistema {
 			throw new IllegalArgumentException(
 					"Erro no cadastrar local de atendimento: local nao pode ser vazio ou em branco");
 		}
+		
+		if(!consultaEmail(email)) {
+			
+			throw new IllegalArgumentException("Erro no cadastrar local de atendimento: tutor nao cadastrado");
+			
+		}
 
 		Local novo = new Local(email, local);
 
@@ -180,6 +206,13 @@ public class Sistema {
 
 		return consulta;
 	}
+
+	public int pedirAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
 
 	// @Override
 	// public int compareTo(Aluno o) {
