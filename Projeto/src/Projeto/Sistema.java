@@ -61,6 +61,9 @@ public class Sistema {
 	}
 
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
+		if (proficiencia < 0) {
+			throw new IllegalArgumentException("Erro na definicao de papel: Proficiencia invalida");
+		}
 		if (mapaAlunos.containsKey(matricula)) {
 			Aluno escolhido = mapaAlunos.get(matricula);
 			if (!tutores.containsKey(matricula)) {
@@ -76,6 +79,8 @@ public class Sistema {
 					throw new IllegalArgumentException("Erro na definicao de papel: Ja eh tutor dessa disciplina");
 				}
 			}
+		} else {
+			throw new IllegalArgumentException("Erro na definicao de papel: Tutor nao encontrado");
 		}
 	}
 
@@ -91,10 +96,18 @@ public class Sistema {
 		return "lucas chato";
 	}
 
-	@Override
-	public int compareTo(Aluno o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void cadastrarHorario(String email, String horario, String dia) {
+
 	}
+
+	public void cadastrarLocalDeAtendimento(String email, String local) {
+
+	}
+
+	// @Override
+	// public int compareTo(Aluno o) {
+	// TODO Auto-generated method stub
+	// return 0;
+	// }
 
 }
