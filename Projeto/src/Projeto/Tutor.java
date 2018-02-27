@@ -24,17 +24,19 @@ public class Tutor extends Aluno {
 	}
 
 	public void disciplinasTutor(String disciplina) {
-		disciplinas.add(disciplina);
+		if (this.verificaDisciplinas(disciplina) == false) {
+			disciplinas.add(disciplina);
+		}
 	}
 
 	public boolean verificaDisciplinas(String disciplina) {
-		boolean aux = false;
+		boolean temDisciplina = false;
 		for (String disc : disciplinas) {
 			if (disc.equals(disciplina)) {
-				aux = true;
+				temDisciplina = true;
 			}
 		}
-		return aux;
+		return temDisciplina;
 	}
 
 	public int getProficiencia() {

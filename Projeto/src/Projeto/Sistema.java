@@ -75,7 +75,7 @@ public class Sistema {
 				Tutor novoTutor = new Tutor(escolhido.getNome(), escolhido.getMatricula(), escolhido.getCodigoCurso(),
 						escolhido.getTelefone(), escolhido.getEmail(), disciplina, proficiencia);
 				tutores.put(matricula, novoTutor);
-			} else {
+			} else if (tutores.containsKey(matricula)) {
 				if (tutores.get(matricula).verificaDisciplinas(disciplina) == false) {
 					tutores.get(matricula).disciplinasTutor(disciplina);
 
