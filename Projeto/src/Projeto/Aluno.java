@@ -2,7 +2,7 @@ package Projeto;
 
 /**
  * 
- * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya Raíssa Guedes Alves ,
+ * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya Raissa Guedes Alves ,
  *         Yally de Lima Galdino
  *
  */
@@ -29,8 +29,8 @@ public class Aluno implements Comparable<Aluno> {
 	}
 
 	/**
-	 * Retorna a matrícula do aluno 
-	 * @return a matrícula do aluno 
+	 * Retorna a matricula do aluno 
+	 * @return a matricula do aluno 
 	 */
 	
 	public String getMatricula() {
@@ -66,7 +66,7 @@ public class Aluno implements Comparable<Aluno> {
 
 	/**
 	 * 
-	 * @return o código do curso 
+	 * @return o codigo do curso 
 	 */
 	
 	public int getCodigoCurso() {

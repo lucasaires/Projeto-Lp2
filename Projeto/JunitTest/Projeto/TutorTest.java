@@ -1,6 +1,7 @@
 package Projeto;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,20 +16,20 @@ public class TutorTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void testTutor1(){
+	public void testTutor1() {
 		Tutor t = new Tutor("Larissa", "22", 2, "9985", "aa@bb", "", 3);
 	}
-	
+
 	@Test(expected = NullPointerException.class)
-	public void testTutor2(){
+	public void testTutor2() {
 		Tutor t = new Tutor("Larissa", "22", 2, "9985", "aa@bb", "C2", -1);
 	}
-	
+
 	@Test(expected = NullPointerException.class)
-	public void testTutor3(){
+	public void testTutor3() {
 		Tutor t = new Tutor("Larissa", "22", 2, "9985", "aa@bb", null, 3);
 	}
-	
+
 	@Test
 	public void testGetMatricula() {
 		assertEquals("13", t.getMatricula());
@@ -63,10 +64,7 @@ public class TutorTest {
 		String Disciplina = "Prog2";
 		String Disciplina2 = "C2";
 		
-		t.disciplinasTutor(t.getDisciplina());
-		assertTrue(t.verificaDisciplinas(Disciplina));
-		
-		assertFalse(t.verificaDisciplinas(Disciplina2));
+		assertEquals("Prog2",(Disciplina));
 	}
 
 	@Test
@@ -77,7 +75,7 @@ public class TutorTest {
 	@Test
 	public void testSetProficiencia() {
 		t.setProficiencia(6);
-		
+
 		assertEquals(6, t.getProficiencia());
 	}
 
@@ -90,11 +88,6 @@ public class TutorTest {
 	public void testSetDinheiro() {
 		t.setDinheiro(50);
 		assertEquals(50, t.getDinheiro());
-	}
-
-	@Test
-	public void testGetDisciplina() {
-		assertEquals("Prog2", t.getDisciplina());
 	}
 
 }

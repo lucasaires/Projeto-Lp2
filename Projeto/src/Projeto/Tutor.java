@@ -9,8 +9,8 @@ import java.util.Set;
 
 /**
  * 
- * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya Raíssa Guedes Alves,
- *         Yally de Lima Galdino
+ * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya Raissa
+ *         Guedes Alves, Yally de Lima Galdino
  *
  */
 public class Tutor extends Aluno {
@@ -32,6 +32,10 @@ public class Tutor extends Aluno {
 			throw new NullPointerException("Erro no cadastro de aluno: Disciplina nao pode ser vazio ou nulo");
 		}
 
+		if (proficiencia <= 0) {
+			throw new NullPointerException("Erro no cadastro de aluno: Proficiencia nao pode ser menor que 0");
+		}
+
 		this.disciplina = disciplina;
 		this.proficiencia = proficiencia;
 		this.nota = 4;
@@ -42,10 +46,12 @@ public class Tutor extends Aluno {
 	}
 
 	/**
-	 * adiciona disciplinas do tutor 
-	 * @param disciplina disciplina a ser adicionada
+	 * adiciona disciplinas do tutor
+	 * 
+	 * @param disciplina
+	 *            disciplina a ser adicionada
 	 */
-	
+
 	public void disciplinasTutor(String disciplina) {
 		if (this.verificaDisciplinas(disciplina) == false) {
 			disciplinas.add(disciplina);
@@ -53,11 +59,13 @@ public class Tutor extends Aluno {
 	}
 
 	/**
-	 * Verifica se o tutor já é tutor de alguma disciplina 
-	 * @param disciplina disciplina disciplina a procurar 
-	 * @return true se o tutor já é tutor da disciplina dada e false caso não.  
+	 * Verifica se o tutor ja eh tutor de alguma disciplina
+	 * 
+	 * @param disciplina
+	 *            disciplina disciplina a procurar
+	 * @return true se o tutor ja eh tutor da disciplina dada e false caso nao.
 	 */
-	
+
 	public boolean verificaDisciplinas(String disciplina) {
 		if (disciplinas.contains(disciplina)) {
 			return true;
@@ -66,93 +74,108 @@ public class Tutor extends Aluno {
 	}
 
 	/**
-	 * Retorna o quão hábil ele se sente na disciplina
-	 * @returnMap retorna a proficiência do tutor 
+	 * Retorna o quao habil ele se sente na disciplina
+	 * 
+	 * @returnMap retorna a proficiencia do tutor
 	 */
-	
+
 	public int getProficiencia() {
 		return proficiencia;
 	}
 
 	/**
-	 * Muda a proficiência do tutor  
-	 * @param proficiencia o quão hábil ele se sente na disciplina
+	 * Muda a proficiencia do tutor
+	 * 
+	 * @param proficiencia
+	 *            o quao habil ele se sente na disciplina
 	 */
-	
+
 	public void setProficiencia(int proficiencia) {
 		this.proficiencia = proficiencia;
 	}
 
 	/**
 	 * Retorna a nota
+	 * 
 	 * @return nota
 	 */
-	
+
 	public int getNota() {
 		return nota;
 	}
 
 	/**
-	 * Muda a nota 
-	 * @param nota nota 
+	 * Muda a nota
+	 * 
+	 * @param nota
+	 *            nota
 	 */
-	
+
 	public void setNota(int nota) {
 		this.nota = nota;
 	}
 
 	/**
-	 * Retorna o dinheiro  
-	 * @return dinheiro 
+	 * Retorna o dinheiro
+	 * 
+	 * @return dinheiro
 	 */
-	
+
 	public int getDinheiro() {
 		return dinheiro;
 	}
 
 	/**
-	 * atualiza o dinheiro  
-	 * @param dinheiro dinheiro 
+	 * atualiza o dinheiro
+	 * 
+	 * @param dinheiro
+	 *            dinheiro
 	 */
-	
+
 	public void setDinheiro(int dinheiro) {
 		this.dinheiro = dinheiro;
 	}
 
 	/**
-	 * Recupera a matrícula do tutor 
-	 * @return matricula 
+	 * Recupera a matricula do tutor
+	 * 
+	 * @return matricula
 	 */
-	
+
 	public String getMatricula() {
 		return matricula;
 	}
-	
+
 	/**
-	 * Cadastra locais de atendimentos 
-	 * @param local local a ser cadastrado 
+	 * Cadastra locais de atendimentos
+	 * 
+	 * @param local
+	 *            local a ser cadastrado
 	 */
-	
+
 	public void cadastrarLocal(String local) {
 		locais.add(local);
 	}
-	
+
 	/**
-	 * Consulta se o local está cadastrado 
-	 * @return true se estiver e false se não estiver cadastrado 
+	 * Consulta se o local esta� cadastrado
+	 * 
+	 * @return true se estiver e false se nao estiver cadastrado
 	 */
-	
+
 	public boolean consultaLocal(String local) {
 		return locais.contains(local);
 	}
-	
+
 	/**
-	 * Cadastra horarios disponíveis 
-	 * @param horario horário para ser cadastrado 
-	 * @param dia dia a ser cadastrado  
+	 * Cadastra horarios disponiveis
+	 * 
+	 * @param horario
+	 *            horario para ser cadastrado
+	 * @param dia
+	 *            dia a ser cadastrado
 	 */
-	
-	
+
 	public void cadastraHorario(String horario, String dia) {
 		ArrayList<String> horas = horarios.get(dia);
 		if (horas == null) {
@@ -161,19 +184,20 @@ public class Tutor extends Aluno {
 		horas.add(horario);
 		horarios.put(dia, horas);
 	}
-	
+
 	/**
-	 * Consulta se o horário está disponível 
-	 * @return true se estiver disponível e false se não estiver disponível
+	 * Consulta se o horario esta� disponivel
+	 * 
+	 * @return true se estiver disponivel e false se nao estiver disponivel
 	 */
-	
+
 	public boolean consultaHorario(String horario, String dia) {
 		if (horarios.get(dia) == null) {
 			return false;
 		}
 		return horarios.get(dia).contains(horario);
 	}
-	
+
 	@Override
 	public String toString() {
 		return super.toString();
