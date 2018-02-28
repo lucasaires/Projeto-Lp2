@@ -60,4 +60,16 @@ public class Facade {
 		return sistema.consultaLocal(email, local);
 
 	}
+	public int pedirAjudaPresencial1(String disciplina, String horario, String dia, String localInteresse) {
+		return sistema.pedirAjudaPresencial(disciplina, horario, dia, localInteresse);
+	}
+	public int pedirAjudaOnline(String disciplina) {
+		return sistema.pedirAjudaOnline(disciplina);
+	}
+	public String pegarTutor(int idAjuda) {
+		return sistema.pegarTutor(idAjuda);
+	}
+	public String getInfoAjuda(int idAjuda, String atributo) {
+		return sistema.getInfoAjuda(idAjuda,atributo);
+	}
 }

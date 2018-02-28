@@ -17,10 +17,12 @@ public class Sistema {
 
 	private Map<String, Aluno> mapaAlunos;
 	private Map<String, Tutor> tutores;
+	private List<Ajuda> ajudas;
 
 	public Sistema() {
 		this.mapaAlunos = new HashMap<>();
 		this.tutores = new HashMap<>();
+		this.ajudas = new ArrayList<>();
 	}
 
 	/**
@@ -70,13 +72,13 @@ public class Sistema {
 	}
 
 	/**
-	 * Recupera informaçoes de um aluno
+	 * Recupera informaï¿½oes de um aluno
 	 * 
 	 * @param matricula
 	 *            matricula do aluno
 	 * @param atributo
-	 *            informaçao que se quer do aluno
-	 * @return informaçoes do atributo
+	 *            informaï¿½ao que se quer do aluno
+	 * @return informaï¿½oes do atributo
 	 */
 
 	public String getInfoAluno(String matricula, String atributo) {
@@ -142,11 +144,11 @@ public class Sistema {
 	}
 
 	/**
-	 * Recupera informaçoes sobre um tutor a partit da sua matricula
+	 * Recupera informaï¿½oes sobre um tutor a partit da sua matricula
 	 * 
 	 * @param matricula
 	 *            matricula do tutor a ser recuperado
-	 * @return infomaçoes sobre o tutor
+	 * @return infomaï¿½oes sobre o tutor
 	 */
 
 	public String recuperaTutor(String matricula) {
@@ -268,7 +270,7 @@ public class Sistema {
 	}
 
 	/**
-	 * consulta se o local esta¡ disponivel
+	 * consulta se o local estaï¿½ disponivel
 	 * 
 	 * @param email
 	 *            do tutor
@@ -291,6 +293,32 @@ public class Sistema {
 			return false;
 		}
 		return tutor.consultaLocal(local);
+	}
+
+	public int pedirAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
+		
+		int id = ajudas.size();
+		AjudaPresencial novaAjuda = new AjudaPresencial(disciplina,horario,dia,localInteresse,id);
+		ajudas.add(novaAjuda);
+		return id;
+	}
+
+	public int pedirAjudaOnline(String disciplina) {
+		int id = ajudas.size();
+		AjudaOnline novaAjuda = new AjudaOnline(disciplina,id);
+		ajudas.add(novaAjuda);
+		return id;
+	}
+
+	public String pegarTutor(int idAjuda) {
+		// TODO Auto-generated method stub
+		return null;
+		
+	}
+
+	public String getInfoAjuda(int idAjuda, String atributo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
