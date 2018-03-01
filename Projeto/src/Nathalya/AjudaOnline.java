@@ -1,14 +1,13 @@
 package Nathalya;
 
-public class AjudaOnline implements Ajuda  {
+public class AjudaOnline  {
 	private String disciplina;
 	private int id;
-	private String tutor;
+
 	
-	public AjudaOnline(String disciplina,int id,String tutor) {
+	public AjudaOnline(String disciplina,int id) {
 		this.disciplina = disciplina;
 		this.id = id;
-		this.tutor = tutor;
 	}
 
 	public String getDisciplina() {
@@ -18,10 +17,5 @@ public class AjudaOnline implements Ajuda  {
 	public int getId() {
 		return id;
 	}
-
-	public String getTutor() {
-		return tutor;
-	}
-	
 	
 }
