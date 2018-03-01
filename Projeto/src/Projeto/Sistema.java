@@ -17,12 +17,12 @@ public class Sistema {
 
 	private Map<String, Aluno> mapaAlunos;
 	private Map<String, Tutor> tutores;
-	private List<Ajuda> ajudas;
+	private Map<Integer, Ajuda> ajudas;
 
 	public Sistema() {
 		this.mapaAlunos = new HashMap<>();
 		this.tutores = new HashMap<>();
-		this.ajudas = new ArrayList<>();
+		this.ajudas = new HashMap<>();
 	}
 
 	/**
@@ -63,6 +63,7 @@ public class Sistema {
 		ArrayList<Aluno> alunosOrdenados = new ArrayList<Aluno>();
 		for (Aluno aluno : mapaAlunos.values()) {
 			alunosOrdenados.add(aluno);
+
 		}
 		Collections.sort(alunosOrdenados);
 		for (Aluno aluno : alunosOrdenados) {
@@ -296,29 +297,79 @@ public class Sistema {
 	}
 
 	public int pedirAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
-		
+		// cadastrar tutor p ajuda
 		int id = ajudas.size();
-		AjudaPresencial novaAjuda = new AjudaPresencial(disciplina,horario,dia,localInteresse,id);
-		ajudas.add(novaAjuda);
+		AjudaPresencial novaAjuda = new AjudaPresencial(disciplina, horario, dia, localInteresse, id, null);
+		ajudas.put(id, novaAjuda);
 		return id;
 	}
 
 	public int pedirAjudaOnline(String disciplina) {
 		int id = ajudas.size();
-		AjudaOnline novaAjuda = new AjudaOnline(disciplina,id);
-		ajudas.add(novaAjuda);
+		// cadastrar tutor p ajuda
+		AjudaOnline novaAjuda = new AjudaOnline(disciplina, id, null);
+		ajudas.put(id, novaAjuda);
+
+	
+
 		return id;
 	}
 
-	public String pegarTutor(int idAjuda) {
-		// TODO Auto-generated method stub
-		return null;
-		
+	public String pegarTutor(Integer idAjuda) {
+
+		if (!ajudas.containsKey(idAjuda)) {
+			throw new IllegalArgumentException("Ajuda não casdastrada");
+		}
+		return ajudas.get(idAjuda).pegarTutor();
+
 	}
 
-	public String getInfoAjuda(int idAjuda, String atributo) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getInfoAjuda(Integer idAjuda, String atributo) {
+		if (!ajudas.containsKey(idAjuda)) {
+			throw new IllegalArgumentException("Ajuda não casdastrada");
+		}
+		if (atributo.trim().equals("")) {
+			throw new IllegalArgumentException("Não existe atributo");
+		}
+		if(atributo == null) {
+			throw new NullPointerException("Atributo nulo");
+		}
+		
+		Ajuda ajuda = ajudas.get(idAjuda);
+		String atri = "";
+		
+		switch (atributo) {
+		case "Diplina":
+			atri = ajuda.getdisDiplina();
+			break;
+
+		case "Horario":
+			atri = ajuda.getHorario();
+			break;
+
+		case "Dia":
+			atri = ajuda.getDia();
+			break;
+
+		case "Local Interesse":
+			atri = ajuda.getLocalInteresse();
+			break;
+
+		case "Id":
+			atri = ajuda.getId();
+			break;
+
+		case "Tutor":
+			atri = ajuda.pegarTutor();
+			break;
+	
+		default:
+			atri = "Atributo invalido";
+			break;
+		}
+
+		return atri;
+
 	}
 
 }

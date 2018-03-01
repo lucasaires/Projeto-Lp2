@@ -13,6 +13,7 @@ import java.util.Set;
  *         Guedes Alves, Yally de Lima Galdino
  *
  */
+
 public class Tutor extends Aluno {
 
 	private String disciplina;
@@ -158,7 +159,7 @@ public class Tutor extends Aluno {
 	}
 
 	/**
-	 * Consulta se o local esta¡ cadastrado
+	 * Consulta se o local estaï¿½ cadastrado
 	 * 
 	 * @return true se estiver e false se nao estiver cadastrado
 	 */
@@ -186,7 +187,7 @@ public class Tutor extends Aluno {
 	}
 
 	/**
-	 * Consulta se o horario esta¡ disponivel
+	 * Consulta se o horario estaï¿½ disponivel
 	 * 
 	 * @return true se estiver disponivel e false se nao estiver disponivel
 	 */

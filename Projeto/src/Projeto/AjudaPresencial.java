@@ -7,13 +7,15 @@ public class AjudaPresencial implements Ajuda {
 	private String dia;
 	private String localInteresse;
 	private int id;
+	private String tutor;
 	
-	public AjudaPresencial(String disciplina,String horario, String dia, String localInteresse,int id) {
+	public AjudaPresencial(String disciplina,String horario, String dia, String localInteresse,int id,String tutor) {
 		this.disciplina = disciplina;
 		this.horario = horario;
 		this.dia = dia;
 		this.localInteresse = localInteresse;
 		this.id = id;
+		this.tutor = tutor;
 	}
 
 	public String getDisciplina() {
@@ -37,5 +39,9 @@ public class AjudaPresencial implements Ajuda {
 		return id;
 	}
 	
+
+	public String getTutor() {
+		return tutor;
+	}
 	
 }
