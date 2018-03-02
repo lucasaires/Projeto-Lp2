@@ -303,7 +303,7 @@ public class Sistema {
 		ajudas.put(id, novaAjuda);
 		return id;
 	}
-	
+
 	public int pedirAjudaOnline(String disciplina) {
 		// cadastrar tutor p ajuda
 		int id = ajudas.size();
@@ -312,43 +312,47 @@ public class Sistema {
 		return id;
 	}
 
-
-	private String verificaProeficiencia(AjudaOnline ajuda) {
+	private String verificaProeficienciaParaOnline(AjudaOnline ajuda) {
 		// analisa o tutor de maior proeficiencia
 		int proeficiencia = 0;
 		String matriculaTutor = "";
 		for (Tutor tutor : tutores.values()) {
-				if (tutor.getProficiencia() > proeficiencia) {
-					proeficiencia = tutor.getProficiencia();
-					matriculaTutor = tutor.getMatricula();
-				}
+			if (tutor.getProficiencia() > proeficiencia && tutor.verificaDisciplinas(ajuda.getDisciplina())) {
+				proeficiencia = tutor.getProficiencia();
+				matriculaTutor = tutor.getMatricula();
 			}
+		}
 		return matriculaTutor;
 	}
-	
+
 	private String escolheTutorOnline(AjudaOnline ajuda) {
 		String aux = "";
 		for (Tutor tutor : tutores.values()) {
-		if (tutor.verificaDisciplinas(ajuda.getDisciplina())) {
-			verificaProeficiencia(ajuda);
-		}
+			if (tutor.verificaDisciplinas(ajuda.getDisciplina())) {
+				verificaProeficienciaParaOnline(ajuda);
+			}
 		}
 		return aux;
 	}
-	
-	private String escolheTutorPresencial(AjudaPresencial ajuda){
+
+	private String escolheTutorPresencial(AjudaPresencial ajuda) {
 		// analisa o melhor tutor para a ajuda Presencial cadastrada
 		String aux = "";
+		int proeficiencia = 0;
 		ArrayList<Tutor> tutores1 = new ArrayList<Tutor>();
-			for (Tutor tutor : tutores1) {
-				
-				if (tutor.consultaHorario(ajuda.getHorario(), ajuda.getDia()) && tutor.consultaLocal(ajuda.getlocalInteresse())){
-					aux = verificaProeficiencia(ajuda);
+
+		for (Tutor tutor : tutores.values()) {
+			if (tutor.verificaDisciplinas(ajuda.getDisciplina())) {
+				if (tutor.consultaHorario(ajuda.getHorario(), ajuda.getDia())
+						&& tutor.consultaLocal(ajuda.getlocalInteresse())) {
+					if (tutor.getProficiencia() > proeficiencia) {
+						aux = tutor.getMatricula();
 					}
+				}
 			}
-			return aux;
-			}
-		
+		}
+		return aux;
+	}
 
 	public String pegarTutor(Integer idAjuda) {
 
