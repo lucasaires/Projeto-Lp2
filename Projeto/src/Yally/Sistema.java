@@ -313,12 +313,12 @@ public class Sistema {
 	}
 
 
-	private String verificaProeficiencia(AjudaOnline ajuda) {
+	private String verificaProeficiencia(AjudaOnline ajuda,String disciplina) {
 		// analisa o tutor de maior proeficiencia
 		int proeficiencia = 0;
 		String matriculaTutor = "";
 		for (Tutor tutor : tutores.values()) {
-				if (tutor.getProficiencia() > proeficiencia) {
+				if (tutor.getProficiencia() > proeficiencia && tutor.verificaDisciplinas(ajuda.getDisciplina())) {
 					proeficiencia = tutor.getProficiencia();
 					matriculaTutor = tutor.getMatricula();
 				}
@@ -340,6 +340,11 @@ public class Sistema {
 		// analisa o melhor tutor para a ajuda Presencial cadastrada
 		String aux = "";
 		ArrayList<Tutor> tutores1 = new ArrayList<Tutor>();
+		
+		for(Tutor tutor: tutores.values()) {
+			if(tutor.getDisciplina)
+		}
+		
 			for (Tutor tutor : tutores1) {
 				
 				if (tutor.consultaHorario(ajuda.getHorario(), ajuda.getDia()) && tutor.consultaLocal(ajuda.getlocalInteresse())){
