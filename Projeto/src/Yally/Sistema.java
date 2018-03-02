@@ -1,4 +1,4 @@
-package Yally;
+package Nathalya;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class Sistema {
 
 	private Map<String, Aluno> mapaAlunos;
 	private Map<String, Tutor> tutores;
-	private Map<Integer, Ajuda> ajudas;
+	private Map<Integer, AjudaOnline> ajudas;
 
 	public Sistema() {
 		this.mapaAlunos = new HashMap<>();
@@ -299,21 +299,56 @@ public class Sistema {
 	public int pedirAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
 		// cadastrar tutor p ajuda
 		int id = ajudas.size();
-		AjudaPresencial novaAjuda = new AjudaPresencial(disciplina, horario, dia, localInteresse, id, null);
+		AjudaPresencial novaAjuda = new AjudaPresencial(disciplina, horario, dia, localInteresse, id);
 		ajudas.put(id, novaAjuda);
 		return id;
 	}
-
-	public int pedirAjudaOnline(String disciplina) {
-		int id = ajudas.size();
-		// cadastrar tutor p ajuda
-		AjudaOnline novaAjuda = new AjudaOnline(disciplina, id, null);
-		ajudas.put(id, novaAjuda);
-
 	
-
+	public int pedirAjudaOnline(String disciplina) {
+		// cadastrar tutor p ajuda
+		int id = ajudas.size();
+		AjudaOnline novaAjuda = new AjudaOnline(disciplina, id);
+		ajudas.put(id, novaAjuda);
 		return id;
 	}
+
+
+	private String verificaProeficiencia(AjudaOnline ajuda) {
+		// analisa o tutor de maior proeficiencia
+		int proeficiencia = 0;
+		String matriculaTutor = "";
+		for (Tutor tutor : tutores.values()) {
+				if (tutor.getProficiencia() > proeficiencia) {
+					proeficiencia = tutor.getProficiencia();
+					matriculaTutor = tutor.getMatricula();
+				}
+			}
+		return matriculaTutor;
+	}
+	
+	private String escolheTutorOnline(AjudaOnline ajuda) {
+		String aux = "";
+		for (Tutor tutor : tutores.values()) {
+		if (tutor.verificaDisciplinas(ajuda.getDisciplina())) {
+			verificaProeficiencia(ajuda);
+		}
+		}
+		return aux;
+	}
+	
+	private String escolheTutorPresencial(AjudaPresencial ajuda){
+		// analisa o melhor tutor para a ajuda Presencial cadastrada
+		String aux = "";
+		ArrayList<Tutor> tutores1 = new ArrayList<Tutor>();
+			for (Tutor tutor : tutores1) {
+				
+				if (tutor.consultaHorario(ajuda.getHorario(), ajuda.getDia()) && tutor.consultaLocal(ajuda.getlocalInteresse())){
+					aux = verificaProeficiencia(ajuda);
+					}
+			}
+			return aux;
+			}
+		
 
 	public String pegarTutor(Integer idAjuda) {
 
@@ -331,13 +366,13 @@ public class Sistema {
 		if (atributo.trim().equals("")) {
 			throw new IllegalArgumentException("Não existe atributo");
 		}
-		if(atributo == null) {
+		if (atributo == null) {
 			throw new NullPointerException("Atributo nulo");
 		}
-		
+
 		Ajuda ajuda = ajudas.get(idAjuda);
 		String atri = "";
-		
+
 		switch (atributo) {
 		case "Diplina":
 			atri = ajuda.getdisDiplina();
@@ -362,7 +397,7 @@ public class Sistema {
 		case "Tutor":
 			atri = ajuda.pegarTutor();
 			break;
-	
+
 		default:
 			atri = "Atributo invalido";
 			break;

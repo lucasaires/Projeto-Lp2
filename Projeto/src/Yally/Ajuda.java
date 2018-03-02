@@ -1,4 +1,4 @@
-package Yally;
+package Nathalya;
 
 public interface Ajuda {
 	//Falta fazer coisas aqui
