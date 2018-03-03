@@ -146,6 +146,11 @@ public class Tutor extends Aluno {
 	public String getMatricula() {
 		return matricula;
 	}
+	
+
+	public String getDisciplina() {
+		return disciplina;
+	}
 
 	/**
 	 * Cadastra locais de atendimentos

@@ -1,4 +1,4 @@
-package Nathalya;
+package Yally;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -313,12 +313,12 @@ public class Sistema {
 	}
 
 
-	private String verificaProeficiencia(AjudaOnline ajuda,String disciplina) {
+	private String verificaProeficiencia(AjudaOnline ajuda) {
 		// analisa o tutor de maior proeficiencia
 		int proeficiencia = 0;
 		String matriculaTutor = "";
 		for (Tutor tutor : tutores.values()) {
-				if (tutor.getProficiencia() > proeficiencia && tutor.verificaDisciplinas(ajuda.getDisciplina())) {
+				if (tutor.getProficiencia() > proeficiencia) {
 					proeficiencia = tutor.getProficiencia();
 					matriculaTutor = tutor.getMatricula();
 				}
@@ -340,13 +340,10 @@ public class Sistema {
 		// analisa o melhor tutor para a ajuda Presencial cadastrada
 		String aux = "";
 		ArrayList<Tutor> tutores1 = new ArrayList<Tutor>();
-		
-		for(Tutor tutor: tutores.values()) {
-			if(tutor.getDisciplina)
-		}
-		
-			for (Tutor tutor : tutores1) {
-				
+			for (Tutor tutor : tutores) {
+				if(tutor.getDisciplina().equals(ajuda.getDisciplina()){
+					tutores1.add(tutor);
+				}
 				if (tutor.consultaHorario(ajuda.getHorario(), ajuda.getDia()) && tutor.consultaLocal(ajuda.getlocalInteresse())){
 					aux = verificaProeficiencia(ajuda);
 					}
@@ -411,5 +408,3 @@ public class Sistema {
 		return atri;
 
 	}
-
-}
