@@ -199,6 +199,59 @@ public class Tutor extends Aluno {
 		return horarios.get(dia).contains(horario);
 	}
 
+	public String retornaOnline(String ajuda) {
+		String disciplina = "";
+		for (String string : disciplinas) {
+
+			if (string.equals(ajuda)) {
+
+				disciplina += string;
+			}
+		}
+		return "Tutor - " + getMatricula() + ", disciplina - " + disciplina;
+	}
+
+	public String retornaPresencial(String disciplina, String horario, String dia, String localInteresse) {
+
+		String dis = "";
+		String hor = "";
+		String loc = "";
+		for (String string : disciplinas) {
+
+			if (string.equals(dis)) {
+
+				dis += string;
+			}
+
+			for (ArrayList<String> horarios : horarios.values()) {
+
+				for (String h : horarios) {
+
+					if (h.equals(horario)) {
+
+						hor = h;
+					}
+
+				}
+
+			}
+
+			for (String local : locais) {
+
+				if (local.equals(localInteresse)) {
+
+					loc = local;
+				}
+
+			}
+
+		}
+
+		return "Tutor - " + getMatricula() + ", horario - " + hor + ", dia - " + dia + ", local - " + loc
+				+ ",disciplina - " + dis;
+
+	}
+
 	@Override
 	public String toString() {
 		return super.toString();
