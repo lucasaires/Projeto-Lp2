@@ -1,15 +1,15 @@
 package Lucas;
 
 public enum Avaliacao {
-	NOTA_INICIAL(5), NOTA_4(4), NOTA_3(3), NOTA_2(2), NOTA_1(1), NOTA_0(0);
+	TOP("TOP"), TUTOR("TUTOR"), APRENDIZ("APRENDIZ");
 	
-	private Avaliacao(int avaliacao) {
+	private Avaliacao(String avaliacao) {
 		this.avaliacao = avaliacao;
 	}
 	
-	private int avaliacao;
+	private String avaliacao;
 	
-	public int getAvaliacao() {
+	public String getAvaliacao() {
 		return avaliacao;
 	}
 }

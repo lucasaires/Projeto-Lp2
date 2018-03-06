@@ -1,27 +1,21 @@
 package Lucas;
 
-public class AjudaOnline implements Ajuda  {
+public class AjudaOnline  {
 	private String disciplina;
-	private int id;
-	private String tutor;
+	private String matricula;
+
 	
-	public AjudaOnline(String disciplina,int id,String tutor) {
+	public AjudaOnline(String disciplina,String matricula) {
 		this.disciplina = disciplina;
-		this.id = id;
-		this.tutor = tutor;
+		this.matricula = matricula;
 	}
 
 	public String getDisciplina() {
 		return disciplina;
 	}
 
-	public int getId() {
-		return id;
+	public String getMatricula() {
+		return matricula;
 	}
-
-	public String getTutor() {
-		return tutor;
-	}
-	
 	
 }
