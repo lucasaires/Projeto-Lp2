@@ -1,4 +1,4 @@
-package Nathalya;
+package Yally;
 
 public class AjudaPresencial extends AjudaOnline {
 
@@ -6,8 +6,8 @@ public class AjudaPresencial extends AjudaOnline {
 	private String dia;
 	private String localInteresse;
 	
-	public AjudaPresencial(String disciplina,String horario, String dia, String localInteresse,int id) {
-		super(disciplina, id);
+	public AjudaPresencial(String matrAluno,String disciplina,String horario, String dia, String localInteresse,int id,String tutor) {
+		super(matrAluno,disciplina,  id, tutor);
 		this.horario = horario;
 		this.dia = dia;
 		this.localInteresse = localInteresse;
@@ -24,4 +24,5 @@ public class AjudaPresencial extends AjudaOnline {
 	public String getlocalInteresse() {
 		return localInteresse;
 	}
+	
 }

@@ -1,4 +1,4 @@
-package Nathalya;
+package Yally;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -145,11 +145,6 @@ public class Tutor extends Aluno {
 
 	public String getMatricula() {
 		return matricula;
-	}
-	
-
-	public String getDisciplina() {
-		return disciplina;
 	}
 
 	/**
