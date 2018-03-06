@@ -18,11 +18,13 @@ public class Sistema {
 	private Map<String, Aluno> mapaAlunos;
 	private Map<String, Tutor> tutores;
 	private Map<Integer, AjudaOnline> ajudas;
+	private List<Tutor> melhorTutores;
 
 	public Sistema() {
 		this.mapaAlunos = new HashMap<>();
 		this.tutores = new HashMap<>();
 		this.ajudas = new HashMap<>();
+		this.melhorTutores = new ArrayList<>();
 	}
 
 	/**
@@ -73,13 +75,13 @@ public class Sistema {
 	}
 
 	/**
-	 * Recupera informa�oes de um aluno
+	 * Recupera informacoes de um aluno
 	 * 
 	 * @param matricula
 	 *            matricula do aluno
 	 * @param atributo
-	 *            informa�ao que se quer do aluno
-	 * @return informa�oes do atributo
+	 *            informacao que se quer do aluno
+	 * @return informacoes do atributo
 	 */
 
 	public String getInfoAluno(String matricula, String atributo) {
@@ -145,11 +147,11 @@ public class Sistema {
 	}
 
 	/**
-	 * Recupera informa�oes sobre um tutor a partit da sua matricula
+	 * Recupera informacoes sobre um tutor a partir da sua matricula
 	 * 
 	 * @param matricula
 	 *            matricula do tutor a ser recuperado
-	 * @return infoma�oes sobre o tutor
+	 * @return infomacoes sobre o tutor
 	 */
 
 	public String recuperaTutor(String matricula) {
@@ -271,7 +273,7 @@ public class Sistema {
 	}
 
 	/**
-	 * consulta se o local esta� disponivel
+	 * consulta se o local esta disponivel
 	 * 
 	 * @param email
 	 *            do tutor
@@ -296,115 +298,61 @@ public class Sistema {
 		return tutor.consultaLocal(local);
 	}
 
-	public int pedirAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
-		// cadastrar tutor p ajuda
+	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia,
+			String localInteresse) {
+
 		int id = ajudas.size();
-		AjudaPresencial novaAjuda = new AjudaPresencial(disciplina, horario, dia, localInteresse, id);
+
+		// Procurando tutor
+
+		String tutorEscolhindo = "";
+		int maiorProficiencia = 0;
+		for (Tutor tutor : tutores.values()) {
+			if (tutor.consultaHorario(horario, dia) && tutor.consultaLocal(localInteresse)
+					&& tutor.verificaDisciplinas(disciplina) && tutor.getProficiencia() > maiorProficiencia) {
+				tutorEscolhindo = tutor.getMatricula();
+				maiorProficiencia = tutor.getProficiencia();
+			}
+		}
+
+		AjudaPresencial novaAjuda = new AjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse, id,
+				tutorEscolhindo);
+
 		ajudas.put(id, novaAjuda);
 		return id;
 	}
-	
-	public int pedirAjudaOnline(String disciplina) {
-		// cadastrar tutor p ajuda
+
+	public int pedirAjudaOnline(String matrAluno, String disciplina) {
+
+		// Procurando tutor
+
+		String tutorEscolhindo = "";
+		int maiorProficiencia = 0;
+		for (Tutor tutor : tutores.values()) {
+			if (tutor.verificaDisciplinas(disciplina) && tutor.getProficiencia() > maiorProficiencia) {
+				tutorEscolhindo = tutor.getMatricula();
+				maiorProficiencia = tutor.getProficiencia();
+			}
+		}
+
 		int id = ajudas.size();
-		AjudaOnline novaAjuda = new AjudaOnline(disciplina, id);
+		AjudaOnline novaAjuda = new AjudaOnline(matrAluno, disciplina, id, tutorEscolhindo);
+
 		ajudas.put(id, novaAjuda);
+
 		return id;
 	}
 
-
-	private String verificaProeficiencia(AjudaOnline ajuda) {
-		// analisa o tutor de maior proeficiencia
-		int proeficiencia = 0;
-		String matriculaTutor = "";
-		for (Tutor tutor : tutores.values()) {
-				if (tutor.getProficiencia() > proeficiencia) {
-					proeficiencia = tutor.getProficiencia();
-					matriculaTutor = tutor.getMatricula();
-				}
-			}
-		return matriculaTutor;
-	}
-	
-	private String escolheTutorOnline(AjudaOnline ajuda) {
-		String aux = "";
-		for (Tutor tutor : tutores.values()) {
-		if (tutor.verificaDisciplinas(ajuda.getDisciplina())) {
-			verificaProeficiencia(ajuda);
-		}
-		}
-		return aux;
-	}
-	
-	private String escolheTutorPresencial(AjudaPresencial ajuda){
-		// analisa o melhor tutor para a ajuda Presencial cadastrada
-		String aux = "";
-		ArrayList<Tutor> tutores1 = new ArrayList<Tutor>();
-			for (Tutor tutor : tutores) {
-				if(tutor.getDisciplina().equals(ajuda.getDisciplina()){
-					tutores1.add(tutor);
-				}
-				if (tutor.consultaHorario(ajuda.getHorario(), ajuda.getDia()) && tutor.consultaLocal(ajuda.getlocalInteresse())){
-					aux = verificaProeficiencia(ajuda);
-					}
-			}
-			return aux;
-			}
-		
-
-	public String pegarTutor(Integer idAjuda) {
+	public String pegarTutor(int idAjuda) {
 
 		if (!ajudas.containsKey(idAjuda)) {
-			throw new IllegalArgumentException("Ajuda não casdastrada");
+			throw new IllegalArgumentException("Ajuda nao casdastrada");
 		}
-		return ajudas.get(idAjuda).pegarTutor();
 
+		return ajudas.get(idAjuda).getTutor();
 	}
 
-	public String getInfoAjuda(Integer idAjuda, String atributo) {
-		if (!ajudas.containsKey(idAjuda)) {
-			throw new IllegalArgumentException("Ajuda não casdastrada");
-		}
-		if (atributo.trim().equals("")) {
-			throw new IllegalArgumentException("Não existe atributo");
-		}
-		if (atributo == null) {
-			throw new NullPointerException("Atributo nulo");
-		}
+//	public String getInfoAjuda(int idAjuda, String atributo) { if
+ 
 
-		Ajuda ajuda = ajudas.get(idAjuda);
-		String atri = "";
-
-		switch (atributo) {
-		case "Diplina":
-			atri = ajuda.getdisDiplina();
-			break;
-
-		case "Horario":
-			atri = ajuda.getHorario();
-			break;
-
-		case "Dia":
-			atri = ajuda.getDia();
-			break;
-
-		case "Local Interesse":
-			atri = ajuda.getLocalInteresse();
-			break;
-
-		case "Id":
-			atri = ajuda.getId();
-			break;
-
-		case "Tutor":
-			atri = ajuda.pegarTutor();
-			break;
-
-		default:
-			atri = "Atributo invalido";
-			break;
-		}
-
-		return atri;
-
-	}
+}
