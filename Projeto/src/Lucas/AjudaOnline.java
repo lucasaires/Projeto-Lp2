@@ -1,11 +1,11 @@
 package Lucas;
 
-public class AjudaOnline  {
+public class AjudaOnline {
 	private String disciplina;
 	private String matricula;
-
 	
-	public AjudaOnline(String disciplina,String matricula) {
+
+	public AjudaOnline(String disciplina, String matricula) {
 		this.disciplina = disciplina;
 		this.matricula = matricula;
 	}
@@ -17,5 +17,6 @@ public class AjudaOnline  {
 	public String getMatricula() {
 		return matricula;
 	}
+
 	
 }

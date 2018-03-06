@@ -60,17 +60,34 @@ public class Facade {
 		return sistema.consultaLocal(email, local);
 
 	}
-	public int pedirAjudaPresencial (String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
+
+	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia,
+			String localInteresse) {
 		return sistema.pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
 	}
+	
 	public int pedirAjudaOnline(String matrAluno,String disciplina) {
 		return sistema.pedirAjudaOnline(matrAluno,disciplina);
 	}
+	
 	public String pegarTutor(int idAjuda) {
 		return sistema.pegarTutor(idAjuda);
 	}
+	
 	public String getInfoAjuda(int idAjuda, String atributo) {
 		return sistema.getInfoAjuda(idAjuda,atributo);
+	}
+	
+	public String avaliarTutor (int idAjuda, int nota) {
+		return sistema.avaliarTutor(idAjuda, nota);
+	}
+	
+	public double pegarNota(String matriculaTutor) {
+		return sistema.pegarNota(matriculaTutor);
+	}
+	
+	public String pegarNivel(String matriculaTutor) {
+		return sistema.pegarNivel(matriculaTutor);
 	}
 	
 }

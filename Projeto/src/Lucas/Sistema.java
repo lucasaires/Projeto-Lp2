@@ -434,6 +434,7 @@ public class Sistema {
 		if (!ajudas.containsKey(idAjuda - 1)) {
 			throw new IllegalArgumentException("Erro ao tentar recuperar tutor : id nao encontrado ");
 		}
+
 		for (Tutor tutor : melhorTutores) {
 
 			if (ajudas.get(idAjuda - 1) instanceof AjudaPresencial) {
@@ -524,5 +525,29 @@ public class Sistema {
 		}
 
 	}
+
+	public String avaliarTutor(int idAjuda, int nota) {
+
+		String matricula = ajudas.get(idAjuda - 1).getMatricula();
+		Tutor novo = tutores.get(matricula);
+
+		double valor = novo.calculaNota(nota);
+
+		return novo.modificaAvaliacao(valor);
+	}
+
+	public double pegarNota(String matriculaTutor) {
+		Tutor novo = tutores.get(matriculaTutor);
+
+		return (double) novo.getNota();
+	}
+
+	public String pegarNivel(String matriculaTutor) {
+		Tutor novo = tutores.get(matriculaTutor);
+
+		return novo.getAvalicao();
+	}
+
+
 
 }

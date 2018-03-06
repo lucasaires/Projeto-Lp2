@@ -20,6 +20,7 @@ public class Tutor extends Aluno {
 	private int proficiencia;
 	private int nota;
 	private int dinheiro;
+	private String avaliacao;
 	private List<String> disciplinas;
 	private Set<String> locais;
 	private Map<String, ArrayList<String>> horarios;
@@ -44,6 +45,8 @@ public class Tutor extends Aluno {
 		this.disciplinas = new ArrayList<String>();
 		this.locais = new HashSet<String>();
 		this.horarios = new HashMap<String, ArrayList<String>>();
+		this.avaliacao = Avaliacao.TUTOR.getAvaliacao();
+
 	}
 
 	/**
@@ -112,8 +115,9 @@ public class Tutor extends Aluno {
 	 *            nota
 	 */
 
-	public void setNota(int nota) {
-		this.nota = nota;
+	public double calculaNota(int nota) {
+		return this.nota = (this.nota * 5 + nota) / 6;
+
 	}
 
 	/**
@@ -280,6 +284,28 @@ public class Tutor extends Aluno {
 		} else if (!disciplina.equals(other.disciplina))
 			return false;
 		return true;
+	}
+
+	public String modificaAvaliacao(double nota) {
+
+		if (nota > 4.5) {
+
+			this.avaliacao = Avaliacao.TOP.getAvaliacao();
+
+		} else if (nota > 3 || nota <= 4.5) {
+
+			this.avaliacao = Avaliacao.TUTOR.getAvaliacao();
+
+		} else {
+
+			this.avaliacao = Avaliacao.APRENDIZ.getAvaliacao();
+		}
+
+		return this.avaliacao;
+	}
+	
+	public String getAvalicao() {
+		return avaliacao;
 	}
 
 }
