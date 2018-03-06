@@ -18,13 +18,13 @@ public class Sistema {
 	private Map<String, Aluno> mapaAlunos;
 	private Map<String, Tutor> tutores;
 	private Map<Integer, AjudaOnline> ajudas;
-	private List<Tutor> melhorTutores;
+	private double caixaSistema;
 
 	public Sistema() {
 		this.mapaAlunos = new HashMap<>();
 		this.tutores = new HashMap<>();
 		this.ajudas = new HashMap<>();
-		this.melhorTutores = new ArrayList<>();
+		this.caixaSistema = caixaSistema;
 	}
 
 	/**
@@ -301,6 +301,31 @@ public class Sistema {
 	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia,
 			String localInteresse) {
 
+		if (matrAluno.trim().equals("")) {
+			throw new IllegalArgumentException(
+					"Erro no pedido de ajuda presencial: matricula de aluno nao pode ser vazio ou em branco");
+
+		} else if (disciplina.trim().equals("")) {
+
+			throw new IllegalArgumentException(
+					"Erro no pedido de ajuda presencial: disciplina nao pode ser vazio ou em branco");
+
+		} else if (horario.trim().equals("")) {
+
+			throw new IllegalArgumentException(
+					"Erro no pedido de ajuda presencial: horario nao pode ser vazio ou em branco");
+
+		} else if (dia.trim().equals("")) {
+
+			throw new IllegalArgumentException(
+					"Erro no pedido de ajuda presencial: dia nao pode ser vazio ou em branco");
+
+		} else if (localInteresse.trim().equals("")) {
+
+			throw new IllegalArgumentException(
+					"Erro no pedido de ajuda presencial: local de interesse nao pode ser vazio ou em branco");
+		}
+
 		int id = ajudas.size();
 
 		// Procurando tutor
@@ -324,6 +349,16 @@ public class Sistema {
 
 	public int pedirAjudaOnline(String matrAluno, String disciplina) {
 
+		if (matrAluno.trim().equals("")) {
+			throw new IllegalArgumentException(
+					"Erro no pedido de ajuda online: matricula de aluno nao pode ser vazio ou em branco");
+
+		} else if (disciplina.trim().equals("")) {
+
+			throw new IllegalArgumentException(
+					"Erro no pedido de ajuda online: disciplina nao pode ser vazio ou em branco");
+
+		}
 		// Procurando tutor
 
 		String tutorEscolhindo = "";
@@ -352,7 +387,41 @@ public class Sistema {
 		return ajudas.get(idAjuda).getTutor();
 	}
 
-//	public String getInfoAjuda(int idAjuda, String atributo) { if
- 
+	// public String getInfoAjuda(int idAjuda, String atributo) { if
+
+	public void doar(String matriculaTutor, int totalCentavos) {
+		
+		
+		double taxa_tutor = 0;
+		if(tutores.get(matriculaTutor).getAvalicao().equals("TOP")) {
+			taxa_tutor = 0.9;
+		}else if(tutores.get(matriculaTutor).getAvalicao().equals("Tutor")) {
+			taxa_tutor = 0.8;
+		}else if(tutores.get(matriculaTutor).getAvalicao().equals("Aprendiz")) {
+			taxa_tutor = 0.4;
+		}
+	
+	double  total_sistema = (1 - taxa_tutor) * totalCentavos ; // arredondado para baixo??
+	tutores.get(matriculaTutor).receberDinheiro(totalCentavos - total_sistema);
+	this.caixaSistema += total_sistema;
+	}
+	public int totalDinheiroTutor(String emailTutor) {
+		
+		boolean temTutor = false;
+		int saida = 0;
+		for(Tutor tutor: tutores.values()) {
+			if(tutor.getEmail().equals(emailTutor)) {
+				saida = (int)(tutor.getDinheiro());
+				temTutor = true;
+			}
+		}if(!temTutor) {
+			throw IllegalArgumentException("Não tem esse tutor");
+		
+	}return saida;
+	}
+	public int totalDinheiroSistema() {
+		return (int)(this.caixaSistema);
+	}
+	
 
 }

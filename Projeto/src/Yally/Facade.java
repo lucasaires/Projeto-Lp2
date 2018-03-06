@@ -10,11 +10,10 @@ public class Facade {
 	}
 
 	public static void main(String[] args) {
-		args = new String[] { "Yally.Facade", "testes/us1_test.txt", "testes/us2_test.txt", "testes/us3_test.txt" ,"testes/us4_test.txt","testes/us5_test.txt", "testes/us6_test.txt" };
+		args = new String[] { "Yally.Facade", "testes/us1_test.txt", "testes/us2_test.txt", "testes/us3_test.txt", "testes/us4_test.txt","testes/us5_test.txt", "testes/us6_test.txt" };
 		EasyAccept.main(args);
 
 	}
-
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		sistema.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
 	}
