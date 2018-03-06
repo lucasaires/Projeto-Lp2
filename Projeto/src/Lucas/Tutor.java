@@ -45,6 +45,7 @@ public class Tutor extends Aluno {
 		this.disciplinas = new ArrayList<String>();
 		this.locais = new HashSet<String>();
 		this.horarios = new HashMap<String, ArrayList<String>>();
+		this.avaliacao = Avaliacao.TUTOR.getAvaliacao();
 
 	}
 
@@ -60,7 +61,7 @@ public class Tutor extends Aluno {
 			disciplinas.add(disciplina);
 		}
 	}
-	
+
 	public String getDisciplina() {
 		return disciplina;
 	}
@@ -193,7 +194,6 @@ public class Tutor extends Aluno {
 		horarios.put(dia, horas);
 	}
 
-
 	/**
 	 * Consulta se o horario esta� disponivel
 	 * 
@@ -258,17 +258,5 @@ public class Tutor extends Aluno {
 	public String getAvalicao() {
 		return avaliacao;
 	}
-
-	public Set<String> getLocais() {
-		return locais;
-	}
-
-	public Map<String, ArrayList<String>> getHorarios() {
-		return horarios;
-	}
-	
-	
-	
-	
 
 }

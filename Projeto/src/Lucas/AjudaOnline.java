@@ -4,7 +4,6 @@ public class AjudaOnline {
 	private String disciplina;
 	private String matricula;
 	protected String ajuda;
-	private String x = "";
 	
 	
 	public AjudaOnline(String disciplina, String matricula) {
@@ -29,7 +28,4 @@ public class AjudaOnline {
 		return this.ajuda;
 	}
 	
-	public void informaçõesDoTutor(String informações) {
-		x += informações;
-	}
 }

@@ -373,7 +373,7 @@ public class Sistema {
 
 			}
 		}
-		
+
 		return melhorTutor;
 
 	}
@@ -393,9 +393,8 @@ public class Sistema {
 
 		int id = ajudas.size();
 		AjudaOnline novaAjuda = new AjudaOnline(disciplina, matrAluno);
-		
-		ajudas.put(id, novaAjuda);
 
+		ajudas.put(id, novaAjuda);
 
 		return id + 1;
 	}
@@ -428,26 +427,29 @@ public class Sistema {
 			throw new IllegalArgumentException("Erro ao tentar recuperar tutor : id nao pode menor que zero ");
 		}
 
-		String melhorTutor = "";
-
 		if (!ajudas.containsKey(idAjuda - 1)) {
 			throw new IllegalArgumentException("Erro ao tentar recuperar tutor : id nao encontrado ");
 		}
+				
+		Tutor t = null;
 		
-		String matricula = ajudas.get(idAjuda).getMatricula();
-		
-		Tutor t = tutores.get(matricula);
-		
-		if(ajudas.get(t.matricula).getTipoAjuda().equals("online")){
+		if(ajudas.get(idAjuda-1).getTipoAjuda().equals("online")){
 			
-			t = verificaAjudaOnline(t.matricula, t.getDisciplina());
+			AjudaOnline ajuda = ajudas.get(idAjuda -1);
+			
+			t = verificaAjudaOnline(ajuda.getMatricula(), ajuda.getDisciplina());
 			
 		} else {
-			
-			t = verificaAjudaPresencial(t.matricula,t.getDisciplina(), t.getHorarios(),)
+			AjudaPresencial ajuda = (AjudaPresencial) ajudas.get(idAjuda -1);
+			t = verificaAjudaPresencial(ajuda.getMatricula(),ajuda.getDisciplina(), ajuda.getHorario(), ajuda.getDia(), ajuda.getlocalInteresse());
+		}
+		String a = "";
+		
+		if(ajudas.get(idAjuda-1).equals(t.matricula)) {
+			a = ajudas.get(idAjuda -1).toString();
 		}
 
-		return ajudas.get(t.matricula).toString();
+		return t.toString();
 
 	}
 
@@ -457,7 +459,7 @@ public class Sistema {
 			throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : id nao pode menor que zero ");
 		}
 
-		if (!ajudas.containsKey(idAjuda)) {
+		if (!ajudas.containsKey(idAjuda-1)) {
 			throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : id nao encontrado ");
 		}
 		if (atributo.trim().equals("")) {
@@ -525,7 +527,7 @@ public class Sistema {
 
 	public String avaliarTutor(int idAjuda, int nota) {
 
-		if (ajudas.containsKey(idAjuda)) {
+		if (ajudas.containsKey(idAjuda-1)) {
 
 			throw new IllegalArgumentException("Erro na avaliacao de tutor: id nao encontrado ");
 		}
@@ -550,19 +552,10 @@ public class Sistema {
 	public double pegarNota(String matriculaTutor) {
 		Tutor novo = tutores.get(matriculaTutor);
 
-		double nota = Double.parseDouble(modificaDouble(novo.getNota()));
-
-		return nota;
+		return novo.getNota();
 
 	}
 
-	private String modificaDouble(double valor) {
-		DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
-		decimalFormatSymbols.setGroupingSeparator(',');
-		DecimalFormat decimalFormat = new DecimalFormat("#,##", decimalFormatSymbols);
-
-		return (decimalFormat.format(valor));
-	}
 
 	public String pegarNivel(String matriculaTutor) {
 		Tutor novo = tutores.get(matriculaTutor);
