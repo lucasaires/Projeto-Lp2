@@ -45,7 +45,6 @@ public class Tutor extends Aluno {
 		this.disciplinas = new ArrayList<String>();
 		this.locais = new HashSet<String>();
 		this.horarios = new HashMap<String, ArrayList<String>>();
-		this.avaliacao = Avaliacao.TUTOR.getAvaliacao();
 
 	}
 
@@ -60,6 +59,10 @@ public class Tutor extends Aluno {
 		if (this.verificaDisciplinas(disciplina) == false) {
 			disciplinas.add(disciplina);
 		}
+	}
+	
+	public String getDisciplina() {
+		return disciplina;
 	}
 
 	/**
@@ -190,6 +193,7 @@ public class Tutor extends Aluno {
 		horarios.put(dia, horas);
 	}
 
+
 	/**
 	 * Consulta se o horario esta� disponivel
 	 * 
@@ -201,59 +205,6 @@ public class Tutor extends Aluno {
 			return false;
 		}
 		return horarios.get(dia).contains(horario);
-	}
-
-	public String retornaOnline(String ajuda) {
-		String disciplina = "";
-		for (String string : disciplinas) {
-
-			if (string.equals(ajuda)) {
-
-				disciplina += string;
-			}
-		}
-		return "Tutor - " + getMatricula() + ", disciplina - " + disciplina;
-	}
-
-	public String retornaPresencial(String disciplina, String horario, String dia, String localInteresse) {
-
-		String dis = "";
-		String hor = "";
-		String loc = "";
-		for (String string : disciplinas) {
-
-			if (string.equals(dis)) {
-
-				dis += string;
-			}
-
-			for (ArrayList<String> horarios : horarios.values()) {
-
-				for (String h : horarios) {
-
-					if (h.equals(horario)) {
-
-						hor = h;
-					}
-
-				}
-
-			}
-
-			for (String local : locais) {
-
-				if (local.equals(localInteresse)) {
-
-					loc = local;
-				}
-
-			}
-
-		}
-
-		return "Tutor - " + getMatricula() + ", horario - " + hor + ", dia - " + dia + ", local - " + loc
-				+ ",disciplina - " + dis;
-
 	}
 
 	@Override
@@ -307,5 +258,17 @@ public class Tutor extends Aluno {
 	public String getAvalicao() {
 		return avaliacao;
 	}
+
+	public Set<String> getLocais() {
+		return locais;
+	}
+
+	public Map<String, ArrayList<String>> getHorarios() {
+		return horarios;
+	}
+	
+	
+	
+	
 
 }

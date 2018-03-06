@@ -20,13 +20,12 @@ public class Sistema {
 	private Map<String, Aluno> mapaAlunos;
 	private Map<String, Tutor> tutores;
 	private Map<Integer, AjudaOnline> ajudas;
-	private List<Tutor> melhorTutores;
 
 	public Sistema() {
 		this.mapaAlunos = new HashMap<>();
 		this.tutores = new HashMap<>();
 		this.ajudas = new HashMap<>();
-		this.melhorTutores = new ArrayList<>();
+
 	}
 
 	/**
@@ -136,6 +135,7 @@ public class Sistema {
 						escolhido.getTelefone(), escolhido.getEmail(), disciplina, proficiencia);
 				novoTutor.disciplinasTutor(disciplina);
 				tutores.put(matricula, novoTutor);
+
 			} else {
 				if (tutores.get(matricula).verificaDisciplinas(disciplina))
 					throw new IllegalArgumentException("Erro na definicao de papel: Ja eh tutor dessa disciplina");
@@ -346,8 +346,6 @@ public class Sistema {
 
 				ajudas.put(id, novaAjuda);
 
-				melhorTutores.add(verificaAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse));
-
 			}
 
 		}
@@ -375,7 +373,7 @@ public class Sistema {
 
 			}
 		}
-
+		
 		return melhorTutor;
 
 	}
@@ -395,10 +393,9 @@ public class Sistema {
 
 		int id = ajudas.size();
 		AjudaOnline novaAjuda = new AjudaOnline(disciplina, matrAluno);
-
+		
 		ajudas.put(id, novaAjuda);
 
-		melhorTutores.add(verificaAjudaOnline(matrAluno, disciplina));
 
 		return id + 1;
 	}
@@ -436,23 +433,21 @@ public class Sistema {
 		if (!ajudas.containsKey(idAjuda - 1)) {
 			throw new IllegalArgumentException("Erro ao tentar recuperar tutor : id nao encontrado ");
 		}
-
-		for (Tutor tutor : melhorTutores) {
-
-			if (ajudas.get(idAjuda - 1) instanceof AjudaPresencial) {
-
-				AjudaPresencial ajuda = (AjudaPresencial) ajudas.get(idAjuda - 1);
-
-				melhorTutor = tutor.retornaPresencial(ajuda.getDisciplina(), ajuda.getHorario(), ajuda.getDia(),
-						ajuda.getlocalInteresse());
-
-			} else {
-
-				melhorTutor = tutor.retornaOnline(ajudas.get(idAjuda - 1).getDisciplina());
-			}
-
+		
+		String matricula = ajudas.get(idAjuda).getMatricula();
+		
+		Tutor t = tutores.get(matricula);
+		
+		if(ajudas.get(t.matricula).getTipoAjuda().equals("online")){
+			
+			t = verificaAjudaOnline(t.matricula, t.getDisciplina());
+			
+		} else {
+			
+			t = verificaAjudaPresencial(t.matricula,t.getDisciplina(), t.getHorarios(),)
 		}
-		return melhorTutor;
+
+		return ajudas.get(t.matricula).toString();
 
 	}
 

@@ -3,11 +3,14 @@ package Lucas;
 public class AjudaOnline {
 	private String disciplina;
 	private String matricula;
+	protected String ajuda;
+	private String x = "";
 	
-
+	
 	public AjudaOnline(String disciplina, String matricula) {
 		this.disciplina = disciplina;
 		this.matricula = matricula;
+		this.ajuda = "online";
 	}
 
 	public String getDisciplina() {
@@ -18,5 +21,15 @@ public class AjudaOnline {
 		return matricula;
 	}
 
+	public String toString() {
+		return "Tutor - " + getMatricula() + ", disciplina - " + disciplina;
+	}
+
+	public String getTipoAjuda() {
+		return this.ajuda;
+	}
 	
+	public void informaçõesDoTutor(String informações) {
+		x += informações;
+	}
 }
