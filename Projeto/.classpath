@@ -6,6 +6,5 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/lucas/eclipse-workspace/Projeto-Lp2/Projeto/lib/easyaccept.jar"/>
-	<classpathentry kind="lib" path="/home/yally/Downloads/easyaccept.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

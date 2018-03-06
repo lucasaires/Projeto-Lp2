@@ -303,7 +303,7 @@ public class Tutor extends Aluno {
 
 		return this.avaliacao;
 	}
-	
+
 	public String getAvalicao() {
 		return avaliacao;
 	}

@@ -1,6 +1,8 @@
 package Lucas;
 
 import java.util.List;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -528,6 +530,20 @@ public class Sistema {
 
 	public String avaliarTutor(int idAjuda, int nota) {
 
+		if (ajudas.containsKey(idAjuda)) {
+
+			throw new IllegalArgumentException("Erro na avaliacao de tutor: id nao encontrado ");
+		}
+
+		if (nota < 0) {
+
+			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser menor que 0");
+
+		} else if (nota > 5) {
+
+			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser maior que 5");
+		}
+
 		String matricula = ajudas.get(idAjuda - 1).getMatricula();
 		Tutor novo = tutores.get(matricula);
 
@@ -539,7 +555,18 @@ public class Sistema {
 	public double pegarNota(String matriculaTutor) {
 		Tutor novo = tutores.get(matriculaTutor);
 
-		return (double) novo.getNota();
+		double nota = Double.parseDouble(modificaDouble(novo.getNota()));
+
+		return nota;
+
+	}
+
+	private String modificaDouble(double valor) {
+		DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
+		decimalFormatSymbols.setGroupingSeparator(',');
+		DecimalFormat decimalFormat = new DecimalFormat("#,##", decimalFormatSymbols);
+
+		return (decimalFormat.format(valor));
 	}
 
 	public String pegarNivel(String matriculaTutor) {
@@ -547,7 +574,5 @@ public class Sistema {
 
 		return novo.getAvalicao();
 	}
-
-
 
 }

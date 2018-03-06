@@ -10,7 +10,7 @@ public class Facade {
 	}
 
 	public static void main(String[] args) {
-		args = new String[] { "Lucas.Facade", "testes/us1_test.txt", "testes/us2_test.txt", "testes/us3_test.txt", "testes/us4_test.txt","testes/us5_test.txt", "testes/us6_test.txt" };
+		args = new String[] { "Lucas.Facade", "testes/us1_test.txt", "testes/us2_test.txt", "testes/us3_test.txt", "testes/us4_test.txt", "testes/us5_test.txt", "testes/us6_test.txt" };
 		EasyAccept.main(args);
 
 	}
@@ -78,7 +78,7 @@ public class Facade {
 		return sistema.getInfoAjuda(idAjuda,atributo);
 	}
 	
-	public String avaliarTutor (int idAjuda, int nota) {
+	public String avaliarTutor(int idAjuda, int nota) {
 		return sistema.avaliarTutor(idAjuda, nota);
 	}
 	
