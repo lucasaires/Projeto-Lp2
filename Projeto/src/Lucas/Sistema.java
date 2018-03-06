@@ -1,8 +1,6 @@
 package Lucas;
 
-import java.util.List;
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -362,15 +360,18 @@ public class Sistema {
 
 		for (Tutor tutor : tutores.values()) {
 
-			if (tutor.getMatricula().equals(matrAluno)
-					|| (tutor.consultaHorario(horario, dia) && tutor.consultaLocal(dia))
-					|| tutor.verificaDisciplinas(disciplina)) {
+			if (tutor.getMatricula().equals(matrAluno)) {
+				if ((tutor.consultaHorario(horario, dia) && tutor.consultaLocal(dia))) {
 
-				if (tutor.getProficiencia() > proficiencia) {
-
-					melhorTutor = tutor;
 				}
+				if (tutor.verificaDisciplinas(disciplina)) {
 
+					if (tutor.getProficiencia() > proficiencia) {
+
+						melhorTutor = tutor;
+					}
+
+				}
 			}
 		}
 
@@ -430,27 +431,26 @@ public class Sistema {
 		if (!ajudas.containsKey(idAjuda - 1)) {
 			throw new IllegalArgumentException("Erro ao tentar recuperar tutor : id nao encontrado ");
 		}
-				
+
 		Tutor t = null;
-		
+
 		String a = "";
-		
-		if(ajudas.get(idAjuda-1).getTipoAjuda().equals("online")){
-			
-			AjudaOnline ajuda = ajudas.get(idAjuda -1);
-			
+
+		if (ajudas.get(idAjuda - 1).getTipoAjuda().equals("online")) {
+
+			AjudaOnline ajuda = ajudas.get(idAjuda - 1);
+
 			t = verificaAjudaOnline(ajuda.getMatricula(), ajuda.getDisciplina());
-			
+
 			a = ajuda.toString(t.getMatricula());
-			
-			
+
 		} else {
-			AjudaPresencial ajuda = (AjudaPresencial) ajudas.get(idAjuda -1);
-			t = verificaAjudaPresencial(ajuda.getMatricula(),ajuda.getDisciplina(), ajuda.getHorario(), ajuda.getDia(), ajuda.getlocalInteresse());
-			
+			AjudaPresencial ajuda = (AjudaPresencial) ajudas.get(idAjuda - 1);
+			t = verificaAjudaPresencial(ajuda.getMatricula(), ajuda.getDisciplina(), ajuda.getHorario(), ajuda.getDia(),
+					ajuda.getlocalInteresse());
+
 			a = ajuda.toString(t.getMatricula());
 		}
-		
 
 		return a;
 
@@ -462,7 +462,7 @@ public class Sistema {
 			throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : id nao pode menor que zero ");
 		}
 
-		if (!ajudas.containsKey(idAjuda-1)) {
+		if (!ajudas.containsKey(idAjuda - 1)) {
 			throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : id nao encontrado ");
 		}
 		if (atributo.trim().equals("")) {
@@ -530,7 +530,7 @@ public class Sistema {
 
 	public String avaliarTutor(int idAjuda, int nota) {
 
-		if (ajudas.containsKey(idAjuda-1)) {
+		if (ajudas.containsKey(idAjuda - 1)) {
 
 			throw new IllegalArgumentException("Erro na avaliacao de tutor: id nao encontrado ");
 		}
@@ -555,10 +555,11 @@ public class Sistema {
 	public double pegarNota(String matriculaTutor) {
 		Tutor novo = tutores.get(matriculaTutor);
 
-		return novo.getNota();
+		double valor = novo.getNota();
+
+		return valor;
 
 	}
-
 
 	public String pegarNivel(String matriculaTutor) {
 		Tutor novo = tutores.get(matriculaTutor);

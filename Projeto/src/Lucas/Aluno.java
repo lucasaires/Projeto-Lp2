@@ -52,7 +52,7 @@ public class Aluno implements Comparable<Aluno> {
 	 * @return nota do aluno 
 	 */
 	
-	public int getNota() {
+	public double getNota() {
 		return nota;
 	}
 

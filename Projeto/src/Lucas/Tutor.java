@@ -18,7 +18,7 @@ public class Tutor extends Aluno {
 
 	private String disciplina;
 	private int proficiencia;
-	private int nota;
+	private double nota;
 	private int dinheiro;
 	private String avaliacao;
 	private List<String> disciplinas;
@@ -40,7 +40,7 @@ public class Tutor extends Aluno {
 
 		this.disciplina = disciplina;
 		this.proficiencia = proficiencia;
-		this.nota = 4;
+		this.nota = 4.00;
 		this.dinheiro = 0;
 		this.disciplinas = new ArrayList<String>();
 		this.locais = new HashSet<String>();
@@ -108,7 +108,7 @@ public class Tutor extends Aluno {
 	 * @return nota
 	 */
 
-	public int getNota() {
+	public double getNota() {
 		return nota;
 	}
 
@@ -120,7 +120,7 @@ public class Tutor extends Aluno {
 	 */
 
 	public double calculaNota(int nota) {
-		return this.nota = (this.nota * 5 + nota) / 6;
+		return this.nota = (this.nota * 5.00 + nota) / 6.00;
 
 	}
 
@@ -201,10 +201,13 @@ public class Tutor extends Aluno {
 	 */
 
 	public boolean consultaHorario(String horario, String dia) {
-		if (horarios.get(dia) == null) {
-			return false;
+
+		boolean monitor = false;
+		if (horarios.containsKey(dia)) {
+			monitor = true;
 		}
-		return horarios.get(dia).contains(horario);
+
+		return monitor;
 	}
 
 	@Override
