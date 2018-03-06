@@ -20,8 +20,8 @@ public class AjudaOnline {
 		return matricula;
 	}
 
-	public String toString() {
-		return "Tutor - " + getMatricula() + ", disciplina - " + disciplina;
+	public String toString(String matricula) {
+		return "Tutor - " + matricula + ", disciplina - " + disciplina;
 	}
 
 	public String getTipoAjuda() {

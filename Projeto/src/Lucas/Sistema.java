@@ -433,23 +433,26 @@ public class Sistema {
 				
 		Tutor t = null;
 		
+		String a = "";
+		
 		if(ajudas.get(idAjuda-1).getTipoAjuda().equals("online")){
 			
 			AjudaOnline ajuda = ajudas.get(idAjuda -1);
 			
 			t = verificaAjudaOnline(ajuda.getMatricula(), ajuda.getDisciplina());
 			
+			a = ajuda.toString(t.getMatricula());
+			
+			
 		} else {
 			AjudaPresencial ajuda = (AjudaPresencial) ajudas.get(idAjuda -1);
 			t = verificaAjudaPresencial(ajuda.getMatricula(),ajuda.getDisciplina(), ajuda.getHorario(), ajuda.getDia(), ajuda.getlocalInteresse());
+			
+			a = ajuda.toString(t.getMatricula());
 		}
-		String a = "";
 		
-		if(ajudas.get(idAjuda-1).equals(t.matricula)) {
-			a = ajudas.get(idAjuda -1).toString();
-		}
 
-		return t.toString();
+		return a;
 
 	}
 
