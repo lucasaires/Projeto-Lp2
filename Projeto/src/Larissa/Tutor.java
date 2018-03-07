@@ -18,8 +18,9 @@ public class Tutor extends Aluno {
 
 	private String disciplina;
 	private int proficiencia;
-	private int nota;
+	private double nota;
 	private int dinheiro;
+	private String avaliacao;
 	private List<String> disciplinas;
 	private Set<String> locais;
 	private Map<String, ArrayList<String>> horarios;
@@ -39,11 +40,13 @@ public class Tutor extends Aluno {
 
 		this.disciplina = disciplina;
 		this.proficiencia = proficiencia;
-		this.nota = 4;
+		this.nota = 4.00;
 		this.dinheiro = 0;
 		this.disciplinas = new ArrayList<String>();
 		this.locais = new HashSet<String>();
 		this.horarios = new HashMap<String, ArrayList<String>>();
+		this.avaliacao = Avaliacao.TUTOR.getAvaliacao();
+
 	}
 
 	/**
@@ -57,6 +60,10 @@ public class Tutor extends Aluno {
 		if (this.verificaDisciplinas(disciplina) == false) {
 			disciplinas.add(disciplina);
 		}
+	}
+
+	public String getDisciplina() {
+		return disciplina;
 	}
 
 	/**
@@ -101,7 +108,7 @@ public class Tutor extends Aluno {
 	 * @return nota
 	 */
 
-	public int getNota() {
+	public double getNota() {
 		return nota;
 	}
 
@@ -112,8 +119,10 @@ public class Tutor extends Aluno {
 	 *            nota
 	 */
 
-	public void setNota(int nota) {
-		this.nota = nota;
+	public double calculaNota(int nota) {
+
+		return this.nota = ((this.nota * 5.00) + nota) / 6.00;
+
 	}
 
 	/**
@@ -166,6 +175,7 @@ public class Tutor extends Aluno {
 
 	public boolean consultaLocal(String local) {
 		return locais.contains(local);
+
 	}
 
 	/**
@@ -187,7 +197,7 @@ public class Tutor extends Aluno {
 	}
 
 	/**
-	 * Consulta se o horario esta� disponivel
+	 * Consulta se o horario esta disponivel
 	 * 
 	 * @return true se estiver disponivel e false se nao estiver disponivel
 	 */
@@ -198,6 +208,15 @@ public class Tutor extends Aluno {
 		}
 		return horarios.get(dia).contains(horario);
 	}
+//	public boolean consultaHorario(String horario, String dia) {
+//
+//		boolean monitor = false;
+//		if (horarios.containsKey(dia) || horarios.get(dia).equals(horario)) {
+//			monitor = true;
+//		}
+//
+//		return monitor;
+//	}
 
 	@Override
 	public String toString() {
@@ -227,6 +246,32 @@ public class Tutor extends Aluno {
 		} else if (!disciplina.equals(other.disciplina))
 			return false;
 		return true;
+	}
+
+	public String modificaAvaliacao(double valor) {
+
+		if (valor > 4.5) {
+
+			this.avaliacao = Avaliacao.TOP.getAvaliacao();
+
+		} else if (valor > 3 && valor <= 4.5) {
+
+			this.avaliacao = Avaliacao.TUTOR.getAvaliacao();
+
+		} else {
+
+			this.avaliacao = Avaliacao.APRENDIZ.getAvaliacao();
+		}
+
+		return this.avaliacao;
+	}
+
+	public String getAvalicao() {
+		return avaliacao;
+	}
+	
+	public void receberDinheiro(double dinheiro) {
+		this.dinheiro += dinheiro;
 	}
 
 }

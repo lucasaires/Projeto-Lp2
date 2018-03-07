@@ -10,7 +10,7 @@ public class Facade {
 	}
 
 	public static void main(String[] args) {
-		args = new String[] { "Projeto.Facade", "testes/us1_test.txt", "testes/us2_test.txt", "testes/us3_test.txt" };
+		args = new String[] { "Larissa.Facade", "testes/us1_test.txt", "testes/us2_test.txt", "testes/us3_test.txt", "testes/us4_test.txt", "testes/us5_test.txt", "testes/us6_test.txt" };
 		EasyAccept.main(args);
 
 	}
@@ -60,16 +60,34 @@ public class Facade {
 		return sistema.consultaLocal(email, local);
 
 	}
-	public int pedirAjudaPresencial1(String disciplina, String horario, String dia, String localInteresse) {
-		return sistema.pedirAjudaPresencial(disciplina, horario, dia, localInteresse);
+
+	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia,
+			String localInteresse) {
+		return sistema.pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
 	}
-	public int pedirAjudaOnline(String disciplina) {
-		return sistema.pedirAjudaOnline(disciplina);
+	
+	public int pedirAjudaOnline(String matrAluno,String disciplina) {
+		return sistema.pedirAjudaOnline(matrAluno,disciplina);
 	}
+	
 	public String pegarTutor(int idAjuda) {
 		return sistema.pegarTutor(idAjuda);
 	}
+	
 	public String getInfoAjuda(int idAjuda, String atributo) {
 		return sistema.getInfoAjuda(idAjuda,atributo);
 	}
+	
+	public String avaliarTutor(int idAjuda, int nota) {
+		return sistema.avaliarTutor(idAjuda, nota);
+	}
+	
+	public double pegarNota(String matriculaTutor) {
+		return sistema.pegarNota(matriculaTutor);
+	}
+	
+	public String pegarNivel(String matriculaTutor) {
+		return sistema.pegarNivel(matriculaTutor);
+	}
+	
 }
