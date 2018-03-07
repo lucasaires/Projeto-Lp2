@@ -65,12 +65,20 @@ public class Facade {
 	public int pedirAjudaOnline(String matrAluno,String disciplina) {
 		return sistema.pedirAjudaOnline(matrAluno,disciplina);
 	}
-	/**
+	
 	public String pegarTutor(int idAjuda) {
 		return sistema.pegarTutor(idAjuda);
 	}
 	public String getInfoAjuda(int idAjuda, String atributo) {
 		return sistema.getInfoAjuda(idAjuda,atributo);
 	}
-	**/
+	public void doar(String matriculaTutor, int totalCentavos) {
+		sistema.doar(matriculaTutor, totalCentavos);
+	}
+	public int totalDinheiroTutor(String emailTutor) {
+		return sistema.totalDinheiroTutor(emailTutor);
+	}
+	public int totalDinheiroSistema() {
+		return sistema.totalDinheiroSistema();
+	}
 }

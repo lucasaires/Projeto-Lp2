@@ -390,38 +390,47 @@ public class Sistema {
 	// public String getInfoAjuda(int idAjuda, String atributo) { if
 
 	public void doar(String matriculaTutor, int totalCentavos) {
-		
-		
+		if (matriculaTutor.trim().equals("")) {
+			throw new IllegalArgumentException();
+		} else if (matriculaTutor == null) {
+			throw new NullPointerException();
+		} else if (totalCentavos < 0) {
+			throw new IllegalArgumentException();
+		}
+
 		double taxa_tutor = 0;
-		if(tutores.get(matriculaTutor).getAvalicao().equals("TOP")) {
+		if (tutores.get(matriculaTutor).getAvalicao().equals("TOP")) {
 			taxa_tutor = 0.9;
-		}else if(tutores.get(matriculaTutor).getAvalicao().equals("Tutor")) {
+		} else if (tutores.get(matriculaTutor).getAvalicao().equals("Tutor")) {
 			taxa_tutor = 0.8;
-		}else if(tutores.get(matriculaTutor).getAvalicao().equals("Aprendiz")) {
+		} else if (tutores.get(matriculaTutor).getAvalicao().equals("Aprendiz")) {
 			taxa_tutor = 0.4;
 		}
-	
-	double  total_sistema = (1 - taxa_tutor) * totalCentavos ; // arredondado para baixo??
-	tutores.get(matriculaTutor).receberDinheiro(totalCentavos - total_sistema);
-	this.caixaSistema += total_sistema;
+
+		double total_sistema = (1 - taxa_tutor) * totalCentavos; // arredondado para baixo??
+		tutores.get(matriculaTutor).receberDinheiro(totalCentavos - total_sistema);
+		this.caixaSistema += total_sistema;
 	}
+
 	public int totalDinheiroTutor(String emailTutor) {
-		
+
 		boolean temTutor = false;
 		int saida = 0;
-		for(Tutor tutor: tutores.values()) {
-			if(tutor.getEmail().equals(emailTutor)) {
-				saida = (int)(tutor.getDinheiro());
+		for (Tutor tutor : tutores.values()) {
+			if (tutor.getEmail().equals(emailTutor)) {
+				saida = (int) (tutor.getDinheiro());
 				temTutor = true;
 			}
-		}if(!temTutor) {
+		}
+		if (!temTutor) {
 			throw IllegalArgumentException("Não tem esse tutor");
-		
-	}return saida;
+
+		}
+		return saida;
 	}
+
 	public int totalDinheiroSistema() {
-		return (int)(this.caixaSistema);
+		return (int) (this.caixaSistema);
 	}
-	
 
 }
