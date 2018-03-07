@@ -120,7 +120,8 @@ public class Tutor extends Aluno {
 	 */
 
 	public double calculaNota(int nota) {
-		return this.nota = (this.nota * 5.00 + nota) / 6.00;
+
+		return this.nota = ((this.nota * 5.00) + nota) / 6.00;
 
 	}
 
@@ -174,6 +175,7 @@ public class Tutor extends Aluno {
 
 	public boolean consultaLocal(String local) {
 		return locais.contains(local);
+
 	}
 
 	/**
@@ -195,7 +197,7 @@ public class Tutor extends Aluno {
 	}
 
 	/**
-	 * Consulta se o horario esta� disponivel
+	 * Consulta se o horario esta disponivel
 	 * 
 	 * @return true se estiver disponivel e false se nao estiver disponivel
 	 */
@@ -203,7 +205,7 @@ public class Tutor extends Aluno {
 	public boolean consultaHorario(String horario, String dia) {
 
 		boolean monitor = false;
-		if (horarios.containsKey(dia)) {
+		if (horarios.containsKey(dia) || horarios.get(dia).equals(horario)) {
 			monitor = true;
 		}
 
@@ -240,13 +242,13 @@ public class Tutor extends Aluno {
 		return true;
 	}
 
-	public String modificaAvaliacao(double nota) {
+	public String modificaAvaliacao(double valor) {
 
-		if (nota > 4.5) {
+		if (valor > 4.5) {
 
 			this.avaliacao = Avaliacao.TOP.getAvaliacao();
 
-		} else if (nota > 3 || nota <= 4.5) {
+		} else if (valor > 3 && valor <= 4.5) {
 
 			this.avaliacao = Avaliacao.TUTOR.getAvaliacao();
 

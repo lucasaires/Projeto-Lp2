@@ -333,20 +333,10 @@ public class Sistema {
 					"Erro no pedido de ajuda presencial: local de interesse nao pode ser vazio ou em branco");
 		}
 
-		int id = 0;
+		int id = ajudas.size();
+		AjudaPresencial novaAjuda = new AjudaPresencial(disciplina, horario, dia, localInteresse, matrAluno);
 
-		for (Aluno aluno : mapaAlunos.values()) {
-
-			if (aluno.matricula.equals(matrAluno)) {
-
-				AjudaPresencial novaAjuda = new AjudaPresencial(disciplina, horario, dia, localInteresse, matrAluno);
-				id = ajudas.size();
-
-				ajudas.put(id, novaAjuda);
-
-			}
-
-		}
+		ajudas.put(id, novaAjuda);
 
 		return id + 1;
 
@@ -363,14 +353,14 @@ public class Sistema {
 			if (tutor.getMatricula().equals(matrAluno)) {
 				if ((tutor.consultaHorario(horario, dia) && tutor.consultaLocal(dia))) {
 
-				}
-				if (tutor.verificaDisciplinas(disciplina)) {
+					if (tutor.verificaDisciplinas(disciplina)) {
 
-					if (tutor.getProficiencia() > proficiencia) {
+						if (tutor.getProficiencia() > proficiencia) {
 
-						melhorTutor = tutor;
+							melhorTutor = tutor;
+						}
+
 					}
-
 				}
 			}
 		}
@@ -445,7 +435,9 @@ public class Sistema {
 			a = ajuda.toString(t.getMatricula());
 
 		} else {
+
 			AjudaPresencial ajuda = (AjudaPresencial) ajudas.get(idAjuda - 1);
+
 			t = verificaAjudaPresencial(ajuda.getMatricula(), ajuda.getDisciplina(), ajuda.getHorario(), ajuda.getDia(),
 					ajuda.getlocalInteresse());
 
@@ -530,7 +522,7 @@ public class Sistema {
 
 	public String avaliarTutor(int idAjuda, int nota) {
 
-		if (ajudas.containsKey(idAjuda - 1)) {
+		if (!ajudas.containsKey(idAjuda - 1)) {
 
 			throw new IllegalArgumentException("Erro na avaliacao de tutor: id nao encontrado ");
 		}
@@ -545,11 +537,14 @@ public class Sistema {
 		}
 
 		String matricula = ajudas.get(idAjuda - 1).getMatricula();
-		Tutor novo = tutores.get(matricula);
+		Tutor t = tutores.get(matricula);
 
-		double valor = novo.calculaNota(nota);
+		double valor = t.calculaNota(nota);
 
-		return novo.modificaAvaliacao(valor);
+		String avaliacao = t.modificaAvaliacao(valor);
+
+		return avaliacao;
+
 	}
 
 	public double pegarNota(String matriculaTutor) {
