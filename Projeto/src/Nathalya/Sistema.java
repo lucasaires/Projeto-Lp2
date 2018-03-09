@@ -1,6 +1,6 @@
 package Nathalya;
 
-import java.util.List;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,7 +14,8 @@ import java.util.Map;
  */
 
 public class Sistema {
-
+	
+	private double caixaSistema;
 	private Map<String, Aluno> mapaAlunos;
 	private Map<String, Tutor> tutores;
 	private Map<Integer, AjudaOnline> ajudas;
@@ -23,6 +24,7 @@ public class Sistema {
 		this.mapaAlunos = new HashMap<>();
 		this.tutores = new HashMap<>();
 		this.ajudas = new HashMap<>();
+
 	}
 
 	/**
@@ -73,13 +75,13 @@ public class Sistema {
 	}
 
 	/**
-	 * Recupera informa�oes de um aluno
+	 * Recupera informacoes de um aluno
 	 * 
 	 * @param matricula
 	 *            matricula do aluno
 	 * @param atributo
-	 *            informa�ao que se quer do aluno
-	 * @return informa�oes do atributo
+	 *            informacao que se quer do aluno
+	 * @return informacoes do atributo
 	 */
 
 	public String getInfoAluno(String matricula, String atributo) {
@@ -132,6 +134,7 @@ public class Sistema {
 						escolhido.getTelefone(), escolhido.getEmail(), disciplina, proficiencia);
 				novoTutor.disciplinasTutor(disciplina);
 				tutores.put(matricula, novoTutor);
+
 			} else {
 				if (tutores.get(matricula).verificaDisciplinas(disciplina))
 					throw new IllegalArgumentException("Erro na definicao de papel: Ja eh tutor dessa disciplina");
@@ -145,11 +148,11 @@ public class Sistema {
 	}
 
 	/**
-	 * Recupera informa�oes sobre um tutor a partit da sua matricula
+	 * Recupera informacoes sobre um tutor a partir da sua matricula
 	 * 
 	 * @param matricula
 	 *            matricula do tutor a ser recuperado
-	 * @return infoma�oes sobre o tutor
+	 * @return infomacoes sobre o tutor
 	 */
 
 	public String recuperaTutor(String matricula) {
@@ -158,6 +161,10 @@ public class Sistema {
 		}
 
 		return tutores.get(matricula).toString();
+	}
+	
+	private Tutor pegaPorMatricula(String matricula){
+		return this.tutores.get(matricula);
 	}
 
 	/**
@@ -238,6 +245,7 @@ public class Sistema {
 	 */
 
 	private Tutor buscaTutor(String email) {
+
 		for (Tutor tutor : tutores.values()) {
 			if (tutor.getEmail().equals(email)) {
 				return tutor;
@@ -256,14 +264,17 @@ public class Sistema {
 	 */
 
 	public void cadastrarLocalDeAtendimento(String email, String local) {
+
 		if (email.trim().equals("")) {
 			throw new IllegalArgumentException(
 					"Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
+
 		} else if (local.trim().equals("")) {
 			throw new IllegalArgumentException(
 					"Erro no cadastrar local de atendimento: local nao pode ser vazio ou em branco");
 		}
 		Tutor tutorBusca = buscaTutor(email);
+
 		if (tutorBusca == null) {
 			throw new IllegalArgumentException("Erro no cadastrar local de atendimento: tutor nao cadastrado");
 		}
@@ -271,7 +282,7 @@ public class Sistema {
 	}
 
 	/**
-	 * consulta se o local esta� disponivel
+	 * consulta se o local esta disponivel
 	 * 
 	 * @param email
 	 *            do tutor
@@ -282,13 +293,16 @@ public class Sistema {
 	 */
 
 	public boolean consultaLocal(String email, String local) {
+
 		if (email.trim().equals("")) {
 			throw new IllegalArgumentException(
 					"Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
+
 		} else if (local.trim().equals("")) {
 			throw new IllegalArgumentException(
 					"Erro no cadastrar local de atendimento: local nao pode ser vazio ou em branco");
 		}
+
 		Tutor tutor = buscaTutor(email);
 		if (tutor == null) {
 			return false;
@@ -296,119 +310,280 @@ public class Sistema {
 		return tutor.consultaLocal(local);
 	}
 
-	public int pedirAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
-		// cadastrar tutor p ajuda
-		int id = ajudas.size();
-		AjudaPresencial novaAjuda = new AjudaPresencial(disciplina, horario, dia, localInteresse, id);
-		ajudas.put(id, novaAjuda);
-		return id;
-	}
+	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia,
+			String localInteresse) {
 
-	public int pedirAjudaOnline(String disciplina) {
-		// cadastrar tutor p ajuda
-		int id = ajudas.size();
-		AjudaOnline novaAjuda = new AjudaOnline(disciplina, id);
-		ajudas.put(id, novaAjuda);
-		return id;
-	}
+		if (matrAluno.trim().equals("")) {
+			throw new IllegalArgumentException(
+					"Erro no pedido de ajuda presencial: matricula de aluno nao pode ser vazio ou em branco");
 
-	private String verificaProeficienciaParaOnline(AjudaOnline ajuda) {
-		// analisa o tutor de maior proeficiencia
-		int proeficiencia = 0;
-		String matriculaTutor = "";
-		for (Tutor tutor : tutores.values()) {
-			if (tutor.getProficiencia() > proeficiencia && tutor.verificaDisciplinas(ajuda.getDisciplina())) {
-				proeficiencia = tutor.getProficiencia();
-				matriculaTutor = tutor.getMatricula();
-			}
+		} else if (disciplina.trim().equals("")) {
+
+			throw new IllegalArgumentException(
+					"Erro no pedido de ajuda presencial: disciplina nao pode ser vazio ou em branco");
+
+		} else if (horario.trim().equals("")) {
+
+			throw new IllegalArgumentException(
+					"Erro no pedido de ajuda presencial: horario nao pode ser vazio ou em branco");
+
+		} else if (dia.trim().equals("")) {
+
+			throw new IllegalArgumentException(
+					"Erro no pedido de ajuda presencial: dia nao pode ser vazio ou em branco");
+
+		} else if (localInteresse.trim().equals("")) {
+
+			throw new IllegalArgumentException(
+					"Erro no pedido de ajuda presencial: local de interesse nao pode ser vazio ou em branco");
 		}
-		return matriculaTutor;
+
+		int id = ajudas.size();
+		AjudaPresencial novaAjuda = new AjudaPresencial(disciplina, horario, dia, localInteresse, matrAluno);
+
+		ajudas.put(id, novaAjuda);
+
+		return id + 1;
+
 	}
 
-	private String escolheTutorOnline(AjudaOnline ajuda) {
-		String aux = "";
-		for (Tutor tutor : tutores.values()) {
-			if (tutor.verificaDisciplinas(ajuda.getDisciplina())) {
-				verificaProeficienciaParaOnline(ajuda);
-			}
-		}
-		return aux;
-	}
+	private Tutor verificaAjudaPresencial(String matrAluno, String disciplina, String horario, String dia,
+			String localInteresse) {
 
-	private String escolheTutorPresencial(AjudaPresencial ajuda) {
-		// analisa o melhor tutor para a ajuda Presencial cadastrada
-		String aux = "";
-		int proeficiencia = 0;
-		ArrayList<Tutor> tutores1 = new ArrayList<Tutor>();
+		int proficiencia = 0;
+		Tutor melhorTutor = null;
 
 		for (Tutor tutor : tutores.values()) {
-			if (tutor.verificaDisciplinas(ajuda.getDisciplina())) {
-				if (tutor.consultaHorario(ajuda.getHorario(), ajuda.getDia())
-						&& tutor.consultaLocal(ajuda.getlocalInteresse())) {
-					if (tutor.getProficiencia() > proeficiencia) {
-						aux = tutor.getMatricula();
+
+			if (tutor.getMatricula().equals(matrAluno)) {
+				if ((tutor.consultaHorario(horario, dia) && tutor.consultaLocal(dia))) {
+
+					if (tutor.verificaDisciplinas(disciplina)) {
+
+						if (tutor.getProficiencia() > proficiencia) {
+
+							melhorTutor = tutor;
+						}
+
 					}
 				}
 			}
 		}
-		return aux;
+
+		return melhorTutor;
+
 	}
 
-	public String pegarTutor(Integer idAjuda) {
+	public int pedirAjudaOnline(String matrAluno, String disciplina) {
 
-		if (!ajudas.containsKey(idAjuda)) {
-			throw new IllegalArgumentException("Ajuda não casdastrada");
+		if (matrAluno.trim().equals("")) {
+			throw new IllegalArgumentException(
+					"Erro no pedido de ajuda online: matricula de aluno nao pode ser vazio ou em branco");
+
+		} else if (disciplina.trim().equals("")) {
+
+			throw new IllegalArgumentException(
+					"Erro no pedido de ajuda online: disciplina nao pode ser vazio ou em branco");
+
 		}
-		return ajudas.get(idAjuda).pegarTutor();
+
+		int id = ajudas.size();
+		AjudaOnline novaAjuda = new AjudaOnline(disciplina, matrAluno);
+
+		ajudas.put(id, novaAjuda);
+
+		return id + 1;
+	}
+
+	private Tutor verificaAjudaOnline(String matrAluno, String disciplina) {
+
+		int proficiencia = 0;
+		Tutor melhorTutor = null;
+
+		for (Tutor tutor : tutores.values()) {
+
+			if (tutor.getMatricula().equals(matrAluno) || (tutor.verificaDisciplinas(disciplina))) {
+
+				if (tutor.getProficiencia() > proficiencia) {
+
+					melhorTutor = tutor;
+				}
+
+			}
+
+		}
+
+		return melhorTutor;
 
 	}
 
-	public String getInfoAjuda(Integer idAjuda, String atributo) {
-		if (!ajudas.containsKey(idAjuda)) {
-			throw new IllegalArgumentException("Ajuda não casdastrada");
+	public String pegarTutor(int idAjuda) {
+
+		if (idAjuda < 0) {
+			throw new IllegalArgumentException("Erro ao tentar recuperar tutor : id nao pode menor que zero ");
+		}
+
+		if (!ajudas.containsKey(idAjuda - 1)) {
+			throw new IllegalArgumentException("Erro ao tentar recuperar tutor : id nao encontrado ");
+		}
+
+		Tutor t = null;
+
+		String a = "";
+
+		if (ajudas.get(idAjuda - 1).getTipoAjuda().equals("online")) {
+
+			AjudaOnline ajuda = ajudas.get(idAjuda - 1);
+
+			t = verificaAjudaOnline(ajuda.getMatricula(), ajuda.getDisciplina());
+
+			a = ajuda.toString(t.getMatricula());
+
+		} else {
+
+			AjudaPresencial ajuda = (AjudaPresencial) ajudas.get(idAjuda - 1);
+
+			t = verificaAjudaPresencial(ajuda.getMatricula(), ajuda.getDisciplina(), ajuda.getHorario(), ajuda.getDia(),
+					ajuda.getlocalInteresse());
+
+			a = ajuda.toString(t.getMatricula());
+		}
+
+		return a;
+
+	}
+
+	public String getInfoAjuda(int idAjuda, String atributo) {
+
+		if (idAjuda < 0) {
+			throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : id nao pode menor que zero ");
+		}
+
+		if (!ajudas.containsKey(idAjuda - 1)) {
+			throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : id nao encontrado ");
 		}
 		if (atributo.trim().equals("")) {
-			throw new IllegalArgumentException("Não existe atributo");
-		}
-		if (atributo == null) {
-			throw new NullPointerException("Atributo nulo");
-		}
 
-		Ajuda ajuda = ajudas.get(idAjuda);
-		String atri = "";
-
-		switch (atributo) {
-		case "Diplina":
-			atri = ajuda.getdisDiplina();
-			break;
-
-		case "Horario":
-			atri = ajuda.getHorario();
-			break;
-
-		case "Dia":
-			atri = ajuda.getDia();
-			break;
-
-		case "Local Interesse":
-			atri = ajuda.getLocalInteresse();
-			break;
-
-		case "Id":
-			atri = ajuda.getId();
-			break;
-
-		case "Tutor":
-			atri = ajuda.pegarTutor();
-			break;
-
-		default:
-			atri = "Atributo invalido";
-			break;
+			throw new IllegalArgumentException(
+					"Erro ao tentar recuperar info da ajuda : atributo nao pode ser vazio ou em branco");
 		}
 
-		return atri;
+		if (!atributo.equals("disciplina") && !atributo.equals("horario") && !atributo.equals("dia")
+				&& !atributo.equals("localInteresse")) {
+
+			throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : atributo nao encontrado");
+		}
+
+		if (ajudas.get(idAjuda - 1) instanceof AjudaPresencial) {
+
+			AjudaPresencial ajuda = (AjudaPresencial) ajudas.get(idAjuda - 1);
+
+			String atri = "";
+
+			switch (atributo) {
+			case "disciplina":
+				atri = ajuda.getDisciplina();
+				break;
+
+			case "horario":
+				atri = ajuda.getHorario();
+				break;
+
+			case "dia":
+				atri = ajuda.getDia();
+				break;
+
+			case "localInteresse":
+				atri = ajuda.getlocalInteresse();
+				break;
+
+			default:
+				atri = "Atributo invalido";
+				break;
+			}
+
+			return atri;
+
+		} else {
+
+			AjudaOnline ajuda = ajudas.get(idAjuda - 1);
+
+			String atri = "";
+
+			switch (atributo) {
+			case "disciplina":
+				atri = ajuda.getDisciplina();
+				break;
+
+			default:
+				atri = "Atributo invalido";
+				break;
+			}
+
+			return atri;
+		}
 
 	}
 
+	public void avaliarTutor(int idAjuda, int nota) {
+
+		if (!ajudas.containsKey(idAjuda - 1)) {
+
+			throw new IllegalArgumentException("Erro na avaliacao de tutor: id nao encontrado ");
+		}
+
+		if (nota < 0) {
+
+			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser menor que 0");
+
+		} else if (nota > 5) {
+
+			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser maior que 5");
+		}
+
+		String matricula = ajudas.get(idAjuda - 1).getMatricula();
+		Tutor t = tutores.get(matricula);
+
+		double valor = t.calculaNota(nota);
+		t.modificaAvaliacao(valor);
+	}
+
+	public double pegarNota(String matriculaTutor) {
+		Tutor novo = tutores.get(matriculaTutor);
+
+		double valor = novo.getNota();
+
+		return valor;
+
+	}
+
+	public String pegarNivel(String matriculaTutor) {
+		Tutor novo = tutores.get(matriculaTutor);
+		return novo.getAvalicao();
+	}	
+	
+	public void doar(String matriculaTutor, int totalCentavos) {
+		if (matriculaTutor == null || matriculaTutor.trim().isEmpty()) {
+			throw new IllegalArgumentException("Matricula vazia");
+		} else if (totalCentavos < 0) {
+			throw new IllegalArgumentException("Valor inválido");
+		}
+		Tutor tutor = this.pegaPorMatricula(matriculaTutor);
+		double taxaTutor = tutor.getTaxaTutor(totalCentavos);
+		double total_sistema = Math.ceil((1 - taxaTutor) * totalCentavos); 
+		tutor.receberDinheiro(totalCentavos);
+		this.caixaSistema += total_sistema;
+	}
+
+	public int totalDinheiroTutor(String emailTutor) {
+		return tutores.get(emailTutor).getDinheiro();		
+	}
+
+	public int totalDinheiroSistema() {
+		return (int)(this.caixaSistema);
+	}
+	
+	
+	
+	
 }

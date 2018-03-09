@@ -16,10 +16,11 @@ import java.util.Set;
 
 public class Tutor extends Aluno {
 
-	private String disciplina;
+	private String disciplina;//tirar esse atributo e colocar no array (dentro do construtor)
 	private int proficiencia;
-	private int nota;
+	private double nota;
 	private int dinheiro;
+	private Avaliacao avaliacao;
 	private List<String> disciplinas;
 	private Set<String> locais;
 	private Map<String, ArrayList<String>> horarios;
@@ -39,11 +40,21 @@ public class Tutor extends Aluno {
 
 		this.disciplina = disciplina;
 		this.proficiencia = proficiencia;
-		this.nota = 4;
+		this.nota = 4.00;
 		this.dinheiro = 0;
 		this.disciplinas = new ArrayList<String>();
 		this.locais = new HashSet<String>();
 		this.horarios = new HashMap<String, ArrayList<String>>();
+		this.avaliacao = new AvaliacaoTutor();
+
+	}
+
+	public List<String> getDisciplinas() {
+		return disciplinas;
+	}
+
+	public void setDisciplinas(List<String> disciplinas) {
+		this.disciplinas = disciplinas;
 	}
 
 	/**
@@ -57,6 +68,12 @@ public class Tutor extends Aluno {
 		if (this.verificaDisciplinas(disciplina) == false) {
 			disciplinas.add(disciplina);
 		}
+	}
+
+	
+	
+	public String getDisciplina() {
+		return disciplina;
 	}
 
 	/**
@@ -101,7 +118,7 @@ public class Tutor extends Aluno {
 	 * @return nota
 	 */
 
-	public int getNota() {
+	public double getNota() {
 		return nota;
 	}
 
@@ -112,18 +129,10 @@ public class Tutor extends Aluno {
 	 *            nota
 	 */
 
-	public void setNota(int nota) {
-		this.nota = nota;
-	}
+	public double calculaNota(int nota) {
 
-	/**
-	 * Retorna o dinheiro
-	 * 
-	 * @return dinheiro
-	 */
+		return this.nota = ((this.nota * 5.00) + nota) / 6.00;
 
-	public int getDinheiro() {
-		return dinheiro;
 	}
 
 	/**
@@ -166,6 +175,7 @@ public class Tutor extends Aluno {
 
 	public boolean consultaLocal(String local) {
 		return locais.contains(local);
+
 	}
 
 	/**
@@ -187,7 +197,7 @@ public class Tutor extends Aluno {
 	}
 
 	/**
-	 * Consulta se o horario esta� disponivel
+	 * Consulta se o horario esta disponivel
 	 * 
 	 * @return true se estiver disponivel e false se nao estiver disponivel
 	 */
@@ -198,6 +208,15 @@ public class Tutor extends Aluno {
 		}
 		return horarios.get(dia).contains(horario);
 	}
+//	public boolean consultaHorario(String horario, String dia) {
+//
+//		boolean monitor = false;
+//		if (horarios.containsKey(dia) || horarios.get(dia).equals(horario)) {
+//			monitor = true;
+//		}
+//
+//		return monitor;
+//	}
 
 	@Override
 	public String toString() {
@@ -229,4 +248,43 @@ public class Tutor extends Aluno {
 		return true;
 	}
 
+	public void modificaAvaliacao(double nota) {
+
+		if (nota > 4.5) {
+
+			this.avaliacao = new AvaliacaoTop();
+
+		} else if (nota > 3 && nota <= 4.5) {
+
+			this.avaliacao = new AvaliacaoTutor();
+
+		} else {
+
+			this.avaliacao = new AvaliacaoAprendiz();
+		}
+
+	}
+
+	public String getAvalicao() {
+		return avaliacao.toString();
+	}
+	
+	public void receberDinheiro(int dinheiro) {
+		this.dinheiro += this.getTaxaTutor(dinheiro);
+	}
+	
+	public double getTaxaTutor(int dinheiro){
+		return avaliacao.calculaValor(dinheiro, this.nota);
+	}
+
+	/**
+	 * Retorna o dinheiro
+	 * 
+	 * @return dinheiro
+	 */
+
+	public int getDinheiro() {
+		return dinheiro;
+	}
+	
 }
