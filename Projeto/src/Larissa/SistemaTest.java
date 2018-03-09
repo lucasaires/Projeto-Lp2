@@ -303,8 +303,8 @@ public class SistemaTest {
 		sistema.cadastrarHorario("nathalya@ccc.com", "21:00", "quar");
 		sistema.cadastrarLocalDeAtendimento("nathalya@ccc.com", "lcc1");
 
-		// assertEquals("Tutor - 116210878, "
-		// + "disciplina - cal", sistema.pegarTutor(1));
+		 assertEquals("Tutor - 116210878, "
+		 + "disciplina - cal", sistema.pegarTutor(2));
 
 	}
 

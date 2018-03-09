@@ -1,7 +1,7 @@
 package Larissa;
 
 import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,8 +35,10 @@ public class TutorTest {
 		assertEquals("13", t.getMatricula());
 	}
 
+	
 	@Test
 	public void testGetNota() {
+
 		assertEquals(4, t.getNota());
 	}
 
@@ -89,5 +91,34 @@ public class TutorTest {
 		t.setDinheiro(50);
 		assertEquals(50, t.getDinheiro());
 	}
+	
+	
+	@Test
+	public void consultaLocalTest() {
+		t.cadastrarLocal("lcc");
+		assertTrue(t.consultaLocal("lcc"));
+
+	}
+	
+	// double nao pega
+	@Test
+	public void calculaNotaTest() {
+		
+		assertEquals( 0 , t.calculaNota(5));
+	}
+	
+	@Test
+	public void consultaHorarioTest() {
+		t.cadastraHorario("15:00", "seg");
+		assertTrue(t.consultaHorario("15:00", "seg"));
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

@@ -1,7 +1,11 @@
 package Larissa;
 
 public enum Avaliacao {
-	TOP("Top"), TUTOR("Tutor"), APRENDIZ("Aprendiz");
+	TOP("Top")
+	
+	
+	
+	, TUTOR("Tutor"), APRENDIZ("Aprendiz");
 	
 	private String avaliacao;
 	
