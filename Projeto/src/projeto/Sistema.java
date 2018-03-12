@@ -1,9 +1,13 @@
 package projeto;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -14,7 +18,7 @@ import java.util.Map;
  */
 
 public class Sistema {
-	
+
 	private double caixaSistema;
 	private Map<String, Aluno> mapaAlunos;
 	private Map<String, Tutor> tutores;
@@ -162,8 +166,8 @@ public class Sistema {
 
 		return tutores.get(matricula).toString();
 	}
-	
-	private Tutor pegaPorMatricula(String matricula){
+
+	private Tutor pegaPorMatricula(String matricula) {
 		return this.tutores.get(matricula);
 	}
 
@@ -525,7 +529,7 @@ public class Sistema {
 
 	}
 
-	public void avaliarTutor(int idAjuda, int nota) {
+	public String avaliarTutor(int idAjuda, int nota) {
 
 		if (!ajudas.containsKey(idAjuda - 1)) {
 
@@ -546,44 +550,46 @@ public class Sistema {
 
 		double valor = t.calculaNota(nota);
 		t.modificaAvaliacao(valor);
+		return t.getAvalicao();
 	}
 
 	public double pegarNota(String matriculaTutor) {
-		Tutor novo = tutores.get(matriculaTutor);
 
-		double valor = novo.getNota();
+		Locale.setDefault(new Locale("pt", "BR", "WIN"));
 
-		return valor;
+		DecimalFormat df = new java.text.DecimalFormat("#,##0.00", new DecimalFormatSymbols());
+
+		String valor = df.format(tutores.get(matriculaTutor).getNota());
+
+		return Double.valueOf(valor);
 
 	}
 
 	public String pegarNivel(String matriculaTutor) {
 		Tutor novo = tutores.get(matriculaTutor);
 		return novo.getAvalicao();
-	}	
-	
+	}
+
 	public void doar(String matriculaTutor, int totalCentavos) {
 		if (matriculaTutor == null || matriculaTutor.trim().isEmpty()) {
 			throw new IllegalArgumentException("Matricula vazia");
 		} else if (totalCentavos < 0) {
-			throw new IllegalArgumentException("Valor inválido");
+			throw new IllegalArgumentException("Valor invalido");
 		}
+
 		Tutor tutor = this.pegaPorMatricula(matriculaTutor);
 		double taxaTutor = tutor.getTaxaTutor(totalCentavos);
-		double total_sistema = Math.ceil((1 - taxaTutor) * totalCentavos); 
+		double total_sistema = Math.ceil((1 - taxaTutor) * totalCentavos);
 		tutor.receberDinheiro(totalCentavos);
 		this.caixaSistema += total_sistema;
 	}
 
 	public int totalDinheiroTutor(String emailTutor) {
-		return tutores.get(emailTutor).getDinheiro();		
+		return tutores.get(emailTutor).getDinheiro();
 	}
 
 	public int totalDinheiroSistema() {
-		return (int)(this.caixaSistema);
+		return (int) (this.caixaSistema);
 	}
-	
-	
-	
-	
+
 }

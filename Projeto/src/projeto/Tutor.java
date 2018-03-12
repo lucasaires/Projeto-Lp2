@@ -130,8 +130,9 @@ public class Tutor extends Aluno {
 	 */
 
 	public double calculaNota(int nota) {
+		double notaAntiga = this.nota;
 
-		return this.nota = ((this.nota * 5.00) + nota) / 6.00;
+		return this.nota = ((notaAntiga * 5.00) + nota) / 6.00;
 
 	}
 

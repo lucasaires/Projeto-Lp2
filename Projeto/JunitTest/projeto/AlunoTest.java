@@ -22,70 +22,70 @@ public class AlunoTest {
 	@Test(expected = NullPointerException.class)
 	public void testCadastraAlunoVazio1() {
 
-		Aluno ilegal = new Aluno("", "000", 11, "9987", "ee@ff");
+		a = new Aluno("", "000", 11, "9987", "ee@ff");
 
 	}
 
 	@Test(expected = IllegalAccessException.class)
 	public void testCadastraAlunoVazio2() {
 
-		Aluno ilegal = new Aluno("Larissa", "", 11, "9987", "ee@ff");
+		a = new Aluno("Larissa", "", 11, "9987", "ee@ff");
 
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testCadastraAlunoVazio3() {
 
-		Aluno ilegal = new Aluno("Nathalya", "000", 0, "9987", "ee@ff");
+		a = new Aluno("Nathalya", "000", 0, "9987", "ee@ff");
 
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testCadastraAlunoVazio4() {
 
-		Aluno ilegal = new Aluno("Lucas", "000", 11, "", "ee@ff");
+		a = new Aluno("Lucas", "000", 11, "", "ee@ff");
 
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testCadastraAlunoVazio5() {
 
-		Aluno ilegal = new Aluno("Yally", "000", 11, "9987", "");
+		a = new Aluno("Yally", "000", 11, "9987", "");
 
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testCadastraAlunoNull() {
 
-		Aluno ilegal = new Aluno(null, "11111", 22, "3321", "aa@bb");
+		a = new Aluno(null, "11111", 22, "3321", "aa@bb");
 
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testCadastraAlunoNull1() {
 
-		Aluno ilegal = new Aluno("Yally", null, 33, "6654", "bb@cc");
+		a = new Aluno("Yally", null, 33, "6654", "bb@cc");
 
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testCadastraAlunoNull2() {
 
-		Aluno ilegal = new Aluno("Yally", "2222", 0, "6654", "d@cc");
+		a = new Aluno("Yally", "2222", 0, "6654", "d@cc");
 
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testCadastraAlunoNull3() {
 
-		Aluno ilegal = new Aluno("Yally", "3333", 55, null, "db@cc");
+		a = new Aluno("Yally", "3333", 55, null, "db@cc");
 
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testCadastraAlunoNull4() {
 
-		Aluno ilegal = new Aluno("Yally", "888", 98, "6454", null);
+		a = new Aluno("Yally", "888", 98, "6454", null);
 
 	}
 
@@ -131,50 +131,5 @@ public class AlunoTest {
 	public void testToString() {
 		assertEquals("13 - Son Goku - 5 - 40028922 - songoku@dbs.com", a.toString());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
