@@ -40,7 +40,7 @@ public class Tutor extends Aluno {
 
 		this.disciplina = disciplina;
 		this.proficiencia = proficiencia;
-		this.nota = 4.00;
+		this.nota = 4.0;
 		this.dinheiro = 0;
 		this.disciplinas = new ArrayList<String>();
 		this.locais = new HashSet<String>();
@@ -130,9 +130,8 @@ public class Tutor extends Aluno {
 	 */
 
 	public double calculaNota(int nota) {
-		double notaAntiga = this.nota;
 
-		return this.nota = ((notaAntiga * 5.00) + nota) / 6.00;
+		return this.nota = (this.nota *5 + nota) / 6;
 
 	}
 

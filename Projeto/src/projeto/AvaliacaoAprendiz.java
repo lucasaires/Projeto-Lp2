@@ -7,7 +7,7 @@ public class AvaliacaoAprendiz implements Avaliacao {
 
 	@Override
 	public double calculaValor(int doacao, double notaAtual) {
-		return doacao * TAXA_APRENDIZ - (3 - notaAtual) * ONUS_APRENDIZ;
+		return doacao * TAXA_APRENDIZ - ((3 - notaAtual) * ONUS_APRENDIZ);
 	}
 	
 	@Override

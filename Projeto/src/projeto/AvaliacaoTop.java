@@ -12,6 +12,6 @@ public class AvaliacaoTop implements Avaliacao{
 
 	@Override
 	public double calculaValor(int doacao, double notaAtual) {
-		return (doacao * TAXA_TOP) + (notaAtual - 4.5) * BONUS_TOP;
+		return (doacao * TAXA_TOP) + ((notaAtual - 4.5) * BONUS_TOP);
 	}
 }

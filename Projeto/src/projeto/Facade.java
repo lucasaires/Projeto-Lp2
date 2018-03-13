@@ -79,11 +79,11 @@ public class Facade {
 		return sistema.getInfoAjuda(idAjuda, atributo);
 	}
 
-	public String avaliarTutor(int idAjuda, int nota) {
-		return sistema.avaliarTutor(idAjuda, nota);
+	public void avaliarTutor(int idAjuda, int nota) {
+		sistema.avaliarTutor(idAjuda, nota);
 	}
 
-	public double pegarNota(String matriculaTutor) {
+	public String pegarNota(String matriculaTutor) {
 		return sistema.pegarNota(matriculaTutor);
 	}
 
@@ -102,20 +102,22 @@ public class Facade {
 	public int totalDinheiroSistema() {
 		return totalDinheiroSistema();
 	}
-	
+
 	public void configurarOrdem(String atributo) {
 		sistema.configuraOrdem(atributo);
 	}
-	
+
 	public void salvar() {
 		sistema.salvar();
 	}
+
 	public void carregar() {
 		sistema.carregar();
 	}
+
 	public void limpar() {
 		sistema.limpar();
-		
+
 	}
 
 }

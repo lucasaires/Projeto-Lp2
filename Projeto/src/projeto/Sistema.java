@@ -527,7 +527,7 @@ public class Sistema {
 
 	}
 
-	public String avaliarTutor(int idAjuda, int nota) {
+	public void avaliarTutor(int idAjuda, int nota) {
 
 		if (nota < 0) {
 
@@ -541,27 +541,30 @@ public class Sistema {
 		if (!ajudas.containsKey(idAjuda - 1)) {
 
 			throw new IllegalArgumentException("Erro na avaliacao de tutor: id nao encontrado ");
+
 		}
 
-		String matricula = ajudas.get(idAjuda - 1).getMatricula();
-		Tutor t = tutores.get(matricula);
+		Tutor t = tutores.get(ajudas.get(idAjuda - 1).getMatricula());
 
-		double valor = t.calculaNota(nota);
-		t.modificaAvaliacao(valor);
-		return t.getAvalicao();
+		System.out.println(t.calculaNota(nota));
+
+		t.modificaAvaliacao(4);
+
+		// Locale.setDefault(new Locale("pt", "BR", "WIN"));
+		//
+		// DecimalFormat df = new java.text.DecimalFormat("#,##0.00", new
+		// DecimalFormatSymbols());
+		//
+		// return df.format(t.calculaNota(nota));
 	}
 
-	public double pegarNota(String matriculaTutor) {
+	public String pegarNota(String matriculaTutor) {
 
 		Locale.setDefault(new Locale("pt", "BR", "WIN"));
 
 		DecimalFormat df = new java.text.DecimalFormat("#,##0.00", new DecimalFormatSymbols());
 
-		String valor = df.format(tutores.get(matriculaTutor).getNota());
-
-		double v = Double.parseDouble(valor);
-
-		return v;
+		return df.format(tutores.get(matriculaTutor).getNota());
 
 	}
 
@@ -571,7 +574,7 @@ public class Sistema {
 	}
 
 	public void doar(String matriculaTutor, int totalCentavos) {
-		if (matriculaTutor.trim().equals("")) {
+		if (matriculaTutor.trim().isEmpty()) {
 			throw new IllegalArgumentException("Matricula vazia");
 		} else if (totalCentavos < 0) {
 			throw new IllegalArgumentException("Erro na doacao para tutor: totalCentavos nao pode ser menor que zero");
@@ -582,6 +585,8 @@ public class Sistema {
 		Tutor tutor = this.pegaPorMatricula(matriculaTutor);
 		double taxaTutor = tutor.getTaxaTutor(totalCentavos);
 		double total_sistema = Math.ceil((1 - taxaTutor) * totalCentavos);
+		System.out.println();
+		System.out.println(tutor.getTaxaTutor(totalCentavos));
 		tutor.receberDinheiro(totalCentavos);
 		this.caixaSistema += total_sistema;
 	}
