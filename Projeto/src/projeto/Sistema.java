@@ -3,10 +3,13 @@ package projeto;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 
@@ -19,13 +22,20 @@ public class Sistema {
 
 	private double caixaSistema;
 	private Map<String, Aluno> mapaAlunos;
+	private String ultimaOrdem;
 	private Map<String, Tutor> tutores;
 	private Map<Integer, AjudaOnline> ajudas;
+	private int indexAluno;
+	private int indexTutor;
 
 	public Sistema() {
 		this.mapaAlunos = new HashMap<>();
 		this.tutores = new HashMap<>();
 		this.ajudas = new HashMap<>();
+		this.ultimaOrdem = "NOME";
+		this.caixaSistema = 0;
+		this.indexAluno = 0;
+		this.indexTutor = 0;
 
 	}
 
@@ -34,7 +44,7 @@ public class Sistema {
 	 */
 
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
-		Aluno aluno = new Aluno(nome, matricula, codigoCurso, telefone, email);
+		Aluno aluno = new Aluno(nome, matricula, codigoCurso, telefone, email, indexAluno++);
 		if (mapaAlunos.containsKey(matricula)) {
 			throw new IllegalArgumentException("Erro no cadastro de aluno: Aluno de mesma matricula ja cadastrado");
 		}
@@ -64,12 +74,9 @@ public class Sistema {
 
 	public String listarAlunos() {
 		String saida = "";
-		ArrayList<Aluno> alunosOrdenados = new ArrayList<Aluno>();
-		for (Aluno aluno : mapaAlunos.values()) {
-			alunosOrdenados.add(aluno);
+		ArrayList<Aluno> alunosOrdenados = getListagemOrdenadaAlunos();
 
-		}
-		Collections.sort(alunosOrdenados);
+
 		for (Aluno aluno : alunosOrdenados) {
 			saida += aluno.toString() + ", ";
 		}
@@ -133,7 +140,7 @@ public class Sistema {
 			Aluno escolhido = mapaAlunos.get(matricula);
 			if (!tutores.containsKey(matricula)) {
 				Tutor novoTutor = new Tutor(escolhido.getNome(), escolhido.getMatricula(), escolhido.getCodigoCurso(),
-						escolhido.getTelefone(), escolhido.getEmail(), disciplina, proficiencia);
+						escolhido.getTelefone(), escolhido.getEmail(), disciplina, proficiencia, indexTutor++);
 				novoTutor.disciplinasTutor(disciplina);
 				tutores.put(matricula, novoTutor);
 				mapaAlunos.remove(matricula);
@@ -178,8 +185,10 @@ public class Sistema {
 	 */
 
 	public String listarTutores() {
+	
+		
 		String saida = "";
-		for (Tutor tutor : tutores.values()) {
+		for (Tutor tutor : getListagemOrdenadaTutores()) {
 			saida += tutor.toString() + ", ";
 		}
 		return saida.substring(0, (saida.length() - 2));
@@ -343,7 +352,10 @@ public class Sistema {
 		}
 
 		int id = ajudas.size();
-		AjudaPresencial novaAjuda = new AjudaPresencial(disciplina, horario, dia, localInteresse, matrAluno);
+
+		Tutor tutor = verificaAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
+		AjudaPresencial novaAjuda = new AjudaPresencial(disciplina, horario, dia, localInteresse, matrAluno,
+				tutor.getMatricula());
 
 		ajudas.put(id, novaAjuda);
 
@@ -390,7 +402,8 @@ public class Sistema {
 		}
 
 		int id = ajudas.size();
-		AjudaOnline novaAjuda = new AjudaOnline(disciplina, matrAluno);
+		Tutor tutor = verificaAjudaOnline(matrAluno, disciplina);
+		AjudaOnline novaAjuda = new AjudaOnline(disciplina, matrAluno, tutor.getMatricula());
 
 		ajudas.put(id, novaAjuda);
 
@@ -448,7 +461,7 @@ public class Sistema {
 			t = verificaAjudaPresencial(ajuda.getMatricula(), ajuda.getDisciplina(), ajuda.getHorario(), ajuda.getDia(),
 					ajuda.getlocalInteresse());
 
-			a = ajuda.toString(t.getMatricula());
+			a = ajuda.toString();
 		}
 
 		return a;
@@ -529,33 +542,35 @@ public class Sistema {
 
 	public void avaliarTutor(int idAjuda, int nota) {
 
-		if (nota < 0) {
+		AjudaOnline ajuda;
+		String matriculaAluno;
 
+		if (nota < 0) {
 			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser menor que 0");
 
 		} else if (nota > 5) {
-
 			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser maior que 5");
+		}
+		if (!ajudas.containsKey(idAjuda - 1)) {
+			throw new IllegalArgumentException("Erro na avaliacao de tutor: id nao encontrado ");
+		}
+
+		else {
+			ajuda = ajudas.get(idAjuda - 1);
+			matriculaAluno = ajuda.getMatricula();
 		}
 
 		if (!ajudas.containsKey(idAjuda - 1)) {
 
 			throw new IllegalArgumentException("Erro na avaliacao de tutor: id nao encontrado ");
 
+		} else if (!ajuda.avaliarAjuda(matriculaAluno)) {
+			throw new IllegalArgumentException("Erro na avaliacao de tutor: Ajuda ja avaliada");
 		}
 
-		Tutor t = tutores.get(ajudas.get(idAjuda - 1).getMatricula());
+		Tutor tutor = tutores.get(ajudas.get(idAjuda - 1).getMatriculaTutor());
 
-		System.out.println(t.calculaNota(nota));
-
-		t.modificaAvaliacao(4);
-
-		// Locale.setDefault(new Locale("pt", "BR", "WIN"));
-		//
-		// DecimalFormat df = new java.text.DecimalFormat("#,##0.00", new
-		// DecimalFormatSymbols());
-		//
-		// return df.format(t.calculaNota(nota));
+		tutor.modificaAvaliacao(nota);
 	}
 
 	public String pegarNota(String matriculaTutor) {
@@ -574,6 +589,7 @@ public class Sistema {
 	}
 
 	public void doar(String matriculaTutor, int totalCentavos) {
+
 		if (matriculaTutor.trim().isEmpty()) {
 			throw new IllegalArgumentException("Matricula vazia");
 		} else if (totalCentavos < 0) {
@@ -583,21 +599,25 @@ public class Sistema {
 		}
 
 		Tutor tutor = this.pegaPorMatricula(matriculaTutor);
+
 		double taxaTutor = tutor.getTaxaTutor(totalCentavos);
-		double total_sistema = Math.ceil((1 - taxaTutor) * totalCentavos);
-		System.out.println();
-		System.out.println(tutor.getTaxaTutor(totalCentavos));
-		tutor.receberDinheiro(totalCentavos);
+
+		double total_sistema = Math.ceil((totalCentavos - taxaTutor));
+
+		tutor.receberDinheiro(totalCentavos - total_sistema);
 		this.caixaSistema += total_sistema;
+
 	}
 
 	public int totalDinheiroTutor(String emailTutor) {
+
 		if (emailTutor.trim().equals("") || emailTutor == null) {
 			throw new IllegalArgumentException(
 					"Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
 		}
 
 		boolean verifica = false;
+
 		Tutor t = null;
 
 		for (Tutor tutor : tutores.values()) {
@@ -618,12 +638,90 @@ public class Sistema {
 	}
 
 	public int totalDinheiroSistema() {
-		return (int) (this.caixaSistema);
+		return (int) caixaSistema;
 	}
 
 	public void configuraOrdem(String atributo) {
-		// TODO Auto-generated method stub
+		switch (atributo) {
 
+		case "NOME":
+			ultimaOrdem = "NOME";
+			break;
+		case "EMAIL":
+			ultimaOrdem = "EMAIL";
+			break;
+		case "MATRICULA":
+			ultimaOrdem = "MATRICULA";
+			break;
+
+		default:
+			throw new IllegalArgumentException("Ordem inválida");
+		}
+
+	}
+	
+	
+	private ArrayList<Aluno> getListagemOrdenadaAlunos(){
+		ArrayList<Aluno> lista = new ArrayList<>();
+		
+		for (Aluno aluno: mapaAlunos.values())
+			lista.add(aluno);
+		
+		
+		ordenaLista(lista);
+		
+		return lista;
+		
+		
+	}
+	
+	private ArrayList<Tutor> getListagemOrdenadaTutores(){
+		ArrayList<Tutor> lista = new ArrayList<>();
+		
+		for (Tutor tutor: tutores.values())
+			lista.add(tutor);
+		
+		
+		ordenaListaTutor(lista);
+		
+		return lista;
+		
+		
+	}
+	
+	
+	
+	
+	
+	private void ordenaLista(List<Aluno> lista){
+		switch (ultimaOrdem) {
+		case "NOME":
+			Collections.sort(lista);
+			break;
+		case "EMAIL":
+			Collections.sort(lista, new ComparadorEmail());
+			break;
+		case "MATRICULA":
+			Collections.sort(lista, new ComparadorMatricula());
+			break;
+			
+		}
+			
+	}
+	private void ordenaListaTutor(List<Tutor> lista){
+		switch (ultimaOrdem) {
+		case "NOME":
+			Collections.sort(lista);
+			break;
+		case "EMAIL":
+			Collections.sort(lista, new ComparadorEmail());
+			break;
+		case "MATRICULA":
+			Collections.sort(lista, new ComparadorMatricula());
+			break;
+			
+		}
+			
 	}
 
 	public void salvar() {

@@ -1,9 +1,12 @@
 package projeto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * 
- * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya Raissa Guedes Alves ,
- *         Yally de Lima Galdino
+ * @author Larissa Gabriela Amorim da Costa, Lucas Gomes Aires , Nathalya Raissa
+ *         Guedes Alves , Yally de Lima Galdino
  *
  */
 public class Aluno implements Comparable<Aluno> {
@@ -11,83 +14,93 @@ public class Aluno implements Comparable<Aluno> {
 	private String nome;
 	private int codigoCurso;
 	private String email;
-	private int nota = 5;
+	private int nota;
 	private String telefone;
 
-	public Aluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
+	private int posicaoCadastro;
+
+	public Aluno(String nome, String matricula, int codigoCurso, String telefone, String email, int posicaoCadastro) {
 		if (nome.trim().equals("")) {
 			throw new NullPointerException("Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
 		}
 		if (email.indexOf("@") == 0 || email.indexOf("@") == email.length() - 1 || !email.contains("@")) {
 			throw new IllegalArgumentException("Erro no cadastro de aluno: Email invalido");
 		}
+
 		this.matricula = matricula;
 		this.nome = nome;
 		this.codigoCurso = codigoCurso;
 		this.telefone = telefone;
 		this.email = email;
+		this.nota = 5;
+		this.posicaoCadastro = posicaoCadastro;
+
 	}
 
 	/**
-	 * Retorna a matricula do aluno 
-	 * @return a matricula do aluno 
+	 * Retorna a matricula do aluno
+	 * 
+	 * @return a matricula do aluno
 	 */
-	
+
 	public String getMatricula() {
 		return matricula;
 	}
 
 	/**
-	 * Retorna o nome do aluno 
-	 * @return o nome do aluno 
+	 * Retorna o nome do aluno
+	 * 
+	 * @return o nome do aluno
 	 */
-	
+
 	public String getNome() {
 		return nome;
 	}
 
-
 	/**
-	 * Retorna a nota do aluno 
-	 * @return nota do aluno 
+	 * Retorna a nota do aluno
+	 * 
+	 * @return nota do aluno
 	 */
-	
+
 	public double getNota() {
 		return nota;
 	}
 
 	/**
-	 * Atualiza a nota do aluno 
-	 * @param nota uma nova nota para o aluno 
+	 * Atualiza a nota do aluno
+	 * 
+	 * @param nota
+	 *            uma nova nota para o aluno
 	 */
-	
+
 	public void setNota(int nota) {
 		this.nota = nota;
 	}
 
 	/**
 	 * 
-	 * @return o codigo do curso 
+	 * @return o codigo do curso
 	 */
-	
+
 	public int getCodigoCurso() {
 		return codigoCurso;
 	}
 
 	/**
 	 * 
-	 * @return o email do aluno 
+	 * @return o email do aluno
 	 */
-	
+
 	public String getEmail() {
 		return email;
 	}
 
 	/**
 	 * 
-	 * @return o telefone do aluno 
+	 * @return o telefone do aluno
 	 */
-	
+
 	public String getTelefone() {
 		return telefone;
 	}
@@ -100,6 +113,10 @@ public class Aluno implements Comparable<Aluno> {
 		return this.matricula + " - " + this.nome + " - " + this.codigoCurso + " - " + this.telefone + " - "
 				+ this.email;
 
+	}
+	
+	public int getPosicaoCadastro() {
+		return this.posicaoCadastro;
 	}
 
 	@Override
@@ -129,7 +146,17 @@ public class Aluno implements Comparable<Aluno> {
 
 	@Override
 	public int compareTo(Aluno o) {
-		return this.nome.compareTo(o.getNome());
+		int compare;
+		
+		
+		if (this.nome.compareTo(o.getNome()) == 0){
+			compare = this.getPosicaoCadastro() - o.getPosicaoCadastro();
+		}
+		
+		else
+			compare = this.nome.compareTo(o.getNome());
+		
+		return compare;
 	}
 
 }

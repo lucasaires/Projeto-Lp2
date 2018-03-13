@@ -100,7 +100,7 @@ public class Facade {
 	}
 
 	public int totalDinheiroSistema() {
-		return totalDinheiroSistema();
+		return sistema.totalDinheiroSistema();
 	}
 
 	public void configurarOrdem(String atributo) {

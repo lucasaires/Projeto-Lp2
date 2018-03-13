@@ -7,7 +7,7 @@ public class AvaliacaoTop implements Avaliacao{
 	
 	@Override
 	public String toString(){
-		return "Top";		
+		return "TOP";		
 	}
 
 	@Override

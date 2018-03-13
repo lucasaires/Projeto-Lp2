@@ -16,7 +16,7 @@ import java.util.Set;
 
 public class Tutor extends Aluno {
 
-	private String disciplina;//tirar esse atributo e colocar no array (dentro do construtor)
+	private String disciplina;// tirar esse atributo e colocar no array (dentro do construtor)
 	private int proficiencia;
 	private double nota;
 	private int dinheiro;
@@ -26,9 +26,9 @@ public class Tutor extends Aluno {
 	private Map<String, ArrayList<String>> horarios;
 
 	public Tutor(String nome, String matricula, int codigoCurso, String telefone, String email, String disciplina,
-			int proficiencia) {
+			int proficiencia, int posicaoCadastro) {
 
-		super(nome, matricula, codigoCurso, telefone, email);
+		super(nome, matricula, codigoCurso, telefone, email, posicaoCadastro);
 
 		if (disciplina.trim().equals("")) {
 			throw new NullPointerException("Erro no cadastro de aluno: Disciplina nao pode ser vazio ou nulo");
@@ -70,8 +70,6 @@ public class Tutor extends Aluno {
 		}
 	}
 
-	
-	
 	public String getDisciplina() {
 		return disciplina;
 	}
@@ -125,13 +123,14 @@ public class Tutor extends Aluno {
 	/**
 	 * Muda a nota
 	 * 
-	 * @param nota
+	 * @param nota2
 	 *            nota
 	 */
 
-	public double calculaNota(int nota) {
+	public double calculaNota(double nota2) {
 
-		return this.nota = (this.nota *5 + nota) / 6;
+		this.nota = (this.nota * 5 + nota2) / 6;
+		return this.nota;
 
 	}
 
@@ -208,15 +207,6 @@ public class Tutor extends Aluno {
 		}
 		return horarios.get(dia).contains(horario);
 	}
-//	public boolean consultaHorario(String horario, String dia) {
-//
-//		boolean monitor = false;
-//		if (horarios.containsKey(dia) || horarios.get(dia).equals(horario)) {
-//			monitor = true;
-//		}
-//
-//		return monitor;
-//	}
 
 	@Override
 	public String toString() {
@@ -250,6 +240,8 @@ public class Tutor extends Aluno {
 
 	public void modificaAvaliacao(double nota) {
 
+		nota = calculaNota(nota);
+
 		if (nota > 4.5) {
 
 			this.avaliacao = new AvaliacaoTop();
@@ -268,13 +260,14 @@ public class Tutor extends Aluno {
 	public String getAvalicao() {
 		return avaliacao.toString();
 	}
-	
-	public void receberDinheiro(int dinheiro) {
-		this.dinheiro += this.getTaxaTutor(dinheiro);
+
+	public void receberDinheiro(double dinheiro) {
+		this.dinheiro += dinheiro;
+
 	}
-	
-	public double getTaxaTutor(int dinheiro){
-		
+
+	public double getTaxaTutor(int dinheiro) {
+
 		return this.avaliacao.calculaValor(dinheiro, this.nota);
 	}
 
@@ -285,7 +278,8 @@ public class Tutor extends Aluno {
 	 */
 
 	public int getDinheiro() {
+
 		return dinheiro;
 	}
-	
+
 }
