@@ -76,7 +76,6 @@ public class Sistema {
 		String saida = "";
 		ArrayList<Aluno> alunosOrdenados = getListagemOrdenadaAlunos();
 
-
 		for (Aluno aluno : alunosOrdenados) {
 			saida += aluno.toString() + ", ";
 		}
@@ -185,8 +184,7 @@ public class Sistema {
 	 */
 
 	public String listarTutores() {
-	
-		
+
 		String saida = "";
 		for (Tutor tutor : getListagemOrdenadaTutores()) {
 			saida += tutor.toString() + ", ";
@@ -323,6 +321,21 @@ public class Sistema {
 		return tutor.consultaLocal(local);
 	}
 
+	/**
+	 * 
+	 * @param matrAluno
+	 *            aluno que quer ajuda
+	 * @param disciplina
+	 *            disciplina da ajuda
+	 * @param horario
+	 *            horário da ajuda
+	 * @param dia
+	 *            dia da ajuda
+	 * @param localInteresse
+	 *            local da ajuda
+	 * @return id da ajuda
+	 */
+
 	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia,
 			String localInteresse) {
 
@@ -363,6 +376,20 @@ public class Sistema {
 
 	}
 
+	/**
+	 * 
+	 * @param matrAluno
+	 * @param disciplina
+	 *            disciplina da ajuda
+	 * @param horario
+	 *            horario da ajuda
+	 * @param dia
+	 *            dia da ajuda
+	 * @param localInteresse
+	 *            local da ajuda
+	 * @return tutor escolhido
+	 */
+
 	private Tutor verificaAjudaPresencial(String matrAluno, String disciplina, String horario, String dia,
 			String localInteresse) {
 
@@ -375,18 +402,22 @@ public class Sistema {
 					&& tutor.consultaHorario(horario, dia)) {
 
 				if (tutor.getProficiencia() > proficiencia) {
-
 					proficiencia = tutor.getProficiencia();
 					melhorTutor = tutor;
-
 				}
-
 			}
 		}
-
 		return melhorTutor;
-
 	}
+
+	/**
+	 * 
+	 * @param matrAluno
+	 *            aluno que quer a ajuda
+	 * @param disciplina
+	 *            disciplina da ajuda
+	 * @return id da ajuda
+	 */
 
 	public int pedirAjudaOnline(String matrAluno, String disciplina) {
 
@@ -410,6 +441,13 @@ public class Sistema {
 		return id + 1;
 	}
 
+	/**
+	 * 
+	 * @param matrAluno
+	 * @param disciplina disciplina da ajuda
+	 * @return melhor tutor 
+	 */
+
 	private Tutor verificaAjudaOnline(String matrAluno, String disciplina) {
 
 		int proficiencia = 0;
@@ -420,18 +458,20 @@ public class Sistema {
 			if (tutor.getMatricula().equals(matrAluno) || (tutor.verificaDisciplinas(disciplina))) {
 
 				if (tutor.getProficiencia() > proficiencia) {
-
 					melhorTutor = tutor;
 				}
-
 			}
-
 		}
-
 		return melhorTutor;
 
 	}
 
+	/**
+	 * 
+	 * @param idAjuda id da ajuda
+	 * @return tutor da ajuda
+	 */
+	
 	public String pegarTutor(int idAjuda) {
 
 		if (idAjuda < 0) {
@@ -468,6 +508,13 @@ public class Sistema {
 
 	}
 
+	/**
+	 * 
+	 * @param idAjuda ajuda que quer a informção 
+	 * @param atributo qual informação sobre a ajuda 
+	 * @return atributo 
+	 */
+	
 	public String getInfoAjuda(int idAjuda, String atributo) {
 
 		if (idAjuda < 0) {
@@ -539,7 +586,13 @@ public class Sistema {
 		}
 
 	}
-
+	
+	/**
+	 * 
+	 * @param idAjuda id da ajuda 
+	 * @param nota nota do tutor 
+	 */
+	
 	public void avaliarTutor(int idAjuda, int nota) {
 
 		AjudaOnline ajuda;
@@ -573,6 +626,12 @@ public class Sistema {
 		tutor.modificaAvaliacao(nota);
 	}
 
+	/**
+	 * 
+	 * @param matriculaTutor metrícula do tutor 
+	 * @return nota do tutor
+	 */
+	
 	public String pegarNota(String matriculaTutor) {
 
 		Locale.setDefault(new Locale("pt", "BR", "WIN"));
@@ -583,11 +642,23 @@ public class Sistema {
 
 	}
 
+	/**
+	 * 
+	 * @param matriculaTutor matricula do tutor 
+	 * @return nível do tutor 
+	 */
+	
 	public String pegarNivel(String matriculaTutor) {
 		Tutor novo = tutores.get(matriculaTutor);
 		return novo.getAvalicao();
 	}
 
+	/**
+	 * 
+	 * @param matriculaTutor matrícula do tutor 
+	 * @param totalCentavos dinheiro doado ao tutor
+	 */
+	
 	public void doar(String matriculaTutor, int totalCentavos) {
 
 		if (matriculaTutor.trim().isEmpty()) {
@@ -608,7 +679,12 @@ public class Sistema {
 		this.caixaSistema += total_sistema;
 
 	}
-
+	/**
+	 * 
+	 * @param emailTutor tutor
+	 * @return dinheiro do tutor 
+	 */
+	
 	public int totalDinheiroTutor(String emailTutor) {
 
 		if (emailTutor.trim().equals("") || emailTutor == null) {
@@ -623,11 +699,9 @@ public class Sistema {
 		for (Tutor tutor : tutores.values()) {
 
 			if (tutor.getEmail().equals(emailTutor)) {
-
 				verifica = true;
 				t = tutor;
 			}
-
 		}
 
 		if (!verifica) {
@@ -637,10 +711,20 @@ public class Sistema {
 		return t.getDinheiro();
 	}
 
+	/**
+	 * 
+	 * @return dinheiro do sistema
+	 */
+	
 	public int totalDinheiroSistema() {
 		return (int) caixaSistema;
 	}
 
+	/**
+	 * 
+	 * @param atributo nome da ordem da listagem 
+	 */
+	
 	public void configuraOrdem(String atributo) {
 		switch (atributo) {
 
@@ -659,71 +743,79 @@ public class Sistema {
 		}
 
 	}
+
+	/**
+	 * 
+	 * @return lista ordenada de alunos 
+	 */
 	
-	
-	private ArrayList<Aluno> getListagemOrdenadaAlunos(){
+	private ArrayList<Aluno> getListagemOrdenadaAlunos() {
 		ArrayList<Aluno> lista = new ArrayList<>();
-		
-		for (Aluno aluno: mapaAlunos.values())
+
+		for (Aluno aluno : mapaAlunos.values())
 			lista.add(aluno);
-		
-		
+
 		ordenaLista(lista);
-		
+
 		return lista;
-		
-		
-	}
-	
-	private ArrayList<Tutor> getListagemOrdenadaTutores(){
-		ArrayList<Tutor> lista = new ArrayList<>();
-		
-		for (Tutor tutor: tutores.values())
-			lista.add(tutor);
-		
-		
-		ordenaListaTutor(lista);
-		
-		return lista;
-		
-		
-	}
-	
-	
-	
-	
-	
-	private void ordenaLista(List<Aluno> lista){
-		switch (ultimaOrdem) {
-		case "NOME":
-			Collections.sort(lista);
-			break;
-		case "EMAIL":
-			Collections.sort(lista, new ComparadorEmail());
-			break;
-		case "MATRICULA":
-			Collections.sort(lista, new ComparadorMatricula());
-			break;
-			
-		}
-			
-	}
-	private void ordenaListaTutor(List<Tutor> lista){
-		switch (ultimaOrdem) {
-		case "NOME":
-			Collections.sort(lista);
-			break;
-		case "EMAIL":
-			Collections.sort(lista, new ComparadorEmail());
-			break;
-		case "MATRICULA":
-			Collections.sort(lista, new ComparadorMatricula());
-			break;
-			
-		}
-			
+
 	}
 
+	/**
+	 * 
+	 * @return lista ordenado de tutores 
+	 */
+	
+	private ArrayList<Tutor> getListagemOrdenadaTutores() {
+		ArrayList<Tutor> lista = new ArrayList<>();
+
+		for (Tutor tutor : tutores.values())
+			lista.add(tutor);
+
+		ordenaListaTutor(lista);
+
+		return lista;
+
+	}
+
+	/**
+	 * ordena alunos 
+	 * @param lista lista de alunos 
+	 */
+	private void ordenaLista(List<Aluno> lista) {
+		switch (ultimaOrdem) {
+		case "NOME":
+			Collections.sort(lista);
+			break;
+		case "EMAIL":
+			Collections.sort(lista, new ComparadorEmail());
+			break;
+		case "MATRICULA":
+			Collections.sort(lista, new ComparadorMatricula());
+			break;
+		}
+	}
+
+	/**
+	 * ordena tutores 
+	 * @param lista lista de tutores
+	 * 
+	 */
+	private void ordenaListaTutor(List<Tutor> lista) {
+		switch (ultimaOrdem) {
+		case "NOME":
+			Collections.sort(lista);
+			break;
+		case "EMAIL":
+			Collections.sort(lista, new ComparadorEmail());
+			break;
+		case "MATRICULA":
+			Collections.sort(lista, new ComparadorMatricula());
+			break;
+		}
+	}
+
+	
 	public void salvar() {
 		// TODO Auto-generated method stub
 
