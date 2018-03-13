@@ -275,7 +275,8 @@ public class Tutor extends Aluno {
 	}
 	
 	public double getTaxaTutor(int dinheiro){
-		return avaliacao.calculaValor(dinheiro, this.nota);
+		
+		return this.avaliacao.calculaValor(dinheiro, this.nota);
 	}
 
 	/**

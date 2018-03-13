@@ -25,9 +25,10 @@ public class AjudaPresencial extends AjudaOnline {
 	public String getlocalInteresse() {
 		return localInteresse;
 	}
-
+	
+	@Override
 	public String toString() {
-		return "Tutor - " + getMatricula() + ", horario - " + getHorario() + ", dia - " + getDia() + ", local - "
+		return "Tutor - " + getMatricula() + ", horario - "+ getHorario() + ", dia - " + getDia() + ", local - "
 				+ getlocalInteresse() + ",disciplina - " + getDisciplina();
 
 	}

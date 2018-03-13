@@ -1,9 +1,7 @@
 package projeto;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -138,6 +136,8 @@ public class Sistema {
 						escolhido.getTelefone(), escolhido.getEmail(), disciplina, proficiencia);
 				novoTutor.disciplinasTutor(disciplina);
 				tutores.put(matricula, novoTutor);
+				mapaAlunos.remove(matricula);
+				mapaAlunos.put(matricula, novoTutor);
 
 			} else {
 				if (tutores.get(matricula).verificaDisciplinas(disciplina))
@@ -359,18 +359,16 @@ public class Sistema {
 
 		for (Tutor tutor : tutores.values()) {
 
-			if (tutor.getMatricula().equals(matrAluno)) {
-				if ((tutor.consultaHorario(horario, dia) && tutor.consultaLocal(dia))) {
+			if (tutor.getDisciplina().equals(disciplina) && tutor.getProficiencia() > 0
+					&& tutor.consultaHorario(horario, dia)) {
 
-					if (tutor.verificaDisciplinas(disciplina)) {
+				if (tutor.getProficiencia() > proficiencia) {
 
-						if (tutor.getProficiencia() > proficiencia) {
+					proficiencia = tutor.getProficiencia();
+					melhorTutor = tutor;
 
-							melhorTutor = tutor;
-						}
-
-					}
 				}
+
 			}
 		}
 
@@ -443,7 +441,7 @@ public class Sistema {
 
 			a = ajuda.toString(t.getMatricula());
 
-		} else {
+		} else if (ajudas.get(idAjuda - 1).getTipoAjuda().equals("presencial")) {
 
 			AjudaPresencial ajuda = (AjudaPresencial) ajudas.get(idAjuda - 1);
 
@@ -531,11 +529,6 @@ public class Sistema {
 
 	public String avaliarTutor(int idAjuda, int nota) {
 
-		if (!ajudas.containsKey(idAjuda - 1)) {
-
-			throw new IllegalArgumentException("Erro na avaliacao de tutor: id nao encontrado ");
-		}
-
 		if (nota < 0) {
 
 			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser menor que 0");
@@ -543,6 +536,11 @@ public class Sistema {
 		} else if (nota > 5) {
 
 			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser maior que 5");
+		}
+
+		if (!ajudas.containsKey(idAjuda - 1)) {
+
+			throw new IllegalArgumentException("Erro na avaliacao de tutor: id nao encontrado ");
 		}
 
 		String matricula = ajudas.get(idAjuda - 1).getMatricula();
@@ -561,7 +559,9 @@ public class Sistema {
 
 		String valor = df.format(tutores.get(matriculaTutor).getNota());
 
-		return Double.valueOf(valor);
+		double v = Double.parseDouble(valor);
+
+		return v;
 
 	}
 
@@ -571,10 +571,12 @@ public class Sistema {
 	}
 
 	public void doar(String matriculaTutor, int totalCentavos) {
-		if (matriculaTutor == null || matriculaTutor.trim().isEmpty()) {
+		if (matriculaTutor.trim().equals("")) {
 			throw new IllegalArgumentException("Matricula vazia");
 		} else if (totalCentavos < 0) {
-			throw new IllegalArgumentException("Valor invalido");
+			throw new IllegalArgumentException("Erro na doacao para tutor: totalCentavos nao pode ser menor que zero");
+		} else if (!tutores.containsKey(matriculaTutor)) {
+			throw new IllegalArgumentException("Erro na doacao para tutor: Tutor nao encontrado");
 		}
 
 		Tutor tutor = this.pegaPorMatricula(matriculaTutor);
@@ -585,11 +587,53 @@ public class Sistema {
 	}
 
 	public int totalDinheiroTutor(String emailTutor) {
-		return tutores.get(emailTutor).getDinheiro();
+		if (emailTutor.trim().equals("") || emailTutor == null) {
+			throw new IllegalArgumentException(
+					"Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
+		}
+
+		boolean verifica = false;
+		Tutor t = null;
+
+		for (Tutor tutor : tutores.values()) {
+
+			if (tutor.getEmail().equals(emailTutor)) {
+
+				verifica = true;
+				t = tutor;
+			}
+
+		}
+
+		if (!verifica) {
+			throw new IllegalArgumentException("Erro na consulta de total de dinheiro do tutor: Tutor nao encontrado");
+		}
+
+		return t.getDinheiro();
 	}
 
 	public int totalDinheiroSistema() {
 		return (int) (this.caixaSistema);
+	}
+
+	public void configuraOrdem(String atributo) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void salvar() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void carregar() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void limpar() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

@@ -91,4 +91,31 @@ public class Facade {
 		return sistema.pegarNivel(matriculaTutor);
 	}
 
+	public void doar(String matriculaTutor, int totalCentavos) {
+		sistema.doar(matriculaTutor, totalCentavos);
+	}
+
+	public int totalDinheiroTutor(String emailTutor) {
+		return sistema.totalDinheiroTutor(emailTutor);
+	}
+
+	public int totalDinheiroSistema() {
+		return totalDinheiroSistema();
+	}
+	
+	public void configurarOrdem(String atributo) {
+		sistema.configuraOrdem(atributo);
+	}
+	
+	public void salvar() {
+		sistema.salvar();
+	}
+	public void carregar() {
+		sistema.carregar();
+	}
+	public void limpar() {
+		sistema.limpar();
+		
+	}
+
 }
