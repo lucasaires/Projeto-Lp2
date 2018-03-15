@@ -1,7 +1,11 @@
-package projeto;
+package projeto.ajuda;
 
 public class AjudaPresencial extends AjudaOnline {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6767538481180344873L;
 	private String horario;
 	private String dia;
 	private String localInteresse;

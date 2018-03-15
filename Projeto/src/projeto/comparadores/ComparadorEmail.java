@@ -1,8 +1,16 @@
-package projeto;
+package projeto.comparadores;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
-public class ComparadorEmail implements Comparator<Aluno> {
+import projeto.Entidades.Aluno;
+
+public class ComparadorEmail implements Comparator<Aluno>, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4141169725365747319L;
 
 	@Override
 	public int compare(Aluno t1, Aluno t2) {

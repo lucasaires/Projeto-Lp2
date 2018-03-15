@@ -2,7 +2,7 @@
 # US4 - Cadastrar Pedidos de Ajuda (Presencial ou Online) #
 ##########################
 
-
+carregar
   
 expect "1" pedirAjudaPresencial matrAluno="116209078" disciplina="Programacao 2" horario="15:00" dia="seg" localInteresse="LCC3"
 expect "2" pedirAjudaPresencial matrAluno="111124242" disciplina="Programacao 2" horario="08:00" dia="qua" localInteresse="LCC3"
@@ -22,7 +22,7 @@ expect "LCC3" getInfoAjuda idAjuda=1 atributo="localInteresse"
 expect "Tutor - 115212345, disciplina - ATAL" pegarTutor idAjuda=7
 expect "Tutor - 115260904, horario - 15:00, dia - seg, local - LCC3, disciplina - Programacao 2" pegarTutor idAjuda=1
 
-
+salvar
 # Testes com exception
 
 expectError "Erro no pedido de ajuda presencial: matricula de aluno nao pode ser vazio ou em branco" pedirAjudaPresencial matrAluno="" disciplina="Programacao 2" horario="15:00" dia="seg" localInteresse="LCC3"

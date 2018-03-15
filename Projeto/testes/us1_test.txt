@@ -2,6 +2,8 @@
 # US1 - Cadastrar Alunos #
 ##########################
 
+carregar
+
 cadastrarAluno nome="Matthew Melio" matricula="115260904" codigoCurso="10000" telefone="" email="matthew.met@ccc.ufcg.edu.br"
 expect "115260904 - Matthew Melio - 10000 - matthew.met@ccc.ufcg.edu.br" recuperaAluno matricula="115260904"
 
@@ -19,6 +21,7 @@ expect "viktor_gatinho123@hotmail.com" getInfoAluno matricula="111124242" atribu
 
 expect "116209078 - Davidson Sadman - 24040 - 3333-3038 - davidson.sadman@ee.ufcg.edu.br, 115260904 - Matthew Melio - 10000 - matthew.met@ccc.ufcg.edu.br, 115212345 - Ueslle Hannibal - 10000 - 99903-3020 - uesle_han@ccc.ufcg.edu.br, 111124242 - Viktor Bottas - 20304 - 98030-1124 - viktor_gatinho123@hotmail.com" listarAlunos
 
+salvar
 # Testes com exception
 
 expectError "Erro no cadastro de aluno: Aluno de mesma matricula ja cadastrado" cadastrarAluno nome="Matthew Melio" matricula="115260904" codigoCurso="10000" telefone="" email="matthew.met@ccc.ufcg.edu.br"

@@ -1,11 +1,17 @@
-package projeto;
+package projeto.Entidades;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import projeto.avaliacao.Avaliacao;
+import projeto.avaliacao.AvaliacaoAprendiz;
+import projeto.avaliacao.AvaliacaoTop;
+import projeto.avaliacao.AvaliacaoTutor;
 
 /**
  * 
@@ -14,8 +20,12 @@ import java.util.Set;
  *
  */
 
-public class Tutor extends Aluno {
+public class Tutor extends Aluno implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 67057042816406954L;
 	private String disciplina;// tirar esse atributo e colocar no array (dentro do construtor)
 	private int proficiencia;
 	private double nota;

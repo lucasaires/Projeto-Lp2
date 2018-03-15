@@ -1,9 +1,14 @@
-package projeto;
+package projeto.ajuda;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AjudaOnline {
+public class AjudaOnline implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2943938449572846846L;
 	private String disciplina;
 	private String matriculaAluno;
 	private String matriculaTutor;

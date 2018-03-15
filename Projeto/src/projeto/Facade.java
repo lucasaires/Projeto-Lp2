@@ -1,5 +1,12 @@
 package projeto;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import easyaccept.EasyAccept;
 
 public class Facade {
@@ -10,8 +17,7 @@ public class Facade {
 	}
 
 	public static void main(String[] args) {
-		args = new String[] { "projeto.Facade", "testes/us1_test.txt", "testes/us2_test.txt", "testes/us3_test.txt",
-				"testes/us4_test.txt", "testes/us5_test.txt", "testes/us6_test.txt" };
+		args = new String[] { "projeto.Facade", "testes/us6_test.txt" };
 		EasyAccept.main(args);
 
 	}
@@ -107,16 +113,39 @@ public class Facade {
 		sistema.configuraOrdem(atributo);
 	}
 
-	public void salvar() {
-		sistema.salvar();
+	public void salvar() throws ClassNotFoundException, IOException {
+		try {
+			String nomeArquivo = "save.bin";
+			FileOutputStream f = new FileOutputStream(nomeArquivo);
+			ObjectOutputStream obj = new ObjectOutputStream(f);
+			obj.writeObject(sistema);
+			obj.close();
+		} catch (IOException e) {
+			throw new IOException("Falha ao Salvar Sistema");
+		}
+
 	}
 
-	public void carregar() {
-		sistema.carregar();
+	public void carregar() throws ClassNotFoundException {
+		try {
+			String nomeArquivo = "save.bin";
+			File arquivo = new File(nomeArquivo);
+			if (arquivo.exists()) {
+				FileInputStream f = new FileInputStream(nomeArquivo);
+				ObjectInputStream obj = new ObjectInputStream(f);
+				Sistema sistemaLido = (Sistema) obj.readObject();
+				this.sistema = sistemaLido;
+				obj.close();
+			} else {
+				this.sistema = new Sistema();
+			}
+		} catch (IOException e) {
+			throw new ClassNotFoundException("Falha na leitura");
+		}
 	}
 
 	public void limpar() {
-		sistema.limpar();
+		this.sistema = new Sistema();
 
 	}
 

@@ -1,15 +1,22 @@
 package projeto;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
+
+import projeto.Entidades.Aluno;
+import projeto.Entidades.Tutor;
+import projeto.ajuda.AjudaOnline;
+import projeto.ajuda.AjudaPresencial;
+import projeto.comparadores.ComparadorEmail;
+import projeto.comparadores.ComparadorMatricula;
 
 /**
  * 
@@ -18,8 +25,12 @@ import java.util.Set;
  *
  */
 
-public class Sistema {
+public class Sistema implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 398040044492698556L;
 	private double caixaSistema;
 	private Map<String, Aluno> mapaAlunos;
 	private String ultimaOrdem;
@@ -137,15 +148,19 @@ public class Sistema {
 		}
 		if (mapaAlunos.containsKey(matricula)) {
 			Aluno escolhido = mapaAlunos.get(matricula);
+
 			if (!tutores.containsKey(matricula)) {
 				Tutor novoTutor = new Tutor(escolhido.getNome(), escolhido.getMatricula(), escolhido.getCodigoCurso(),
 						escolhido.getTelefone(), escolhido.getEmail(), disciplina, proficiencia, indexTutor++);
 				novoTutor.disciplinasTutor(disciplina);
+
 				tutores.put(matricula, novoTutor);
 				mapaAlunos.remove(matricula);
 				mapaAlunos.put(matricula, novoTutor);
 
-			} else {
+			}
+
+			else {
 				if (tutores.get(matricula).verificaDisciplinas(disciplina))
 					throw new IllegalArgumentException("Erro na definicao de papel: Ja eh tutor dessa disciplina");
 
@@ -444,8 +459,9 @@ public class Sistema {
 	/**
 	 * 
 	 * @param matrAluno
-	 * @param disciplina disciplina da ajuda
-	 * @return melhor tutor 
+	 * @param disciplina
+	 *            disciplina da ajuda
+	 * @return melhor tutor
 	 */
 
 	private Tutor verificaAjudaOnline(String matrAluno, String disciplina) {
@@ -468,10 +484,11 @@ public class Sistema {
 
 	/**
 	 * 
-	 * @param idAjuda id da ajuda
+	 * @param idAjuda
+	 *            id da ajuda
 	 * @return tutor da ajuda
 	 */
-	
+
 	public String pegarTutor(int idAjuda) {
 
 		if (idAjuda < 0) {
@@ -510,11 +527,13 @@ public class Sistema {
 
 	/**
 	 * 
-	 * @param idAjuda ajuda que quer a informção 
-	 * @param atributo qual informação sobre a ajuda 
-	 * @return atributo 
+	 * @param idAjuda
+	 *            ajuda que quer a informção
+	 * @param atributo
+	 *            qual informação sobre a ajuda
+	 * @return atributo
 	 */
-	
+
 	public String getInfoAjuda(int idAjuda, String atributo) {
 
 		if (idAjuda < 0) {
@@ -586,13 +605,15 @@ public class Sistema {
 		}
 
 	}
-	
+
 	/**
 	 * 
-	 * @param idAjuda id da ajuda 
-	 * @param nota nota do tutor 
+	 * @param idAjuda
+	 *            id da ajuda
+	 * @param nota
+	 *            nota do tutor
 	 */
-	
+
 	public void avaliarTutor(int idAjuda, int nota) {
 
 		AjudaOnline ajuda;
@@ -628,10 +649,11 @@ public class Sistema {
 
 	/**
 	 * 
-	 * @param matriculaTutor metrícula do tutor 
+	 * @param matriculaTutor
+	 *            metrícula do tutor
 	 * @return nota do tutor
 	 */
-	
+
 	public String pegarNota(String matriculaTutor) {
 
 		Locale.setDefault(new Locale("pt", "BR", "WIN"));
@@ -644,10 +666,11 @@ public class Sistema {
 
 	/**
 	 * 
-	 * @param matriculaTutor matricula do tutor 
-	 * @return nível do tutor 
+	 * @param matriculaTutor
+	 *            matricula do tutor
+	 * @return nível do tutor
 	 */
-	
+
 	public String pegarNivel(String matriculaTutor) {
 		Tutor novo = tutores.get(matriculaTutor);
 		return novo.getAvalicao();
@@ -655,10 +678,12 @@ public class Sistema {
 
 	/**
 	 * 
-	 * @param matriculaTutor matrícula do tutor 
-	 * @param totalCentavos dinheiro doado ao tutor
+	 * @param matriculaTutor
+	 *            matrícula do tutor
+	 * @param totalCentavos
+	 *            dinheiro doado ao tutor
 	 */
-	
+
 	public void doar(String matriculaTutor, int totalCentavos) {
 
 		if (matriculaTutor.trim().isEmpty()) {
@@ -679,12 +704,14 @@ public class Sistema {
 		this.caixaSistema += total_sistema;
 
 	}
+
 	/**
 	 * 
-	 * @param emailTutor tutor
-	 * @return dinheiro do tutor 
+	 * @param emailTutor
+	 *            tutor
+	 * @return dinheiro do tutor
 	 */
-	
+
 	public int totalDinheiroTutor(String emailTutor) {
 
 		if (emailTutor.trim().equals("") || emailTutor == null) {
@@ -715,16 +742,17 @@ public class Sistema {
 	 * 
 	 * @return dinheiro do sistema
 	 */
-	
+
 	public int totalDinheiroSistema() {
 		return (int) caixaSistema;
 	}
 
 	/**
 	 * 
-	 * @param atributo nome da ordem da listagem 
+	 * @param atributo
+	 *            nome da ordem da listagem
 	 */
-	
+
 	public void configuraOrdem(String atributo) {
 		switch (atributo) {
 
@@ -746,9 +774,9 @@ public class Sistema {
 
 	/**
 	 * 
-	 * @return lista ordenada de alunos 
+	 * @return lista ordenada de alunos
 	 */
-	
+
 	private ArrayList<Aluno> getListagemOrdenadaAlunos() {
 		ArrayList<Aluno> lista = new ArrayList<>();
 
@@ -763,9 +791,9 @@ public class Sistema {
 
 	/**
 	 * 
-	 * @return lista ordenado de tutores 
+	 * @return lista ordenado de tutores
 	 */
-	
+
 	private ArrayList<Tutor> getListagemOrdenadaTutores() {
 		ArrayList<Tutor> lista = new ArrayList<>();
 
@@ -779,8 +807,10 @@ public class Sistema {
 	}
 
 	/**
-	 * ordena alunos 
-	 * @param lista lista de alunos 
+	 * ordena alunos
+	 * 
+	 * @param lista
+	 *            lista de alunos
 	 */
 	private void ordenaLista(List<Aluno> lista) {
 		switch (ultimaOrdem) {
@@ -797,8 +827,10 @@ public class Sistema {
 	}
 
 	/**
-	 * ordena tutores 
-	 * @param lista lista de tutores
+	 * ordena tutores
+	 * 
+	 * @param lista
+	 *            lista de tutores
 	 * 
 	 */
 	private void ordenaListaTutor(List<Tutor> lista) {
@@ -813,22 +845,6 @@ public class Sistema {
 			Collections.sort(lista, new ComparadorMatricula());
 			break;
 		}
-	}
-
-	
-	public void salvar() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void carregar() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void limpar() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

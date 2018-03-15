@@ -1,7 +1,6 @@
-package projeto;
+package projeto.Entidades;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.io.Serializable;
 
 /**
  * 
@@ -9,7 +8,11 @@ import java.util.Set;
  *         Guedes Alves , Yally de Lima Galdino
  *
  */
-public class Aluno implements Comparable<Aluno> {
+public class Aluno implements Comparable<Aluno>, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4286553236281854153L;
 	protected String matricula;
 	private String nome;
 	private int codigoCurso;

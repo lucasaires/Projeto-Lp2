@@ -1,7 +1,7 @@
 ##########################
 #   US5 - Doar ao Tutor  #
 ##########################
-
+carregar
 doar matriculaTutor="115260904" totalCentavos=500
 expect 450 totalDinheiroTutor emailTutor="matthew.met@ccc.ufcg.edu.br"
 expect 50 totalDinheiroSistema
@@ -20,7 +20,7 @@ avaliarTutor idAjuda=14 nota=0
 
 doar matriculaTutor="115212345" totalCentavos=100
 expect 117 totalDinheiroTutor emailTutor="uesle_han@ccc.ufcg.edu.br"
-
+salvar
 # Testes com exception
 
 expectError "Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo" totalDinheiroTutor emailTutor=""

@@ -2,7 +2,7 @@
 # US3 -  Disponibilizar e listar horários e locais #
 ##########################
 
-
+carregar
 cadastrarHorario email="matthew.met@ccc.ufcg.edu.br" horario="15:00" dia="seg"
 cadastrarHorario email="matthew.met@ccc.ufcg.edu.br" horario="08:00" dia="qua"
 cadastrarHorario email="matthew.met@ccc.ufcg.edu.br" horario="13:00" dia="sex"
@@ -44,7 +44,7 @@ expect "false" consultaLocal email="uesle_han@ccc.ufcg.edu.br" locaL="LCC2"
 
 expect "false" consultaLocal email="annah.go@ccc.ufcg.edu.br" locaL="Embedded"
 
-
+salvar
 
 # Testes com exception
 

@@ -6,6 +6,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import projeto.Entidades.Tutor;
+
 public class TutorTest {
 
 	Tutor t;
