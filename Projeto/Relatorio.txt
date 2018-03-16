@@ -1,0 +1,41 @@
+
+Caso 1:
+
+	O caso 1 pede que seja criado um sistema em que seja possível cadastrar alunos, para que os mesmos fiquem registrados e possam ser recuperados pela matrícula através do método recuperaAluno(). Optamos por uma coleção que armazena todos os alunos. Essa coleção é um mapa onde a chave é a matricula, única para cada usuário. Para gerenciar os alunos criamos uma classe Aluno com os atributos nome, matricula, codigo do curso, telefone e email.
+
+
+
+Caso 2:
+
+	No o caso 2, é dito que quando um aluno quiser, ele pode se disponibilizar como tutor para atender outros alunos que precisam. Foi criado um método tornarTutor() que passa a matricula, a disciplina que deseja dar assistencia e a proficiencia - o quão hábil ele se sente na disciplina. Inicialmente, todos os tutores têm avaliação igual a 4, a mesma é modificada de acordo com o retorno dado pelos alunos em forma de avaliação. Além disso, cada Tutor tem uma quantidade de dinheiro recebida pelo sistema (começa em zero). 
+
+Caso 3:
+
+	No caso de uso 3, criamos duas novas entidades chamadas AjudaOnline e AjudaPresencial. Nesse caso, usamos Herança, AjudaPresencial herdou de AjudaOnline, já que cada tipo tem comportamento diferente para a criação do ID único. Ao criar essas entidades, tornou-se necessário a criação de um mapa para cadastrar e ligar os dias aos horários que o Tutor tem disponibilidade. 
+
+
+
+Caso 4:
+
+	No caso de uso 4, o Aluno tem a possibilidade de cadastrar um pedido de ajuda (presencial ou online) de maneira que o Tutor posso atende-lo. Por existirem dois tipos de ajuda, criou-se dois tipos de pedidos, e métodos para cada um deles. O Sistema ficou responsável por ligar o Tutor à ajuda, contudo, caso mais de um Tutor estivessem disponível, o de maior proeficência seria indicado. Criamos o método verificaAjudaPresencial() para isso. Pois somente a ajuda presencial necessitava de disponibilidade horários e dias. Para uma ajuda online, era necessário apenas informar a disciplina de interesse. Nesse caso, o Tutor de maior proeficência seria retornado, independente dos horários disponíveis. No cadastro do pedido de ajuda, é retornado um ID. Esse id foi usado como chave no mapa de ajudas dentro de Sistema, usado para armazenar Ajudas e recupera-las através do número de identificação (ID).
+
+
+
+Caso 5:
+
+	Após a realização da Ajuda, é possível avaliar a Ajuda recebida, seja ela online ou presencial, com notas inteiras de 0 a 5. É possível votar apenas uma vez. A pontuação do Tutor é iniciada como 4 e depois calculada por uma fórmula dada na especificação; através dela, classificamos cada Tutor como Top (pontuação mais alta), Tutor (pontuação média) ou Aprendiz (menor pontuação). 
+
+
+
+Caso 6:
+	No caso 6, pôde-se doar dinheiro ao Tutor, de acordo com sua classificação. Independente da ajuda que foi dada. Cada classificação recebia uma porcentagem, com base na pontuação e no valor doado. Esse cálculo também foi dado na especificação. Depois de calculada a porcentagem que seria direcionada ao Tutor, o dinheiro restante ficava para o Sistema.
+
+
+
+Caso 7:
+ 	O caso 7 pede para ordenar os tutores cadastrados, tal ordenação pode ser realizada pelos atributos nome, e-mail e matrícula, para tal em Tutor foi implementada a interface Comparable, sendo assim a ordenação default de tutores passou a ser por nome, para os outros atríbutos  foram criadas duas classes implementando a interface Comparator, sendo assim em sistema foram criados métodos que criam uma lista temporária e a ordena baseado na última ordem requisitada, por default a primeira ordem é a de inserção.
+
+Caso 8:
+	O caso 8 requisita a criação de métodos para salvar em arquivo os dados cadastrados no sistema, posteriormente carregá-los , e adendo limpar tais dados, para realizar tal todas as classes passaram a implementar a interface Serializable, e as interfaces passaram estender tal, o método salvar , armazena em arquivo binário o sistema, no de carregar tal arquivo binário é carregado, para limpar o sistema uma nova classe sistema é instanciada e substitui a atual.
+
+Link GitHub: https://github.com/lucasaires/Projeto-Lp2 

@@ -23,6 +23,7 @@ expect "Tutor - 115212345, disciplina - ATAL" pegarTutor idAjuda=7
 expect "Tutor - 115260904, horario - 15:00, dia - seg, local - LCC3, disciplina - Programacao 2" pegarTutor idAjuda=1
 
 salvar
+
 # Testes com exception
 
 expectError "Erro no pedido de ajuda presencial: matricula de aluno nao pode ser vazio ou em branco" pedirAjudaPresencial matrAluno="" disciplina="Programacao 2" horario="15:00" dia="seg" localInteresse="LCC3"

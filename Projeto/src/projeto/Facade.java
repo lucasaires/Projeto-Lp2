@@ -115,7 +115,7 @@ public class Facade {
 
 	public void salvar() throws ClassNotFoundException, IOException {
 		try {
-			String nomeArquivo = "save.bin";
+			String nomeArquivo = "save.dat";
 			FileOutputStream f = new FileOutputStream(nomeArquivo);
 			ObjectOutputStream obj = new ObjectOutputStream(f);
 			obj.writeObject(sistema);
@@ -128,7 +128,7 @@ public class Facade {
 
 	public void carregar() throws ClassNotFoundException {
 		try {
-			String nomeArquivo = "save.bin";
+			String nomeArquivo = "save.dat";
 			File arquivo = new File(nomeArquivo);
 			if (arquivo.exists()) {
 				FileInputStream f = new FileInputStream(nomeArquivo);

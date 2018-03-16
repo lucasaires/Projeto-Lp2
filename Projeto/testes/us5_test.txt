@@ -1,7 +1,9 @@
 ##########################
 #   US5 - Avaliar Tutor  #
 ##########################
+
 carregar
+
 expect "Tutor" pegarNivel matriculaTutor="115260904"
 expect "Tutor" pegarNivel matriculaTutor="115212345"
 
@@ -34,7 +36,9 @@ expect "TOP" pegarNivel matriculaTutor="115260904"
 pedirAjudaPresencial matrAluno="116209078" disciplina="Programacao 2" horario="15:00" dia="seg" localInteresse="LCC3"
 pegarTutor idAjuda=11
 pedirAjudaPresencial matrAluno="116209078" disciplina="Programacao 2" horario="15:00" dia="seg" localInteresse="LCC3"
-salvar
+
+salvar 
+
 # Testes com exception
 
 expectError "Erro na avaliacao de tutor: Ajuda ja avaliada" avaliarTutor idAjuda=8 nota=5

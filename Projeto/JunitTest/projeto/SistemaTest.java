@@ -14,7 +14,7 @@ public class SistemaTest {
 
 	@Before
 	public void testSistema() {
-		a = new Aluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
+		a = new Aluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com", 1);
 		sistema = new Sistema();
 
 	}
@@ -25,7 +25,7 @@ public class SistemaTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testCadastraAlunoRepetido() {
+	public void testCadastraMatriculaRepetida() {
 		sistema.cadastrarAluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
 		sistema.cadastrarAluno("George", "13", 5, "33106000", "principegeorge@imperio.com");
 	}
@@ -43,8 +43,8 @@ public class SistemaTest {
 
 	@Test
 	public void testListarAlunos() {
-		sistema.cadastrarAluno("George", "11", 3, "33106000", "principegeorge@imperio.com");
 		sistema.cadastrarAluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
+		sistema.cadastrarAluno("George", "11", 3, "33106000", "principegeorge@imperio.com");
 
 		assertEquals("11 - George - " + 3 + " - 33106000 - principegeorge@imperio.com, 13 - Son Goku - " + 5
 				+ " - 40028922 - songoku@dbs.com", sistema.listarAlunos());
@@ -147,7 +147,7 @@ public class SistemaTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testCadastrarHorarioTutorNCadastrado() {
+	public void testCadastrarHorarioTutorNaoCadastrado() {
 
 		sistema.cadastrarHorario("narutokun@shipuden.com", "18h", "sex");
 
@@ -295,18 +295,34 @@ public class SistemaTest {
 	// o erro
 	@Test
 	public void pegarTutorTest() {
+		sistema.cadastrarAluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
 		sistema.cadastrarAluno("Lucas", "116210878", 5, "40028922", "lucas@ccc.com");
 		sistema.tornarTutor("116210878", "cal", 5);
 		sistema.cadastrarHorario("lucas@ccc.com", "21:00", "ter");
 		sistema.cadastrarLocalDeAtendimento("lucas@ccc.com", "lcc");
+
+		sistema.pedirAjudaOnline("13", "cal");
+
+		assertEquals("Tutor - 116210878, " + "disciplina - cal", sistema.pegarTutor(1));
+
+	}
+
+	@Test
+	public void pegarTutorTestt() {
+		sistema.cadastrarAluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
+		sistema.cadastrarAluno("Lucas", "116210878", 5, "40028922", "lucas@ccc.com");
+		sistema.tornarTutor("116210878", "cal", 5);
 
 		sistema.cadastrarAluno("Nathalya", "11621244", 5, "885645", "nathalya@ccc.com");
 		sistema.tornarTutor("11621244", "prog", 5);
 		sistema.cadastrarHorario("nathalya@ccc.com", "21:00", "quar");
 		sistema.cadastrarLocalDeAtendimento("nathalya@ccc.com", "lcc1");
 
-		 assertEquals("Tutor - 116210878, "
-		 + "disciplina - cal", sistema.pegarTutor(2));
+		sistema.pedirAjudaOnline("13", "cal");
+		sistema.pedirAjudaPresencial("13", "prog", "21:00", "quar", "lcc1");
+
+		assertEquals("Tutor - 11621244, horario - 21:00, dia - quar, local - lcc1, disciplina - prog",
+				sistema.pegarTutor(2));
 
 	}
 
@@ -425,4 +441,249 @@ public class SistemaTest {
 		sistema.pegarTutor(100);
 
 	}
+
+	@Test
+	public void pegarNotaDoTutorTest() {
+		sistema.cadastrarAluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
+		sistema.cadastrarAluno("Lucas", "116210878", 5, "40028922", "lucas@ccc.com");
+		sistema.tornarTutor("116210878", "cal", 5);
+
+		sistema.cadastrarAluno("Nathalya", "11621244", 5, "885645", "nathalya@ccc.com");
+		sistema.tornarTutor("11621244", "prog", 5);
+		sistema.cadastrarHorario("nathalya@ccc.com", "21:00", "quar");
+		sistema.cadastrarLocalDeAtendimento("nathalya@ccc.com", "lcc1");
+
+		sistema.pedirAjudaOnline("13", "cal");
+		sistema.pedirAjudaPresencial("13", "prog", "21:00", "quar", "lcc1");
+
+		sistema.avaliarTutor(2, 5);
+
+		assertEquals("4,17", sistema.pegarNota("11621244"));
+	}
+
+	@Test
+	public void pegarNotaDoTutorTest1() {
+		sistema.cadastrarAluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
+		sistema.cadastrarAluno("Lucas", "116210878", 5, "40028922", "lucas@ccc.com");
+		sistema.tornarTutor("116210878", "cal", 5);
+
+		sistema.pedirAjudaOnline("13", "cal");
+
+		sistema.avaliarTutor(1, 4);
+
+		assertEquals("4,00", sistema.pegarNota("116210878"));
+
+	}
+
+	@Test
+	public void pegarNivelTutorTest() {
+		sistema.cadastrarAluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
+		sistema.cadastrarAluno("Lucas", "116210878", 5, "40028922", "lucas@ccc.com");
+		sistema.tornarTutor("116210878", "cal", 5);
+
+		sistema.pedirAjudaOnline("13", "cal");
+
+		sistema.avaliarTutor(1, 4);
+
+		assertEquals("Tutor", sistema.pegarNivel("116210878"));
+
+	}
+
+	@Test
+	public void pegarNivelTutorTest1() {
+		sistema.cadastrarAluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
+		sistema.cadastrarAluno("Nathalya", "11621244", 5, "885645", "nathalya@ccc.com");
+		sistema.tornarTutor("11621244", "prog", 5);
+		sistema.cadastrarHorario("nathalya@ccc.com", "21:00", "quar");
+		sistema.cadastrarLocalDeAtendimento("nathalya@ccc.com", "lcc1");
+
+		sistema.pedirAjudaPresencial("13", "prog", "21:00", "quar", "lcc1");
+
+		sistema.avaliarTutor(1, 5);
+
+		assertEquals("Tutor", sistema.pegarNivel("11621244"));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void avaliarTutorTest1() {
+		sistema.cadastrarAluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
+		sistema.cadastrarAluno("Nathalya", "11621244", 5, "885645", "nathalya@ccc.com");
+		sistema.tornarTutor("11621244", "prog", 5);
+		sistema.cadastrarHorario("nathalya@ccc.com", "21:00", "quar");
+		sistema.cadastrarLocalDeAtendimento("nathalya@ccc.com", "lcc1");
+
+		sistema.pedirAjudaPresencial("13", "prog", "21:00", "quar", "lcc1");
+
+		sistema.avaliarTutor(1, -2);
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void avaliarTutorTest2() {
+		sistema.cadastrarAluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
+		sistema.cadastrarAluno("Nathalya", "11621244", 5, "885645", "nathalya@ccc.com");
+		sistema.tornarTutor("11621244", "prog", 5);
+		sistema.cadastrarHorario("nathalya@ccc.com", "21:00", "quar");
+		sistema.cadastrarLocalDeAtendimento("nathalya@ccc.com", "lcc1");
+
+		sistema.pedirAjudaPresencial("13", "prog", "21:00", "quar", "lcc1");
+
+		sistema.avaliarTutor(1, 7);
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void avaliarTutorTest3() {
+		sistema.cadastrarAluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
+		sistema.cadastrarAluno("Nathalya", "11621244", 5, "885645", "nathalya@ccc.com");
+		sistema.tornarTutor("11621244", "prog", 5);
+		sistema.cadastrarHorario("nathalya@ccc.com", "21:00", "quar");
+		sistema.cadastrarLocalDeAtendimento("nathalya@ccc.com", "lcc1");
+
+		sistema.pedirAjudaPresencial("13", "prog", "21:00", "quar", "lcc1");
+
+		sistema.avaliarTutor(12, 3);
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void avaliarTutorTest4() {
+		sistema.cadastrarAluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
+		sistema.cadastrarAluno("Nathalya", "11621244", 5, "885645", "nathalya@ccc.com");
+		sistema.tornarTutor("11621244", "prog", 5);
+		sistema.cadastrarHorario("nathalya@ccc.com", "21:00", "quar");
+		sistema.cadastrarLocalDeAtendimento("nathalya@ccc.com", "lcc1");
+
+		sistema.pedirAjudaPresencial("13", "prog", "21:00", "quar", "lcc1");
+
+		sistema.avaliarTutor(1, 5);
+		sistema.avaliarTutor(1, 5);
+	}
+
+	@Test
+	public void totalDinheiroTutor() {
+		sistema.cadastrarAluno("Larissa", "13", 5, "40028922", "larissa@dbs.com");
+		sistema.cadastrarAluno("Yally", "11621244", 5, "885645", "yally@ccc.com");
+		sistema.tornarTutor("11621244", "prog", 5);
+		sistema.cadastrarHorario("yally@ccc.com", "21:00", "quar");
+		sistema.cadastrarLocalDeAtendimento("yally@ccc.com", "lcc1");
+
+		sistema.pedirAjudaPresencial("13", "prog", "21:00", "quar", "lcc1");
+		sistema.avaliarTutor(1, 5);
+
+		sistema.doar("11621244", 500);
+
+		assertEquals(400, sistema.totalDinheiroTutor("yally@ccc.com"));
+	}
+	
+
+	@Test
+	public void totalDinheiroTutor2() {
+		sistema.cadastrarAluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
+		sistema.cadastrarAluno("Lucas", "116210878", 5, "40028922", "lucas@ccc.com");
+		sistema.tornarTutor("116210878", "cal", 5);
+
+		sistema.pedirAjudaOnline("13", "cal");
+
+		sistema.avaliarTutor(1, 4);
+		
+		sistema.doar("116210878", 800);
+		
+		assertEquals(640, sistema.totalDinheiroTutor("lucas@ccc.com"));
+
+	}
+	
+	@Test 
+	public void totalDinheiroSistema() {
+		sistema.cadastrarAluno("Larissa", "116210493", 5, "40028922", "larissa@dbs.com");
+		sistema.cadastrarAluno("Yally", "11621244", 5, "885645", "yally@ccc.com");
+		sistema.tornarTutor("11621244", "prog", 5);
+		sistema.cadastrarHorario("yally@ccc.com", "21:00", "quar");
+		sistema.cadastrarLocalDeAtendimento("yally@ccc.com", "lcc1");
+
+		sistema.pedirAjudaPresencial("116210493", "prog", "21:00", "quar", "lcc1");
+		sistema.avaliarTutor(1, 5);
+
+		sistema.doar("11621244", 500);
+
+		sistema.cadastrarAluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
+		sistema.cadastrarAluno("Lucas", "116210878", 5, "40028922", "lucas@ccc.com");
+		sistema.tornarTutor("116210878", "cal", 5);
+
+		sistema.pedirAjudaOnline("13", "cal");
+
+		sistema.avaliarTutor(2, 4);
+		
+		sistema.doar("116210878", 800);
+		
+
+		assertEquals(260, sistema.totalDinheiroSistema());
+		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void doarDinheiroPTutor() {
+		sistema.cadastrarAluno("Larissa", "116210493", 5, "40028922", "larissa@dbs.com");
+		sistema.cadastrarAluno("Yally", "11621244", 5, "885645", "yally@ccc.com");
+		sistema.tornarTutor("11621244", "prog", 5);
+		sistema.cadastrarHorario("yally@ccc.com", "21:00", "quar");
+		sistema.cadastrarLocalDeAtendimento("yally@ccc.com", "lcc1");
+
+		sistema.pedirAjudaPresencial("116210493", "prog", "21:00", "quar", "lcc1");
+		sistema.avaliarTutor(1, 5);
+
+		sistema.doar("", 500);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void doarDinheiroPTutor2() {
+		sistema.cadastrarAluno("Larissa", "116210493", 5, "40028922", "larissa@dbs.com");
+		sistema.cadastrarAluno("Yally", "11621244", 5, "885645", "yally@ccc.com");
+		sistema.tornarTutor("11621244", "prog", 5);
+		sistema.cadastrarHorario("yally@ccc.com", "21:00", "quar");
+		sistema.cadastrarLocalDeAtendimento("yally@ccc.com", "lcc1");
+
+		sistema.pedirAjudaPresencial("116210493", "prog", "21:00", "quar", "lcc1");
+		sistema.avaliarTutor(1, 5);
+
+		sistema.doar("11621244", -200);
+	}
+	
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void doarDinheiroPTutor3() {
+		sistema.cadastrarAluno("Larissa", "116210493", 5, "40028922", "larissa@dbs.com");
+		sistema.cadastrarAluno("Yally", "11621244", 5, "885645", "yally@ccc.com");
+		sistema.tornarTutor("11621244", "prog", 5);
+		sistema.cadastrarHorario("yally@ccc.com", "21:00", "quar");
+		sistema.cadastrarLocalDeAtendimento("yally@ccc.com", "lcc1");
+
+		sistema.pedirAjudaPresencial("116210493", "prog", "21:00", "quar", "lcc1");
+		sistema.avaliarTutor(1, 5);
+
+		sistema.doar("116210463", 500);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void totalDinheiroTutorError() {
+		sistema.cadastrarAluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
+		sistema.cadastrarAluno("Lucas", "116210878", 5, "40028922", "lucas@ccc.com");
+		sistema.tornarTutor("116210878", "cal", 5);
+
+		sistema.pedirAjudaOnline("13", "cal");
+
+		sistema.avaliarTutor(1, 4);
+		
+		sistema.doar("116210878", 800);
+		
+		sistema.totalDinheiroTutor("");
+
+	}
+	
+	
+	
+	
+	
+	
+	
 }

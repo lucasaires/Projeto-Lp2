@@ -1,7 +1,9 @@
 ##########################
 # US2 - Definir papeis #
 ##########################
+
 carregar
+
 tornarTutor matricula="115260904" disciplina="Programacao 2" proficiencia=5
 tornarTutor matricula="115260904" disciplina="Calculo 1" proficiencia=3
 tornarTutor matricula="115212345" disciplina="Programacao 2" proficiencia=5
@@ -10,7 +12,9 @@ tornarTutor matricula="115212345" disciplina="ATAL" proficiencia=4
 expect "115260904 - Matthew Melio - 10000 - matthew.met@ccc.ufcg.edu.br" recuperaTutor matricula="115260904"
 
 expect "115260904 - Matthew Melio - 10000 - matthew.met@ccc.ufcg.edu.br, 115212345 - Ueslle Hannibal - 10000 - 99903-3020 - uesle_han@ccc.ufcg.edu.br" listarTutores
-salvar
+
+salvar 
+
 # Testes com exception
 
 expectError "Erro na busca por tutor: Tutor nao encontrado" recuperaTutor matricula="1112212"

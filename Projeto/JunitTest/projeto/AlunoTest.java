@@ -13,7 +13,7 @@ public class AlunoTest {
 
 	@Before
 	public void testAluno() {
-		a = new Aluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com");
+		a = new Aluno("Son Goku", "13", 5, "40028922", "songoku@dbs.com", 1);
 	}
 
 	@Test
@@ -24,88 +24,48 @@ public class AlunoTest {
 	@Test(expected = NullPointerException.class)
 	public void testCadastraAlunoVazio1() {
 
-		a = new Aluno("", "000", 11, "9987", "ee@ff");
+		a = new Aluno("", "000", 11, "9987", "ee@ff", 2);
 
 	}
 
-	@Test(expected = IllegalAccessException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testCadastraAlunoVazio2() {
 
-		a = new Aluno("Larissa", "", 11, "9987", "ee@ff");
+		a = new Aluno("Yally", "000", 11, "9987", "", 6);
 
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void testCadastraAlunoVazio3() {
+	@Test(expected = IllegalArgumentException.class)
+	public void testCadastraAlunoEmailInvalido() {
 
-		a = new Aluno("Nathalya", "000", 0, "9987", "ee@ff");
-
-	}
-
-	@Test(expected = NullPointerException.class)
-	public void testCadastraAlunoVazio4() {
-
-		a = new Aluno("Lucas", "000", 11, "", "ee@ff");
+		a = new Aluno("Nath", "000", 11, "9987", "@hotmail.com", 6);
 
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void testCadastraAlunoVazio5() {
+	@Test(expected = IllegalArgumentException.class)
+	public void testCadastraAlunoEmailInvalido1() {
 
-		a = new Aluno("Yally", "000", 11, "9987", "");
-
-	}
-
-	@Test(expected = NullPointerException.class)
-	public void testCadastraAlunoNull() {
-
-		a = new Aluno(null, "11111", 22, "3321", "aa@bb");
+		a = new Aluno("Nath", "000", 11, "9987", "nath@", 6);
 
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testCadastraAlunoNull1() {
 
-		a = new Aluno("Yally", null, 33, "6654", "bb@cc");
+		a = new Aluno(null, "11111", 22, "3321", "aa@bb", 7);
 
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testCadastraAlunoNull2() {
 
-		a = new Aluno("Yally", "2222", 0, "6654", "d@cc");
-
-	}
-
-	@Test(expected = NullPointerException.class)
-	public void testCadastraAlunoNull3() {
-
-		a = new Aluno("Yally", "3333", 55, null, "db@cc");
-
-	}
-
-	@Test(expected = NullPointerException.class)
-	public void testCadastraAlunoNull4() {
-
-		a = new Aluno("Yally", "888", 98, "6454", null);
+		a = new Aluno("Yally", "888", 98, "6454", null, 11);
 
 	}
 
 	@Test
 	public void testGetNome() {
 		assertEquals("Son Goku", a.getNome());
-	}
-
-	@Test
-	public void testGetNota() {
-		assertEquals(5, a.getNota());
-	}
-
-	@Test
-	public void testSetNota() {
-		a.setNota(15);
-
-		assertEquals(15, a.getNota());
 	}
 
 	@Test
@@ -125,13 +85,19 @@ public class AlunoTest {
 
 	@Test
 	public void testEqualsObject() {
-		Aluno b = new Aluno("Vegeta", "13", 69, "33106000", "vegeta@dbs.com");
+		Aluno b = new Aluno("Vegeta", "13", 69, "33106000", "vegeta@dbs.com", 1);
 		assertTrue(a.getMatricula().equals(b.getMatricula()));
 	}
 
 	@Test
 	public void testToString() {
 		assertEquals("13 - Son Goku - 5 - 40028922 - songoku@dbs.com", a.toString());
+	}
+
+	@Test
+	public void getPosicaoCadastroTest() {
+		assertEquals(1, a.getPosicaoCadastro());
+
 	}
 
 }
